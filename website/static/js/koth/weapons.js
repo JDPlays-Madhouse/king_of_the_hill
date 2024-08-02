@@ -147,7 +147,7 @@ export const weaponObjects = {
       "transform: rotate(0deg) translate(-20px,-20px) scale(1.25); width: 50px;",
     command: ["big brains", "smart", "smrt", "200", "IQ"],
   },
-  "rocket cats": {
+  "cat combat": {
     file: "Cat_Rocket.png",
     "tense 1": "",
     "tense 2": "that",
@@ -263,6 +263,133 @@ export const weaponObjects = {
     right: "transform: translate(-38px,-56px) rotate(-45deg); width: 78px;",
     command: ["tentacles", "tentacle", "octopus", "squid", "ten"],
   },
+  "T3 Loose Dump Truck": {
+    file: "TruckT3Loose_Dump.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(0deg) scale(1.25) scaleX(-1); width: 50px;",
+    command: [],
+  },
+  "T3 Fluid Tank Truck": {
+    file: "TruckT3Fluid_Tank.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(0deg) scale(1.25) scaleX(-1); width: 50px;",
+    command: [],
+  },
+  "T2 Truck": {
+    file: "TruckT2.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(0deg) scale(1.25) scaleX(-1); width: 50px;",
+    command: [],
+  },
+  "T2 Dump Truck": {
+    file: "TruckT2_Dump.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(0deg) scale(1.25) scaleX(-1); width: 50px;",
+    command: [],
+  },
+  "T2 Fluid Tank Truck": {
+    file: "TruckT2_Tank.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(0deg) scale(1.25) scaleX(-1); width: 50px;",
+    command: [],
+  },
+  "T2 Container Truck": {
+    file: "TruckT2_Container.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(0deg) scale(1.25) scaleX(-1); width: 50px;",
+    command: [],
+  },
+  "T1 Truck": {
+    file: "TruckT1.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(0deg) scale(1.25) scaleX(-1); width: 50px;",
+    command: [],
+  },
+  "T1 Dump Truck": {
+    file: "TruckT1_Dump.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(0deg) scale(1.25) scaleX(-1); width: 50px;",
+    command: [],
+  },
+  "T1 Fluid Tank Truck": {
+    file: "TruckT1_Tank.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(0deg) scale(1.25) scaleX(-1); width: 50px;",
+    command: [],
+  },
+  "T1 Container Truck": {
+    file: "TruckT1_Container.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(0deg) scale(1.25) scaleX(-1); width: 50px;",
+    command: [],
+  },
+  "T1 Excavator": {
+    file: "ExcavatorT1.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(0deg) scale(1.25) scaleX(-1); width: 50px;",
+    command: [],
+  },
+  "T2 Excavator": {
+    file: "ExcavatorT2.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(0deg) scale(1.25) scaleX(-1); width: 50px;",
+    command: [],
+  },
+  "T3 Excavator": {
+    file: "ExcavatorT3.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(0deg) scale(1.25) scaleX(-1); width: 50px;",
+    command: [],
+  },
+
+  "Tree Harvester": {
+    file: "TreeHarvester.png", // TODO: check on background.
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(0deg) scale(1.25) scaleX(-1); width: 50px;",
+    command: [],
+  },
 
   "abused bot": {
     file: "abused_robot.png",
@@ -316,6 +443,15 @@ export const weaponObjectsTesting = {
       "transform: translate(-25px,-20px) rotate(0deg) scale(1.25); width: 50px;",
     command: ["pumpkin"],
   },
+  "rocket": {
+    file: "testingrockett0transporter.png", // todo: position and orientation of rocket
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(0deg) scale(1.25) scalex(-1); width: 50px;",
+    command: [],
+  },
   gsting: {
     name: "JD's Sexy Thong",
     takeoverName: "thong",
@@ -343,6 +479,48 @@ export const gstring = {
   command: ["thong", "flip flop", "formal thong", "safety boot"],
 };
 
+const tier_regex = {
+  T1: { name: "T1", command: ['mini', 'micro', 'tiny', 'tini', 'baby', 'toy', 'puny', 'itsy', 'wee', 'teeny', 'weeny', 'teensy'] },
+  T2: { name: "T2", command: ['mid', 'speedy', 'mean', 'moderate'] },
+  T3: { name: "T3", command: ['big', 'mega', 'large', 'gigantic', 'huge', 'colossal', 'oversize'] },
+}
+for (let key of Object.keys(tier_regex)) {
+  let tier = tier_regex[key]
+  // console.log(key)
+  tier_regex[key].regex = new RegExp([key.toLowerCase(), ...tier.command].join("|"), "i")
+}
+console.log(weaponNames.join(", "))
+
+const tiered_weapons = {
+  Truck: {
+    name: 'Truck',
+    command: ['truck', 'trucky', 'truk', 'truc'],
+    types: [{ name: 'Container' }, { name: 'Dump' }, { name: 'Empty' }, { name: 'Tank' }]
+  },
+  Excavator: {
+    name: 'Excavator',
+    command: ['excavator', 'excav', 'diggy', 'dig'],
+    types: false
+  },
+}
+
+
+for (let key of Object.keys(tiered_weapons)) {
+  let tier = tiered_weapons[key]
+  // console.log(key)
+  tiered_weapons[key].regex = new RegExp([key.toLowerCase(), ...tier.command].join("|"), "i")
+  if (tier.types) {
+    tiered_weapons[key].typeNames = []
+    for (let idx in tier.types) {
+      let type = tiered_weapons[key].types[idx]
+      tiered_weapons[key].typeNames.push(type.name)
+      tiered_weapons[key].types[idx].regex = new RegExp(type.name.toLowerCase(), 'i')
+    }
+  }
+}
+
+console.log(tiered_weapons)
+
 // adds the name of each weapon for code readabilty
 for (let i = 0; i < weaponNames.length; i++) {
   let weapon = weaponObjects[weaponNames[i]];
@@ -354,6 +532,36 @@ for (let i = 0; i < weaponNamesTesting.length; i++) {
   let weapon = weaponObjectsTesting[weaponNamesTesting[i]];
   weapon.name = weaponNamesTesting[i];
   weapon.regex = new RegExp([weapon.name, ...weapon.command].join("|"), "i");
+}
+
+export function userTieredWeapon(lowerMessage, weapon_name) {
+  let tier_choice = "T3"
+  let type_choice = "Random"
+  let weapon = tiered_weapons[weapon_name]
+  for (let tier of tier_regex) {
+    if (tier.regex.exec(lowerMessage) != null) {
+      tier_choice = tier.name
+      break
+    }
+  }
+  let weaponChoice = tier_choice + " " + weapon.name
+
+  if (!weapon.types) {
+    return weaponChoice
+  }
+  for (let idx in weapon.types) {
+
+    let type = weapon.types[idx]
+    if (type.regex.exec(lowerMessage) != null) {
+      type_choice = type.name
+    }
+  }
+  if (type_choice === "Random") {
+    type_choice = weapon[Math.floor(Math.random() * weapon.typeNames.length)]
+  }
+  type_choice = type_choice === "Empty" ? "" : type_choice;
+  type_choice = type_choice === "Tank" ? "Fluid Tank" : type_choice;
+  return tier_choice + " " + type_choice + " " + weapon.name;
 }
 
 export function weaponRegex() {
@@ -377,10 +585,16 @@ export function chooseRandomWeapon() {
 export function usersWeapon(lowerMessage) {
   let weapon;
   let choosenWeapon;
+  for (let weapon of tiered_weapons) {
+    if (weapon.regex.exec(lowerMessage) != null) {
+      return userTieredWeapon(lowerMessage, weapon.name)
+    }
+  }
   for (let i = 0; i < weaponNames.length; i++) {
     weapon = weaponObjects[weaponNames[i]];
     if (weapon.regex.exec(lowerMessage) != null) {
       choosenWeapon = weapon;
+      break
     }
   }
   if (choosenWeapon === undefined) {
