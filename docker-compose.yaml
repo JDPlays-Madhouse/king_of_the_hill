@@ -2,7 +2,7 @@ version: "3.8"
 name: king-of-the-hill
 services:
   web:
-    image: ozyviking/twitch-king-of-the-hill:0.9.8
+    image: ozyviking/twitch-king-of-the-hill:0.9.9
     ports:
       - 28080:80
     restart: always

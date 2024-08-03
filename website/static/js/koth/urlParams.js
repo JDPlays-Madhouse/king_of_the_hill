@@ -10,8 +10,9 @@ const classicNegation = ["false", "no"];
 export const reset = checkNegation("reset");
 export const testing = checkNegation("testing");
 export const massTesting = checkNegation("massTesting");
-export const showLastWinner = checkNegation("lastWinner", ["false", "no"]);
+export const showLastWinner = checkNegation("lastWinner", classicNegation);
 export const listWeapons = checkNegation("listWeapons");
+export const coiVehicles = checkNegation("coiVehicles", classicNegation); // TODO: Implement and document.
 
 export const botID = urlParams.get("botID") ? urlParams.get("botID") : "12343";
 export const championName = urlParams.get("championName")
@@ -82,6 +83,7 @@ export default function settings() {
     hillName: hillName,
     joinCommand: joinCommand,
     listWeapons: listWeapons,
+    coiVehicles,
     massTesting: massTesting,
     reset: reset,
     riggedUsers: riggedUsers,

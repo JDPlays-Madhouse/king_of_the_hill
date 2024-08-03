@@ -43,7 +43,7 @@ export function kothTestEvent(
   ws,
   joinCommand,
   username = "ozy_viking",
-  weapon = ""
+  weapon = "thong"
 ) {
   class TestEvent {
     constructor(data) {
@@ -51,7 +51,7 @@ export function kothTestEvent(
     }
   }
   const { user, platform, profileImageUrl } = testPeople[username];
-  console.log({ user, platform, profileImageUrl });
+  console.log({ user, platform, profileImageUrl, weapon });
   if (platform === PLATFORM.Twitch) {
     ws.onmessage(
       new TestEvent({
