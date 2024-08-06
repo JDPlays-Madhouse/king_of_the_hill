@@ -43,7 +43,7 @@ export function kothTestEvent(
   ws,
   joinCommand,
   username = "ozy_viking",
-  weapon = "thong"
+  weapon = ""
 ) {
   class TestEvent {
     constructor(data) {
