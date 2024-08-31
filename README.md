@@ -2,11 +2,7 @@
 
 ![GitHub tag (with filter)](https://img.shields.io/github/v/tag/ozy-viking/twitch_king_of_the_hill?logo=github&label=Latest%20Tag)![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/ozyviking/twitch-king-of-the-hill/stable?logo=docker&label=Stable%20Version&color=blue)![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/ozyviking/twitch-king-of-the-hill/latest?logo=docker&label=Latest%20Version&color=blue)
 
-King of the Hill game for Twitch Streams to engage their audience.
-
-A live example or a stable version you can use in production/live: [https://twitchbot.hankin.io/](https://twitchbot.hankin.io/). It can be modified to your liking using the url modification below.
-
-To try out the weapons and different features go to  [https://twitchbot.hankin.io/testing](https://twitchbot.hankin.io/testing)
+King of the Hill game for Twitch and YouTube Streams to engage their audience.
 
 ----
 

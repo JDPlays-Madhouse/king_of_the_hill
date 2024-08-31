@@ -1,4 +1,3 @@
-version: "3.1"
 name: king-of-the-hill
 services:
   web:
