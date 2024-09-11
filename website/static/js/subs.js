@@ -1,4 +1,45 @@
-import { modifyStyleSheet, rgba, Randomizer, removeElement } from "./util.js";
+function rgba(r, g, b, a = 1) {
+  return `rgba(${r}, ${g}, ${b}, ${a})`;
+}
+
+/**
+ * Returns the requested style sheet. If there is only 1 sheet of title left blank it will return that sheet.
+ * @param {string} title - The unique title of the stylesheet.
+ * @returns {CSSStyleSheet} The requested style sheet.
+ */
+function getStyleSheet(title = "") {
+  if (document.styleSheets.length === 1 || title === "") {
+    return document.styleSheets[0];
+  }
+  for (const sheet of document.styleSheets) {
+    console.log(sheet.title);
+    if (sheet.title === title) {
+      return sheet;
+    }
+  }
+}
+
+/**
+ * Modifies a select part of a stylesheet.
+ * @param {string} element - The element of the css style sheet e.g "div".
+ * @param {string} selector - The selector of the element e.g "font-size".
+ * @param {string} value - The value to be set.
+ * @param {string} stylesheetTitle - The title of the style sheet. If left empty, the first style sheet will be chosen.
+ */
+function modifyStyleSheet(element, selector, value, stylesheetTitle = "") {
+  // Getting the stylesheet
+  const stylesheet = getStyleSheet(stylesheetTitle);
+  let elementRules;
+
+  // looping through all its rules and getting your rule
+  for (let i = 0; i < stylesheet.cssRules.length; i++) {
+    if (stylesheet.cssRules[i].selectorText === element) {
+      elementRules = stylesheet.cssRules[i];
+    }
+  }
+  // modifying the rule in the stylesheet
+  elementRules.style.setProperty(selector, value);
+}
 
 const shadowColour = rgba(0, 0, 0, 1);
 const fontColour = rgba(255, 255, 255, 1);
@@ -18,6 +59,8 @@ if (!(server === null)) {
 } else {
   server = `ws://localhost:${wsPort}/`;
 }
+const ws = new WebSocket(server);
+const botID = "124";
 
 var reset = urlParams.get("reset") != null;
 var testing = urlParams.get("testing") != null;
@@ -42,18 +85,24 @@ const tierName = {
   3: "tier3",
 };
 
+let title = urlParams.get("title") ? urlParams.get("title") : "Subs";
+let pointname = urlParams.get("pointname")
+  ? urlParams.get("pointname")
+  : "point";
+let capitalpointname = pointname[0].toUpperCase() + pointname.slice(1);
+let endgoal = urlParams.get("endgoal")
+  ? urlParams.get("endgoal")
+  : `Giveaway every 10 ${capitalpointname}s`;
+let display = `
+${title}: <span id="total"></span><br />
+${endgoal}<br/>
+T1 = 1 ${capitalpointname}<br /> T2 = 2 ${capitalpointname}s<br/>T3 = 5 ${capitalpointname}s
+`;
+document.getElementById("display").innerHTML = display;
+
 updateScore(1, initScore(1), true);
 updateScore(2, initScore(2), true);
 updateScore(3, initScore(3), true);
-
-if (testing) {
-  const testButtons = document.getElementById("testButtons");
-  testButtons.innerHTML = `<button onclick="ws.onmessage(testData('Sub', 1));">Tier 1 Sub (1)</button>
-                            <button onclick="ws.onmessage(testData('ReSub', 2));">Tier 2 ReSub (2)</button>
-                            <button onclick="ws.onmessage(testData('GiftSub', 3));">Tier 3 Gift Sub (6)</button>
-                            <button onclick="ws.onmessage(testData('GiftBomb', 1));">GiftBomb 10 Tier 1 (10)</button>
-                            <button onclick="resetSubCount()">Reset Count</button>`;
-}
 
 function initScore(tierInt) {
   let initTierScore = storage.getItem(tierName[tierInt]);
@@ -105,15 +154,14 @@ function subSwitch(subTier, subs = 1) {
       updateScore(1, subs);
   }
 }
-// file deepcode ignore MissingClose: Not relevent.
-const ws = new WebSocket(server);
-const botID = "124";
+// file deepcode ignore MissingClose: Not relevant.
+
 function connectws() {
-  ws.onclose = function () {
+  ws.onclose = function() {
     setTimeout(connectws, 10000);
   };
 
-  ws.onopen = function () {
+  ws.onopen = function() {
     ws.send(
       JSON.stringify({
         request: "Subscribe",
@@ -128,17 +176,17 @@ function connectws() {
           ],
         },
         id: botID,
-      })
+      }),
     );
     ws.send(
       JSON.stringify({
         request: "GetBroadcaster",
         id: "1",
-      })
+      }),
     );
   };
 
-  ws.onmessage = function (event) {
+  ws.onmessage = function(event) {
     // console.log(event)
     const msg = event.data;
     // console.log(event.data)
@@ -195,7 +243,7 @@ function notify(message) {
         rawInput: message,
       },
       id: botID,
-    })
+    }),
   );
 }
 
@@ -276,8 +324,20 @@ function testSubSwitch(subType) {
   }
 }
 
+function handle_on_click(sub_type, amount) {
+  ws.onmessage(testData(sub_type, amount));
+}
+
 function main() {
   connectws();
+  if (testing) {
+    const testButtons = document.getElementById("testButtons");
+    testButtons.innerHTML = `<button onclick="handle_on_click('Sub', 1);">Tier 1 Sub (1)</button>
+                            <button onclick="handle_on_click('ReSub', 2);">Tier 2 ReSub (2)</button>
+                            <button onclick="handle_on_click('GiftSub', 3);">Tier 3 Gift Sub (6)</button>
+                            <button onclick="handle_on_click('GiftBomb', 1);">GiftBomb 10 Tier 1 (10)</button>
+                            <button onclick="resetSubCount()">Reset Count</button>`;
+  }
   // if (testing) {
   //     // file deepcode ignore CodeInjection: Code injection is not possible.
   //     setTimeout(ws.onmessage, 500, testData("GiftBomb", 1));

@@ -443,7 +443,8 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 1. [ ] Confetti explosion on win.
 1. [x] Add crown to last winner.
 1. [x] Drop down top.
-2. [ ] Preload all current users images.
+1. [ ] Preload all current users images.
+1. [ ] Add milo tin
 
 #### Known Bugs
 
@@ -496,12 +497,14 @@ Cheer from:
 http://localhost:28080/subs
 ```
 
+![Illustrations of this page](./docs/Subs.png)
+
 #### OBS Setting
 
 Browser:
 
-- Width: 400
-- Height: 100
+- Width: 422
+- Height: 176
 
 #### Streambot import function
 
@@ -534,6 +537,36 @@ If streamer.bot is on a different server to you gaming machine use the search pa
 ```url
 http://localhost:28080/subs?server=127.0.0.1
 ```
+
+##### Subs Streamer.bot Title
+
+The `title` is the verbiage before the total and the colon ':'. Default is `Subs`.
+
+```url
+http://localhost:28080/subs?title=Subs
+```
+
+##### Subs Streamer.bot Point Name
+
+The `pointname` is the name you are giving to the points. Default is `point`.
+
+```url
+http://localhost:28080/subs?pointname=point
+```
+
+##### Subs Streamer.bot End Goal
+
+The `endgoal` is the target that your subs are aiming for.
+Default is `Giveaway every 10 ${capitalpointname}s` i.e. Giveaway every 10 Points.
+
+```url
+http://localhost:28080/subs?title=Subs
+```
+
+> [!CAUTION]
+> The `${capitalpointname}s` is only possible through coding,
+> do not set your url with it as it won't work.
+> Instead type out the desired output verbatim.
 
 ##### Subs Reset Count
 
@@ -615,7 +648,7 @@ http://localhost:28080/counter?testing=random text to test
 
 ##### Count Command
 
-To change the count command from !slap use the search parameter `count`. There is no issue if you want to use and exclamation command (!slap) or not. The command is also, case insensative i.e. `!SLaPYA` is valid as it starts with !slap.
+To change the count command from !slap use the search parameter `count`. There is no issue if you want to use and exclamation command (!slap) or not. The command is also, case insensitive i.e. `!SLaPYA` is valid as it starts with !slap.
 
 ```url
 http://localhost:28080/counter?count=!slap
@@ -639,7 +672,7 @@ http://localhost:28080/counter?timeout=0
 
 ## Testing
 
-To rebuid and test changes use the docker compose yaml in the testing folder. Ensure that the other container is down otherwith you will have conflicting ports.
+To rebuild and test changes use the docker compose yaml in the testing folder. Ensure that the other container is down otherwith you will have conflicting ports.
 
 ```bash
 docker compose --file ./testing/docker-compose.yaml up -d --force-recreate

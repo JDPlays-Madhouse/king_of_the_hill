@@ -1,4 +1,4 @@
-#!/bin/env sh
+#!/bin/env bash
 
 pages[0]=$(pwd)/website/index.html
 pages[1]=$(pwd)/website/subs.html
