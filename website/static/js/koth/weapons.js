@@ -560,7 +560,7 @@ export function userTieredWeapon(lowerMessage, weapon_name) {
       typeMatch = true
     }
   }
-  if (type_choice === "Random") { // TODO: Implement random
+  if (type_choice === "Random") {
     type_choice = weapon.typeNames[Math.floor(Math.random() * weapon.typeNames.length)]
   }
   type_choice = type_choice === "Empty" ? "" : type_choice;

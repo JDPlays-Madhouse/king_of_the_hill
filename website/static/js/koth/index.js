@@ -94,7 +94,7 @@ function userJoining() {
         YouTube: ["Message"],
       },
       id: botID,
-    })
+    }),
   );
 
   ws.onmessage = function (event) {
@@ -147,7 +147,7 @@ function addFighter(
   username,
   lowerMessage,
   imageUrl,
-  platform = PLATFORM.Twitch
+  platform = PLATFORM.Twitch,
 ) {
   usernamesAdded.add(username);
   var xhttp = new XMLHttpRequest();
@@ -204,7 +204,7 @@ function winnerTime(winner) {
     winner.side,
     winner.rigged,
     winner.platform,
-    winner.avatarURL
+    winner.avatarURL,
   ).save();
   element.innerHTML += `<div class='WinnerUsername'><div class="pretext">New ${
     joinCommand[0].toUpperCase() + joinCommand.slice(1)
@@ -213,8 +213,8 @@ function winnerTime(winner) {
   if (param.platformBattle) {
     scoreboard.platformWonRound(winner.platform);
     scoreboard.displayWinnerPlatformMessage(motionUp1 * 1000);
-    const twitchChatMessage = scoreboard.chatMessage(PLATFORM.Twitch);
-    const youtubeChatMessage = scoreboard.chatMessage(PLATFORM.YouTube);
+    const twitchChatMessage = scoreboard.endChatMessage(PLATFORM.Twitch);
+    const youtubeChatMessage = scoreboard.endChatMessage(PLATFORM.YouTube);
     setTimeout(notify, 2000, twitchChatMessage, PLATFORM.Twitch);
     setTimeout(notify, 2000, youtubeChatMessage, PLATFORM.YouTube);
   }
@@ -263,7 +263,7 @@ function fightSequence() {
   setTimeout(
     setWinner,
     totalYeetTime + delayToCeremony + motionUp + victorsClaimToFameTime,
-    user.username
+    user.username,
   );
   // deepcode ignore CodeInjection: Code Injection is not possible.
   setTimeout(closeWS, postGameLength * 1000, ws);
@@ -336,6 +336,14 @@ function main() {
   connectws(userJoining);
   hill();
   battleActive = true;
+  console.log({ platfromBattle: param.platformBattle });
+  if (param.platformBattle) {
+    const twitchChatMessage = scoreboard.startChatMessage(PLATFORM.Twitch);
+    const youtubeChatMessage = scoreboard.startChatMessage(PLATFORM.YouTube);
+    setTimeout(notify, 1000, twitchChatMessage, PLATFORM.Twitch);
+    setTimeout(notify, 1000, youtubeChatMessage, PLATFORM.YouTube);
+    console.log("starting message");
+  }
   setTimeout(playBattleSound, hillAnimationLength * 1000, 0.2, gameLength);
   if (LastWinner.exists() && showLastWinner) {
     setTimeout(displayLastWinner, hillAnimationLength * 1000);
@@ -343,32 +351,32 @@ function main() {
   setTimeout(
     notify,
     gameLengthSplit(0, hillAnimationLength) * 1000,
-    `${gameLengthSplit(12, 0, true)} ${updateMessage}!`
+    `${gameLengthSplit(12, 0, true)} ${updateMessage}!`,
   );
   setTimeout(
     notify,
     gameLengthSplit(-9, hillAnimationLength + gameLength) * 1000,
-    `${gameLengthSplit(9, 0, true)} ${updateMessage}!`
+    `${gameLengthSplit(9, 0, true)} ${updateMessage}!`,
   );
   setTimeout(
     notify,
     gameLengthSplit(-6, hillAnimationLength + gameLength) * 1000,
-    `${gameLengthSplit(6, 0, true)} ${updateMessage}!`
+    `${gameLengthSplit(6, 0, true)} ${updateMessage}!`,
   );
   setTimeout(
     notify,
     gameLengthSplit(-3, hillAnimationLength + gameLength) * 1000,
-    `${gameLengthSplit(3, 0, true)} ${updateMessage}!`
+    `${gameLengthSplit(3, 0, true)} ${updateMessage}!`,
   );
   setTimeout(
     notify,
     gameLengthSplit(-2, hillAnimationLength + gameLength) * 1000,
-    `${gameLengthSplit(2, 0, true)} ${updateMessage}!`
+    `${gameLengthSplit(2, 0, true)} ${updateMessage}!`,
   );
   setTimeout(
     notify,
     gameLengthSplit(-1, hillAnimationLength + gameLength) * 1000,
-    `${gameLengthSplit(1, 0, true)} ${updateMessage}!`
+    `${gameLengthSplit(1, 0, true)} ${updateMessage}!`,
   );
   setTimeout(notify, (gameLength + hillAnimationLength) * 1000, endingMessage);
   setTimeout("battleActive = false", (gameLength + hillAnimationLength) * 1000);
@@ -376,7 +384,7 @@ function main() {
   setTimeout(closeWS, (gameLength + hillAnimationLength) * 1000, ws);
   setTimeout(
     startFight,
-    (gameLength + hillAnimationLength + fightDelay) * 1000
+    (gameLength + hillAnimationLength + fightDelay) * 1000,
   );
   setTimeout(removeElement, (totalGameLength - 0.5) * 1000, "grassyhill_id");
   setTimeout(stopAllSound, totalGameLength * 1000);
@@ -388,7 +396,7 @@ function main() {
     setTimeout(
       redirectBrowser,
       (totalGameLength + 1) * 1000,
-      document.location.href
+      document.location.href,
     );
   }
   randomWeaponSetup();
@@ -397,7 +405,7 @@ function main() {
       addTestingPeople,
       hillAnimationLength * 1000,
       gameLength,
-      gameLength / 2
+      gameLength / 2,
     );
   }
 }
