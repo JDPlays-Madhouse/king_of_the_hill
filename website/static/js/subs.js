@@ -76,7 +76,7 @@ const tier = {
 const tierValue = {
   1: 1,
   2: 2,
-  3: 6,
+  3: 5,
 };
 
 const tierName = {
@@ -85,7 +85,7 @@ const tierName = {
   3: "tier3",
 };
 
-let title = urlParams.get("title") ? urlParams.get("title") : "Subs";
+let title = urlParams.get("title") ? urlParams.get("title") : "Points";
 let pointname = urlParams.get("pointname")
   ? urlParams.get("pointname")
   : "point";

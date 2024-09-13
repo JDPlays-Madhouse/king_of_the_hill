@@ -116,7 +116,7 @@ export function scoreboardMotion(
   entry = true,
   element = null,
   motionDuration = 0.75,
-  delay = 0
+  delay = 0,
 ) {
   if (entry) {
     TweenLite.set({ opacity: 0 });
@@ -131,12 +131,17 @@ export function scoreboardMotion(
 }
 
 class PlatformState {
-  static TIEING_WON = 0;
-  static TIEING_LOSE = 1;
+  static TYING_WON = 0;
+  static TYING_LOSE = 1;
   static WINNING_WON = 2;
   static WINNING_LOSE = 3;
   static LOSING_WON = 4;
   static LOSING_LOSE = 5;
+}
+class PlatformScoreState {
+  static TYING = 0;
+  static WINNING = 1;
+  static LOSING = 2;
 }
 
 export class Scoreboard {
@@ -317,7 +322,7 @@ export class Scoreboard {
       scoreboardMotion,
       delay,
       false,
-      scoreboard.platformBattleDisplayDiv
+      scoreboard.platformBattleDisplayDiv,
     );
   }
 
@@ -342,7 +347,7 @@ export class Scoreboard {
     }
     if (this.lastWinner === platform) {
       if (this.twitch === this.youtube) {
-        return PlatformState.TIEING_WON;
+        return PlatformState.TYING_WON;
       } else if (this.twitch > this.youtube) {
         return platform === PLATFORM.Twitch
           ? PlatformState.WINNING_WON
@@ -354,7 +359,7 @@ export class Scoreboard {
       }
     } else {
       if (this.twitch === this.youtube) {
-        return PlatformState.TIEING_LOSE;
+        return PlatformState.TYING_LOSE;
       } else if (this.twitch > this.youtube) {
         return platform === PLATFORM.Twitch
           ? PlatformState.WINNING_LOSE
@@ -371,16 +376,31 @@ export class Scoreboard {
     return `${scoreList[0]} - ${scoreList[1]}`;
   }
 
-  chatMessage(platform) {
+  overallScoreState(platform) {
+    if (this.lastWinner === null) {
+      return null;
+    }
+    const overallWinner = this.overallCurrentWinner;
+
+    if (overallWinner === null) {
+      return PlatformScoreState.TYING;
+    } else if (overallWinner === platform) {
+      return PlatformScoreState.WINNING;
+    } else {
+      return PlatformScoreState.LOSING;
+    }
+  }
+
+  endChatMessage(platform) {
     const state = this.platformState(platform);
     const score = this.scoreChatMessage;
     const diff = this.diff;
     const overallWinner = this.overallCurrentWinner;
     console.log({ state, platform });
     switch (state) {
-      case PlatformState.TIEING_WON:
+      case PlatformState.TYING_WON:
         return `Great job, ${platform}! That win made it a tie, keep pushing ahead! The score is now ${score}.`;
-      case PlatformState.TIEING_LOSE:
+      case PlatformState.TYING_LOSE:
         return `Unlucky, ${platform}! It's a tie now. The score is now ${score}.`;
       case PlatformState.WINNING_WON:
         return `Great job, ${platform}! Keep pushing ahead, you leading by ${diff}! The score is now ${score} to ${overallWinner}.`;
@@ -392,6 +412,24 @@ export class Scoreboard {
         return `Unlucky, ${platform}! It may be a skill issue but maybe kick them in the shins next time around! The score is now ${score} to ${overallWinner}.`;
       default:
         return "No side has won yet!";
+    }
+  }
+
+  startChatMessage(platform) {
+    const score = this.scoreChatMessage;
+    const diff = this.diff;
+    const state = this.overallScoreState(platform);
+    console.log({ state, platform });
+
+    switch (state) {
+      case PlatformScoreState.WINNING:
+        return `You are currently winning ${platform}. The score is ${score}, keep up the great work!`;
+      case PlatformScoreState.LOSING:
+        return `You are currently losing, ${platform}. The score is ${score}, you are only behind by ${diff}! Remember you can kick them in the shins if you need to!!`;
+      case PlatformScoreState.TYING:
+        return `We are all tied up, ${platform}. The score is ${score}, we have this, push ahead so we can be the champions.`;
+      default:
+        return "No side has won yet! Who will be the first platform to win?";
     }
   }
 }

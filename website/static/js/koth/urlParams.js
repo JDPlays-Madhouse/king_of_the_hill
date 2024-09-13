@@ -47,7 +47,7 @@ export const winner = urlParams.get("winner")
   ? Number(urlParams.get("winner"))
   : Infinity;
 export const winStreakOrder = winStreakOrderCondition(
-  urlParams.get("consecutive")
+  urlParams.get("consecutive"),
 );
 export const platformBattle = checkNegation("platformBattle");
 export const platform = urlParams.get("platform")
@@ -83,6 +83,7 @@ export default function settings() {
     hillName: hillName,
     joinCommand: joinCommand,
     listWeapons: listWeapons,
+    platformBattle,
     coiVehicles,
     massTesting: massTesting,
     reset: reset,
