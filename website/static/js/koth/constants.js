@@ -6,7 +6,7 @@ import {
   hillName,
   joinCommand,
 } from "./urlParams.js";
-import { chooseRandomWeapon, weaponNames } from "./weapons.js";
+import { chooseRandomWeapon, displayName, weaponNames } from "./weapons.js";
 
 var altEndingMessages = [
   // `This Is Your Life, and It's Ending One Minute at a Time`
@@ -15,13 +15,13 @@ var altEndingMessages = [
 function generateEndingMessage() {
   let endingChoice = Randomizer(
     0,
-    weaponNames.length + altEndingMessages.length - 1
+    weaponNames.length + altEndingMessages.length - 1,
   );
   if (endingChoice < altEndingMessages.length) {
     return altEndingMessages[endingChoice];
   } else {
     let randWeapon = chooseRandomWeapon();
-    return `The fight is coming to an end! Get back, Back, no more people. OI! Who threw ${randWeapon["tense 2"]} ${randWeapon.name}!?!`;
+    return `The fight is coming to an end! Get back, Back, no more people. OI! Who threw ${randWeapon["tense 2"]} ${displayName(randWeapon).toLowerCase()}!?!`;
   }
 }
 
@@ -45,9 +45,9 @@ export const noJoinMessage = `No one joined, so no new ${battleGround}!`;
 export const winnerMessage = `is the new ${battleGround}`;
 export const updateMessage = `seconds left to join the fight! Type ${joinCommand} to see if you can take the title of ${battleGround}!`;
 export const endingMessage = generateEndingMessage();
-
+console.log({ endingMessage });
 export const joinCommandRegex = new RegExp(joinCommand, "i");
 export const updateMessageRegex = new RegExp(
   `${updateMessage.toLowerCase()}|${endingMessage.toLowerCase()}|${noJoinMessage.toLowerCase()}`,
-  "i"
+  "i",
 );

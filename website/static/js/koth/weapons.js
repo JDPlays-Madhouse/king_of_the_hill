@@ -265,15 +265,17 @@ export const weaponObjects = {
   },
   "T3 Dump Truck": {
     file: "TruckT3Loose_Dump.png",
+    displayName: "Mega Trucky Boi",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.4); width: 50px;",
     right:
       "transform: translate(-25px,-20px) rotate(0deg) scale(1.4) scaleX(-1); width: 50px;",
-    command: ['mega truck'],
+    command: ["mega truck"],
   },
   "T3 Fluid Tank Truck": {
     file: "TruckT3Fluid_Tank.png",
+    displayName: "Mega Turtle",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.4); width: 50px;",
@@ -283,6 +285,7 @@ export const weaponObjects = {
   },
   "T2 Truck": {
     file: "TruckT2.png",
+    displayName: "Big Trucky Boi",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
@@ -292,6 +295,7 @@ export const weaponObjects = {
   },
   "T2 Dump Truck": {
     file: "TruckT2_Dump.png",
+    displayName: "Big Trucky Boi",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
@@ -301,6 +305,7 @@ export const weaponObjects = {
   },
   "T2 Fluid Tank Truck": {
     file: "TruckT2_Tank.png",
+    displayName: "Big Trucky Boi",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
@@ -310,6 +315,7 @@ export const weaponObjects = {
   },
   "T2 Container Truck": {
     file: "TruckT2_Container.png",
+    displayName: "Big Trucky Boi",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
@@ -319,6 +325,7 @@ export const weaponObjects = {
   },
   "T1 Truck": {
     file: "TruckT1.png",
+    displayName: "Trucky Boi",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.1); width: 50px;",
@@ -328,6 +335,7 @@ export const weaponObjects = {
   },
   "T1 Dump Truck": {
     file: "TruckT1_Dump.png",
+    displayName: "Trucky Boi",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.1); width: 50px;",
@@ -337,6 +345,7 @@ export const weaponObjects = {
   },
   "T1 Fluid Tank Truck": {
     file: "TruckT1_Tank.png",
+    displayName: "Trucky Boi",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.1); width: 50px;",
@@ -346,6 +355,7 @@ export const weaponObjects = {
   },
   "T1 Container Truck": {
     file: "TruckT1_Container.png",
+    displayName: "Trucky Boi",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.1); width: 50px;",
@@ -355,6 +365,7 @@ export const weaponObjects = {
   },
   "T1 Excavator": {
     file: "ExcavatorT1.png",
+    displayName: "Diggy Boi",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.1); width: 50px;",
@@ -364,6 +375,7 @@ export const weaponObjects = {
   },
   "T2 Excavator": {
     file: "ExcavatorT2.png",
+    displayName: "Big Diggy Boi",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.20); width: 50px;",
@@ -373,6 +385,7 @@ export const weaponObjects = {
   },
   "T3 Excavator": {
     file: "ExcavatorT3.png",
+    displayName: "Mega Diggy Boi",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.4); width: 50px;",
@@ -443,7 +456,7 @@ export const weaponObjectsTesting = {
       "transform: translate(-25px,-20px) rotate(0deg) scale(1.25); width: 50px;",
     command: ["pumpkin"],
   },
-  "rocket": {
+  rocket: {
     file: "testingrockett0transporter.png", // todo: position and orientation of rocket
     "tense 1": "the",
     "tense 2": "that",
@@ -480,54 +493,84 @@ export const gstring = {
 };
 
 const tier_regex = {
-  T1: { name: "T1", command: ['mini', 'micro', 'tiny', 'tini', 'baby', 'toy', 'puny', 'itsy', 'wee', 'teeny', 'weeny', 'teensy'] },
-  T2: { name: "T2", command: ['mid', 'speedy', 'mean', 'moderate'] },
-  T3: { name: "T3", command: ['big', 'mega', 'large', 'gigantic', 'huge', 'colossal', 'oversize'] },
-}
+  T1: {
+    name: "T1",
+    command: [
+      "mini",
+      "micro",
+      "tiny",
+      "tini",
+      "baby",
+      "toy",
+      "puny",
+      "itsy",
+      "wee",
+      "teeny",
+      "weeny",
+      "teensy",
+    ],
+  },
+  T2: { name: "T2", command: ["mid", "speedy", "mean", "moderate", "big"] },
+  T3: {
+    name: "T3",
+    command: ["mega", "large", "gigantic", "huge", "colossal", "oversize"],
+  },
+};
 for (let key of Object.keys(tier_regex)) {
-  let tier = tier_regex[key]
+  let tier = tier_regex[key];
   // console.log(key)
-  tier_regex[key].regex = new RegExp([key.toLowerCase(), ...tier.command].join("|"), "i")
+  tier_regex[key].regex = new RegExp(
+    [key.toLowerCase(), ...tier.command].join("|"),
+    "i",
+  );
 }
 // console.log(weaponNames.join(", "))
 
 const tiered_weapons = {
   Truck: {
-    name: 'Truck',
-    command: ['truck', 'trucky', 'truk', 'truc'],
-    types: [{ name: 'Container ', command: [] }, { name: 'Dump ', command: [] }, { name: 'Empty', command: [] }, { name: 'Tank ', command: ["fluid", 'oil', 'fuel', 'liquid'] },]
+    name: "Truck",
+    command: ["truck", "trucky", "truk", "truc"],
+    types: [
+      { name: "Container ", command: [] },
+      { name: "Dump ", command: [] },
+      { name: "Empty", command: [] },
+      { name: "Tank ", command: ["fluid", "oil", "fuel", "liquid"] },
+    ],
   },
   Excavator: {
-    name: 'Excavator',
-    command: ['excavator', 'excav', 'diggy', 'dig'],
-    types: false
+    name: "Excavator",
+    command: ["excavator", "excav", "diggy", "dig"],
+    types: false,
   },
-}
-
+};
 
 for (let key of Object.keys(tiered_weapons)) {
-  let tier = tiered_weapons[key]
+  let tier = tiered_weapons[key];
   // console.log(key)
-  tiered_weapons[key].regex = new RegExp([key.toLowerCase(), ...tier.command].join("|"), "i")
+  tiered_weapons[key].regex = new RegExp(
+    [key.toLowerCase(), ...tier.command].join("|"),
+    "i",
+  );
   if (tier.types) {
-    tiered_weapons[key].typeNames = []
+    tiered_weapons[key].typeNames = [];
     for (let idx in tier.types) {
-      let type = tiered_weapons[key].types[idx]
-      tiered_weapons[key].typeNames.push(type.name)
-      tiered_weapons[key].types[idx].regex = new RegExp([type.name.trim().toLowerCase(), ...type.command].join('|'), 'i')
+      let type = tiered_weapons[key].types[idx];
+      tiered_weapons[key].typeNames.push(type.name);
+      tiered_weapons[key].types[idx].regex = new RegExp(
+        [type.name.trim().toLowerCase(), ...type.command].join("|"),
+        "i",
+      );
     }
   }
 }
 
-
-// adds the name of each weapon for code readabilty
+// adds the name of each weapon for code readability
 for (let i = 0; i < weaponNames.length; i++) {
   let weapon = weaponObjects[weaponNames[i]];
   weapon.name = weaponNames[i];
   weapon.regex = new RegExp([weapon.name, ...weapon.command].join("|"), "i");
-
 }
-// adds the name of each weapon for code readabilty
+// adds the name of each weapon for code readability
 for (let i = 0; i < weaponNamesTesting.length; i++) {
   let weapon = weaponObjectsTesting[weaponNamesTesting[i]];
   weapon.name = weaponNamesTesting[i];
@@ -535,46 +578,47 @@ for (let i = 0; i < weaponNamesTesting.length; i++) {
 }
 
 export function userTieredWeapon(lowerMessage, weapon_name) {
-  let tier_choice = "T2"
-  let type_choice = "Random"
-  let typeMatch = false
-  let weapon = tiered_weapons[weapon_name]
+  let tier_choice = "T1";
+  let type_choice = "Random";
+  let typeMatch = false;
+  let weapon = tiered_weapons[weapon_name];
   for (let tier_name of Object.keys(tier_regex)) {
-    let tier = tier_regex[tier_name]
+    let tier = tier_regex[tier_name];
     if (tier.regex.exec(lowerMessage) != null) {
-      tier_choice = tier.name
-      break
+      tier_choice = tier.name;
+      break;
     }
   }
-  let weaponChoice = tier_choice + " " + weapon.name
+  let weaponChoice = tier_choice + " " + weapon.name;
 
   if (!weapon.types) {
-    return weaponChoice
+    return weaponChoice;
   }
-  // console.log({ types: weapon.types, weapon })
   for (let idx in weapon.types) {
-
-    let type = weapon.types[idx]
+    let type = weapon.types[idx];
     if (type.regex.exec(lowerMessage) != null) {
-      type_choice = type.name
-      typeMatch = true
+      type_choice = type.name;
+      typeMatch = true;
     }
   }
   if (type_choice === "Random") {
-    type_choice = weapon.typeNames[Math.floor(Math.random() * weapon.typeNames.length)]
+    type_choice =
+      weapon.typeNames[Math.floor(Math.random() * weapon.typeNames.length)];
   }
   type_choice = type_choice === "Empty" ? "" : type_choice;
   type_choice = type_choice === "Tank " ? "Fluid Tank " : type_choice;
   weaponChoice = tier_choice + " " + type_choice + weapon.name;
   if (tier_choice === "T3") {
     if (weaponObjects["T3 Dump Truck"].regex.exec(lowerMessage) != null) {
-      return "T3 Dump Truck"
+      return "T3 Dump Truck";
     }
-    weaponChoice = weaponChoice === "T3 Container Truck" ? "T2 Container Truck" : weaponChoice;
+    weaponChoice =
+      weaponChoice === "T3 Container Truck"
+        ? "T2 Container Truck"
+        : weaponChoice;
     weaponChoice = weaponChoice === "T3 Truck" ? "T3 Dump Truck" : weaponChoice;
   }
-  // console.log({ weaponChoice })
-  return weaponChoice
+  return weaponChoice;
 }
 
 export function weaponRegex() {
@@ -597,11 +641,11 @@ export function chooseRandomWeapon() {
 export function usersWeapon(lowerMessage) {
   let weapon;
   let choosenWeapon;
-  // if (coiVehicles) {
+  // if (coiVehicles) { // TODO: Add choice of use.
   for (let weaponName of Object.keys(tiered_weapons)) {
-    weapon = tiered_weapons[weaponName]
+    weapon = tiered_weapons[weaponName];
     if (weapon.regex.exec(lowerMessage) != null) {
-      return weaponObjects[userTieredWeapon(lowerMessage, weaponName)]
+      return weaponObjects[userTieredWeapon(lowerMessage, weaponName)];
     }
   }
   // }
@@ -609,7 +653,7 @@ export function usersWeapon(lowerMessage) {
     weapon = weaponObjects[weaponNames[i]];
     if (weapon.regex.exec(lowerMessage) != null) {
       choosenWeapon = weapon;
-      break
+      break;
     }
   }
   if (choosenWeapon === undefined) {
@@ -621,4 +665,8 @@ export function usersWeapon(lowerMessage) {
     }
   }
   return choosenWeapon;
+}
+
+export function displayName(weapon) {
+  return weapon.displayName ? weapon.displayName : weapon.name;
 }

@@ -58,7 +58,7 @@ export default class User {
     lowerMessage,
     avatarURL,
     platform = PLATFORM.Twitch,
-    side = ""
+    side = "",
   ) {
     this.ID = ID.toString();
     divnumber++;
@@ -102,12 +102,10 @@ export default class User {
     Div.setAttribute("side", this.side);
     Div.setAttribute("weapon", this.weapon.name);
 
-    Div.innerHTML = `<img style='${
-      this.weapon[this.side]
-    }' src='static/images/${this.weapon.file}'/>
-    <img class='${this.side} ${this.platform}' src='static/images/${
-      this.platform
-    }.png'/>`;
+    Div.innerHTML = `<img style='${this.weapon[this.side]
+      }' src='static/images/${this.weapon.file}'/>
+    <img class='${this.side} ${this.platform}' src='static/images/${this.platform
+      }.png'/>`;
     fighterAnimation(this.side, Div);
 
     return Div;
@@ -129,12 +127,12 @@ export default class User {
 
   /**
    * Get the winMessage for the user.
-   * `${this.username} ${winMessage}, using ${this.weapon["tense 1"]} ${this.weapon.name}.`
+   * `${this.username} ${winMessage}, using ${this.weapon["tense 1"]} ${displayName(this.weapon).toLowerCase()}.`
    * @returns {string} The message to be sent.
    * @param {string} [winMessage=winnerMessage] - The bulk of the message to be sent.
    */
   winMessage(winMessage = winnerMessage) {
     const platformAddition = platformBattle ? ` of ${this.platform}` : "";
-    return `${this.username}${platformAddition} ${winMessage}, using ${this.weapon["tense 1"]} ${this.weapon.name}.`;
+    return `${this.username}${platformAddition} ${winMessage}, using ${this.weapon["tense 1"]} ${displayName(this.weapon)}.`;
   }
 }

@@ -333,7 +333,6 @@ function closeWS(ws) {
 
 //Main function
 function main() {
-  console.log(settings());
   connectws(userJoining);
   hill();
   battleActive = true;
