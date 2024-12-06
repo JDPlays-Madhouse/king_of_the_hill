@@ -1,9 +1,4 @@
-import {
-  weaponObjects,
-  weaponNames,
-  weaponCount,
-  weaponRegex,
-} from "./weapons.js";
+import { weaponObjects, weaponNames } from "./weapons.js";
 import { weaponNamesTesting, weaponObjectsTesting } from "./weapons.js";
 import {
   modifyStyleSheet,
@@ -46,16 +41,18 @@ import {
   twitchTitle,
   youtubeTitle,
 } from "./platformBattle.js";
+import User from "./user.js";
+import { winnerMessage } from "./constants.js";
+
 var testingUser = "Ozy_Viking";
 var activeHill = null;
 var side = requestSide;
 const divnumber = 0;
-const battleGround = `${championName} of the ${hillName}`;
-const winnerMessage = `is the new ${battleGround}`;
 let weaponName = requestWeaponName ? requestWeaponName : "tentacles";
 var weapon = weaponObjects[weaponName];
 var rigged = false;
 let platform = requestPlatform;
+let USER;
 
 function usersWeapon(choosenWeapon) {
   if (weapon) {
@@ -64,59 +61,44 @@ function usersWeapon(choosenWeapon) {
   return weaponObjects[choosenWeapon];
 }
 
-function addFighter(user, lowerMessage) {
+function addFighter(user, lowerMessage, imageUrl, platform, side) {
   var username = user.toLowerCase();
-  // console.log("starting xmlhttp");
   var xhttp = new XMLHttpRequest();
-  // console.log("created xmlhttp object");
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      // get display image for the user
-      // console.log("got a response back");
-      //save this to cache between sessions too.
-      //check for user being added already (or if already dead and ignore)
-      var warp = document.getElementById("confetti-container"),
-        innerWidth = window.innerWidth,
-        innerHeight = window.innerHeight;
-
-      // Load into page
-      var Div = document.createElement("div");
-      Div.id = divnumber.toString();
-      Div.setAttribute("user", user);
-      Div.setAttribute("state", "alive");
-      Div.style.background = `url(${xhttp.responseText})`;
-      Div.style.backgroundSize = "100% 100%";
-
-      var weapon = usersWeapon(lowerMessage);
-      side = randomSide(side);
-      Div.setAttribute("side", side);
-      Div.setAttribute("weapon", weapon.name);
-      Div.setAttribute("platform", platform);
-
-      Div.innerHTML = `<img style='${weapon[side]}' src='static/images/${weapon.file}'/><img class='${side} ${platform}' src='static/images/${platform}.png'/>`;
-      fighterAnimation(side, Div);
-      warp.appendChild(Div);
+      var warp = document.getElementById("confetti-container");
+      let image = xhttp.responseText;
+      // if (platform === PLATFORM.YouTube) {
+      //   image = imageUrl;
+      // }
+      USER = new User(divnumber, username, lowerMessage, image, platform, side);
+      USER.rigged = rigged;
+      platformChatMessages();
+      document.getElementById("winnerNotification").innerText =
+        winnerNotification();
+      // @ts-ignore
+      warp.appendChild(USER.div);
     }
   };
-  xhttp.open("GET", "https://decapi.me/twitch/avatar/" + username, true);
+  xhttp.open("GET", imageUrl, true);
   xhttp.send();
 }
 
-function winnerNotification(
-  user = testingUser,
-  winweapon = weapon,
-  winMessage = winnerMessage
-) {
-  return `${user} ${winMessage}, using ${winweapon["tense 1"]} ${winweapon.name}.`;
+function winnerNotification() {
+  return USER.winMessage();
 }
 
 function platformChatMessages() {
   const left = document.getElementById("leftPlatformBattleChat");
+  const youtubeChatMessage = scoreboard.endChatMessage(PLATFORM.YouTube);
+  left.innerHTML = youtubeChatMessage;
+
   const right = document.getElementById("rightPlatformBattleChat");
+  const twitchChatMessage = scoreboard.endChatMessage(PLATFORM.Twitch);
+  right.innerHTML = twitchChatMessage;
+
   const center = document.getElementById("scorePlatformBattleChat");
-  center.innerHTML = scoreboard.scoreChatMessage;
-  left.innerHTML = scoreboard.chatMessage("Twitch");
-  right.innerHTML = scoreboard.chatMessage("YouTube");
+  center.innerHTML = `${scoreboard.youtube} - ${scoreboard.twitch}`;
 }
 
 function removeElement(ID) {
@@ -139,9 +121,8 @@ function weaponTest(annimationSide = null, inputWeapon = weaponName) {
   } else if (weaponNamesTesting.includes(inputWeapon)) {
     weapon = weaponObjectsTesting[inputWeapon];
   }
-  addFighter(testingUser, weapon);
-  document.getElementById("winnerNotification").innerText =
-    winnerNotification();
+  let imageUrl = "https://decapi.me/twitch/avatar/" + testingUser;
+  addFighter(testingUser, weapon, imageUrl, platform, side);
 }
 
 function hill(hillID = "grassyhill_1") {
@@ -167,16 +148,21 @@ function winnerTime(id, userSide = side) {
     joinCommand[0].toUpperCase() + joinCommand.slice(1)
   }</div><div>${element.getAttribute("user")}</div></div>`;
   new LastWinner(
-    element.getAttribute("user"),
-    element.getAttribute("weapon"),
-    userSide,
-    rigged
+    USER.username,
+    USER.weapon.name,
+    USER.side,
+    USER.rigged,
+    USER.platform,
+    USER.imageUrl,
   ).save();
+
   if (platformBattle) {
-    scoreboard.platformWonRound(element.getAttribute("platform"));
+    scoreboard.platformWonRound(USER.platform);
     scoreboard.displayWinnerPlatformMessage(motionUp1 * 1000);
-    console.log("Twitch Chat: ", scoreboard.chatMessage("Twitch"));
-    console.log("YouTube Chat: ", scoreboard.chatMessage("YouTube"));
+    const twitchChatMessage = scoreboard.endChatMessage(PLATFORM.Twitch);
+    const youtubeChatMessage = scoreboard.endChatMessage(PLATFORM.YouTube);
+    console.log("Twitch Chat: ", twitchChatMessage);
+    console.log("YouTube Chat: ", youtubeChatMessage);
     platformChatMessages();
   }
   if (rigged) {
@@ -195,7 +181,7 @@ function winnerTime(id, userSide = side) {
 function addButtons() {
   const buttonDiv = document.getElementById("buttonDiv");
   const testingWeaponButtonDiv = document.getElementById(
-    "testingWeaponButtonDivCardBody"
+    "testingWeaponButtonDivCardBody",
   );
   const sideButtonDiv = document.getElementById("sideButtonDiv");
   const hillButtonDiv = document.getElementById("hillButtonDiv");
@@ -350,7 +336,7 @@ function weaponsButtons(buttonDiv, testingWeaponButtonDiv) {
 }
 
 function sortSides(a, b) {
-  console.log({a,b, PlatformSide})
+  console.log({ a, b, PlatformSide });
   if (PlatformSide.Twitch === SIDE.left) {
     if (a == PLATFORM.Twitch) return -1;
     else return 1;
@@ -360,14 +346,14 @@ function sortSides(a, b) {
   }
 }
 
-function setPlatformSides(){
-  let ytBorder = "var(--yt-primary) solid"
-  let twitchBorder = "var(--twitch-primary) solid"
-  let left = PlatformSide.Twitch === SIDE.left ? twitchBorder : ytBorder
-  let right = PlatformSide.Twitch === SIDE.right ? twitchBorder : ytBorder
+function setPlatformSides() {
+  let ytBorder = "var(--yt-primary) solid";
+  let twitchBorder = "var(--twitch-primary) solid";
+  let left = PlatformSide.Twitch === SIDE.left ? twitchBorder : ytBorder;
+  let right = PlatformSide.Twitch === SIDE.right ? twitchBorder : ytBorder;
 
-  modifyStyleSheet('#leftPlatformBattleChat', 'border', left)
-  modifyStyleSheet('#rightPlatformBattleChat', 'border', right)
+  modifyStyleSheet("#leftPlatformBattleChat", "border", left);
+  modifyStyleSheet("#rightPlatformBattleChat", "border", right);
 }
 
 function platformButtons(platformButtonDiv) {
@@ -437,7 +423,7 @@ function platformWinnerButtons(platformButtonDiv) {
   btn.className = "btn btn-danger";
   platformButtonDiv.appendChild(btn);
 }
-setPlatformSides()
+setPlatformSides();
 addButtons();
 weaponTest();
 platformChatMessages();

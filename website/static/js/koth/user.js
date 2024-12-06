@@ -3,7 +3,7 @@ import { PLATFORM, randomSide, sides } from "../util.js";
 import { winnerMessage } from "./constants.js";
 import { fighterAnimation } from "./playerMotion.js";
 import { PlatformSide, platformBattle, riggedUsers } from "./urlParams.js";
-import { usersWeapon } from "./weapons.js";
+import { usersWeapon, displayName } from "./weapons.js";
 
 class UserListClass {
   constructor() {
@@ -102,10 +102,12 @@ export default class User {
     Div.setAttribute("side", this.side);
     Div.setAttribute("weapon", this.weapon.name);
 
-    Div.innerHTML = `<img style='${this.weapon[this.side]
-      }' src='static/images/${this.weapon.file}'/>
-    <img class='${this.side} ${this.platform}' src='static/images/${this.platform
-      }.png'/>`;
+    Div.innerHTML = `<img style='${
+      this.weapon[this.side]
+    }' src='static/images/${this.weapon.file}'/>
+    <img class='${this.side} ${this.platform}' src='static/images/${
+      this.platform
+    }.png'/>`;
     fighterAnimation(this.side, Div);
 
     return Div;

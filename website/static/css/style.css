@@ -28,6 +28,7 @@ body,
   position: absolute;
   z-index: -10;
 }
+
 #container {
   pointer-events: none;
   position: absolute;
@@ -73,10 +74,12 @@ body,
 }
 
 @keyframes hillanimation {
+
   0%,
   100% {
     bottom: -325px;
   }
+
   2%,
   98% {
     bottom: 0px;
@@ -85,10 +88,15 @@ body,
 
 #display {
   color: var(--font-colour);
-  text-shadow: 2px 0 var(--shadow-colour), -2px 0 var(--shadow-colour),
-    0 2px var(--shadow-colour), 0 -2px var(--shadow-colour),
-    1px 1px var(--shadow-colour), -1px -1px var(--shadow-colour),
-    1px -1px var(--shadow-colour), -1px 1px var(--shadow-colour);
+  text-shadow:
+    2px 0 var(--shadow-colour),
+    -2px 0 var(--shadow-colour),
+    0 2px var(--shadow-colour),
+    0 -2px var(--shadow-colour),
+    1px 1px var(--shadow-colour),
+    -1px -1px var(--shadow-colour),
+    1px -1px var(--shadow-colour),
+    -1px 1px var(--shadow-colour);
   font-size: 40px;
   font-family: var(--font-family);
   font-style: normal;
@@ -135,10 +143,12 @@ div.testingButtons {
   opacity: 0;
   z-index: 0;
 }
+
 #buttonDiv {
   margin-top: 10px;
   margin-bottom: 20px;
 }
+
 div#winnerNotification {
   max-width: 1024px;
   margin-left: auto;
@@ -151,6 +161,7 @@ div#winnerNotification {
   border: rgba(255, 255, 255, 0.6) solid;
   text-align: center;
 }
+
 .display {
   font-family: var(--font-family);
   font-style: normal;
@@ -160,9 +171,12 @@ div#winnerNotification {
   text-align: center;
   margin: 0px 10px;
 }
+
 div#buttonDisp button {
-  margin: 2px;
+  margin: 3px;
+
   padding: 3px;
+  line-height: 32px;
   font-family: var(--font-family);
   /* font-style: 600; */
   font-size: 25px;
@@ -173,7 +187,8 @@ div#buttonDisp button {
   padding: 10px;
   background-color: rgba(0, 0, 0, 0);
 }
-div#testingWeaponButtonDiv > button {
+
+div#testingWeaponButtonDiv>button {
   max-width: max-content;
   margin: auto auto;
 }
@@ -187,6 +202,7 @@ div#testingWeaponButtonDiv > button {
   flex-wrap: wrap;
   background-color: rgba(0, 0, 0, 0);
 }
+
 #testingWeaponTitle {
   position: absolute;
   text-align: left;
@@ -198,6 +214,7 @@ div#testingWeaponButtonDiv > button {
   vertical-align: top;
   margin-left: 10px;
 }
+
 /* .card .card-body {
   text-align: center;
 } */
@@ -205,6 +222,7 @@ div#testingWeaponButtonDiv > button {
   margin-top: -1.25em;
   text-align: left;
 }
+
 .card-title {
   background-color: white;
   display: inline-flex;
@@ -216,19 +234,21 @@ div#buttonDisp button#left {
   border-color: red;
   min-width: 60px;
 }
+
 div#buttonDisp button#right {
   margin-left: 0px;
   background-color: green;
   border-color: green;
   min-width: 60px;
 }
+
 div#buttonDisp button#winnerTest {
   background-color: green;
   border-color: green;
   min-width: 100px;
 }
 
-div#buttonDisp div.btn-group > button.btn {
+div#buttonDisp div.btn-group>button.btn {
   margin: 0px;
   padding: 0px 10px;
 }
@@ -237,6 +257,7 @@ div#buttonDisp div.btn-group > button.btn {
   position: absolute;
   z-index: -10;
 }
+
 #lastWinnerDiv {
   position: absolute;
   z-index: -10;
@@ -277,12 +298,15 @@ img#lastWinnerCrown {
 img#lastWinnerCrown.left {
   left: 0;
 }
+
 img#lastWinnerCrown.left.op0 {
   transform: translate(-9px, 3px) rotate(-30deg);
 }
+
 img#lastWinnerCrown.left.op1 {
   transform: translate(-13px, 8px) rotate(-45deg);
 }
+
 img#lastWinnerCrown.left.op2 {
   transform: translate(-18px, 12px) rotate(-60deg);
 }
@@ -290,24 +314,30 @@ img#lastWinnerCrown.left.op2 {
 img#lastWinnerCrown.right {
   right: 0;
 }
+
 img#lastWinnerCrown.right.op0 {
   transform: translate(18px, 12px) rotate(60deg);
 }
+
 img#lastWinnerCrown.right.op1 {
   transform: translate(13px, 7px) rotate(45deg);
 }
+
 img#lastWinnerCrown.right.op2 {
   transform: translate(9px, 2.5px) rotate(30deg);
 }
+
 img#lastWinnerCrown.op3.left,
 img#lastWinnerCrown.op3.right {
   left: 50%;
   transform: translateX(-50%);
 }
+
 img#lastWinnerCrown.crownOzyViking {
   left: 50%;
   transform: translate(-21px, 12px) rotate(-5deg) scale(0.7);
 }
+
 img#lastWinnerCrown.crownNavalWarlord {
   left: 50%;
   transform: translate(19%, 4.5px) scale(0.5) rotate(1deg);
@@ -323,6 +353,7 @@ button.btn-YouTube {
   --bs-btn-bg: var(--yt-primary);
   --bs-btn-color: #fff;
 }
+
 button.btn-Twitch {
   --bs-btn-bg: var(--twitch-primary);
   --bs-btn-color: #fff;
@@ -343,21 +374,24 @@ div.WinnerUsername {
   line-height: 1;
 }
 
-.WinnerUsername > div.pretext {
+.WinnerUsername>div.pretext {
   font-size: 15px;
   font-weight: 500;
 }
+
 img.Twitch {
   --twitch-width: calc(var(--icon-dimension) * 0.857111);
   --twitch-height: var(--icon-dimension);
   width: var(--twitch-width);
   height: var(--twitch-height);
 }
+
 img.Twitch.left {
   position: absolute;
   left: calc(-1 * var(--twitch-width) / 2);
   bottom: calc(-1 * var(--twitch-height) / 2);
 }
+
 img.Twitch.right {
   position: absolute;
   right: calc(-1 * var(--twitch-width) / 2);
@@ -376,6 +410,7 @@ img.left.YouTube {
   left: calc(-1 * var(--yt-width) / 2);
   bottom: calc(-1 * var(--yt-height) / 2);
 }
+
 img.right.YouTube {
   position: absolute;
   right: calc(-1 * var(--yt-width) / 2);
@@ -425,14 +460,17 @@ img.Twitch.titlelogo {
   width: 68.57px;
   height: 80px;
 }
+
 img.YouTube.titlelogo {
   width: 113.36px;
   height: 80px;
 }
+
 img.Twitch.score_logo {
   width: 51.43px;
   height: 60px;
 }
+
 img.YouTube.score_logo {
   width: 85.02px;
   height: 60px;
@@ -510,6 +548,7 @@ div.score {
   padding-bottom: 24px;
   line-height: 0;
 }
+
 .titleMessageWrapper {
   display: flex;
   flex-direction: column;
@@ -532,25 +571,27 @@ div.score {
   margin-right: auto;
   text-align: center;
   color: #fff;
-  gap: 10px
+  gap: 10px;
 }
-#platformChatNotification > div {
+
+#platformChatNotification>div {
   width: 100%;
   margin-top: 10px;
   padding: 5px 5px;
 }
+
 div#scorePlatformBattleChat.center {
   width: max-content;
   white-space: nowrap;
   font-size: xx-large;
 }
-#rightPlatformBattleChat{
+
+#rightPlatformBattleChat {
   /* border: var(--yt-primary) solid; */
   text-align: right;
-} 
-#leftPlatformBattleChat{
+}
+
+#leftPlatformBattleChat {
   /* border: var(--twitch-primary) solid; */
   text-align: left;
-} 
-
-
+}

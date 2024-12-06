@@ -37,7 +37,7 @@ export class LastWinner {
     side,
     rigged = false,
     platform = PLATFORM.Twitch,
-    ImageURL = ""
+    ImageURL = "",
   ) {
     this.username = username;
     this.weapon = weapon;
@@ -58,6 +58,7 @@ export class LastWinner {
     };
   }
   get json() {
+    console.log(JSON.stringify(this.obj));
     return JSON.stringify(this.obj);
   }
   save() {
@@ -78,7 +79,7 @@ export class LastWinner {
       lw.side,
       lw.rigged,
       lw.platform,
-      lw.ImageURL
+      lw.ImageURL,
     );
   }
 }
@@ -113,7 +114,7 @@ class ConsecutiveCounter {
     username = undefined,
     wins = 0,
     previousWinners = [],
-    history = []
+    history = [],
   ) {
     this.#username = username;
     this.#wins = wins;
