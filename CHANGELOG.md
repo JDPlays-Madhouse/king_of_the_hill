@@ -2,6 +2,49 @@
 
 <a name="Upcoming Changes"></a>
 ## [Upcoming Changes]
+
+<a name="v1.0.0"></a>
+## [v1.0.0] - 2024-09-13
+
+<a name="v0.9.9"></a>
+## [v0.9.9] - 2024-08-03
+
+<a name="v0.9.8"></a>
+## [v0.9.8] - 2024-08-02
+
+<a name="v0.9.7"></a>
+## [v0.9.7] - 2024-05-04
+
+<a name="v0.9.6"></a>
+## [v0.9.6] - 2024-05-01
+
+<a name="v0.9.5"></a>
+## [v0.9.5] - 2024-04-05
+
+<a name="v0.9.4"></a>
+## [v0.9.4] - 2024-04-05
+
+<a name="v0.9.3"></a>
+## [v0.9.3] - 2024-04-04
+
+<a name="v0.9.2"></a>
+## [v0.9.2] - 2024-04-01
+
+<a name="v0.9.1"></a>
+## [v0.9.1] - 2024-04-01
+### Testing Changes
+- script code trial 2
+- script code trial
+
+
+<a name="v0.9.0"></a>
+## [v0.9.0] - 2024-03-31
+
+<a name="v0.8.15"></a>
+## [v0.8.15] - 2024-03-30
+
+<a name="v0.8.14"></a>
+## [v0.8.14] - 2024-03-30
 ### Features
 - Added change logs.
 
@@ -292,7 +335,20 @@
 
 
 
-[Upcoming Changes]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.13...HEAD
+[Upcoming Changes]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v1.0.0...HEAD
+[v1.0.0]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.9...v1.0.0
+[v0.9.9]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.8...v0.9.9
+[v0.9.8]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.7...v0.9.8
+[v0.9.7]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.6...v0.9.7
+[v0.9.6]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.5...v0.9.6
+[v0.9.5]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.4...v0.9.5
+[v0.9.4]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.3...v0.9.4
+[v0.9.3]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.2...v0.9.3
+[v0.9.2]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.1...v0.9.2
+[v0.9.1]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.0...v0.9.1
+[v0.9.0]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.15...v0.9.0
+[v0.8.15]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.14...v0.8.15
+[v0.8.14]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.13...v0.8.14
 [v0.8.13]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.12...v0.8.13
 [v0.8.12]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.11...v0.8.12
 [v0.8.11]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.10...v0.8.11

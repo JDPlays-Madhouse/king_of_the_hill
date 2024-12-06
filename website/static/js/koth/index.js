@@ -13,6 +13,7 @@ import settings, {
   showLastWinner,
   testing,
   winStreak,
+  ignoredUsers,
 } from "./urlParams.js";
 
 import { weaponObjects, chooseRandomWeapon } from "./weapons.js";
@@ -64,7 +65,6 @@ import {
   totalYeetTime,
   updateMessage,
   updateMessageRegex,
-  winnerMessage,
 } from "./constants.js";
 import User, { UserList, divnumber } from "./user.js";
 import { clearPlatformBattleHistory, scoreboard } from "./platformBattle.js";
@@ -97,7 +97,7 @@ function userJoining() {
     }),
   );
 
-  ws.onmessage = function (event) {
+  ws.onmessage = function(event) {
     // grab message and parse JSON
     const msg = event.data;
     const wsdata = JSON.parse(msg);
@@ -129,6 +129,8 @@ function userJoining() {
 function canUserJoin(username, lowerMessage) {
   if (!battleActive) {
     return false;
+  } else if (ignoredUsers.has(username)) {
+    return false;
   } else if (testing) {
     return true;
   } else if (usernamesAdded.has(username)) {
@@ -151,7 +153,7 @@ function addFighter(
 ) {
   usernamesAdded.add(username);
   var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function () {
+  xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       var warp = document.getElementById("confetti-container");
       let image = xhttp.responseText;
@@ -206,9 +208,8 @@ function winnerTime(winner) {
     winner.platform,
     winner.avatarURL,
   ).save();
-  element.innerHTML += `<div class='WinnerUsername'><div class="pretext">New ${
-    joinCommand[0].toUpperCase() + joinCommand.slice(1)
-  }</div><div>${element.getAttribute("user")}</div></div>`;
+  element.innerHTML += `<div class='WinnerUsername'><div class="pretext">New ${joinCommand[0].toUpperCase() + joinCommand.slice(1)
+    }</div><div>${element.getAttribute("user")}</div></div>`;
 
   if (param.platformBattle) {
     scoreboard.platformWonRound(winner.platform);

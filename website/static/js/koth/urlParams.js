@@ -36,6 +36,10 @@ export const riggedUsers = [
   "gotobedchild",
   ...urlParams.getAll("riggedUser"),
 ];
+export const ignoredUsers = [
+  "FrostyToolsDotCom",
+  ...urlParams.getAll("ignoredUser"),
+];
 export const wsPort = urlParams.get("wsPort")
   ? urlParams.get("wsPort")
   : "8080";
@@ -59,7 +63,7 @@ export const PlatformSide = setPlatformSide(urlParams.get("twitchSide"));
 export var checkNegationSettings;
 
 /**
- * @param {string} param - Search Parametre.
+ * @param {string} param - Search Parameter.
  * @param {(string | null)[]} negationList - The list to check against. Default: [null, "false", "no"]
  * @returns {boolean} Returns true if not in negationList.
  */
@@ -76,27 +80,30 @@ export default function settings() {
   return {
     botID: botID,
     championName: championName,
+    coiVehicles,
     debug: debug,
     gameLength: gameLength,
     gstringProb: gstringProb,
     hillChoice: hillChoice,
     hillName: hillName,
+    ignoredUsers,
     joinCommand: joinCommand,
     listWeapons: listWeapons,
-    platformBattle,
-    coiVehicles,
     massTesting: massTesting,
+    platformBattle,
     reset: reset,
     riggedUsers: riggedUsers,
     server: server,
     showLastWinner: showLastWinner,
     testing: testing,
-    winner: winner,
     winStreak: winStreak,
     winStreakOrder: winStreakOrder,
+    winner: winner,
     wsPort: wsPort,
   };
 }
+
+console.log(settings());
 
 function winStreakNumber(winStreakParam = null) {
   // @ts-ignore

@@ -4,7 +4,9 @@
 
 King of the Hill game for Twitch and YouTube Streams to engage their audience.
 
-----
+You can run it locally with docker or through the browser at [twitchbot.hankin.io](https://twitchbot.hankin.io/).
+
+---
 
 ## BREAKING CHANGE
 
@@ -19,7 +21,7 @@ In streamer.bot instead of a single message action named `FightMessage` one for 
 U0JBRR+LCAAAAAAABADtVcGK2zAUvC/sPxjD3lZBshXH6W0pbLeHUijLQllKkaVnR9SWXVlqki7590p2nMRxuode2kNv1sw8zfO8h/1yfRUE4Q/QraxV+CaIbztAVk2tzdMBjnq4kkpWtjriIZ5Fsyjcs2CYw178wR0Vq8BLPkDbsgLerphSULa92PHMmlWtveLjz+3XJ/lNquJAHjsKyQzP8IEQ0HItG7MnQw/ven/BRv6Me1HrkOceCQaqo6Xw9ZHAi4hEFKV5QhBdZAIxuqSI0BwwxmKJSTp4d2XfLVj/WsqW5SkOimUl+DuNtjBiNry0Au51XT3I1tR660Q5K9uRakjrXhYrs4/scS0NX43sC13bxutcnFXj3i+o88CsIHiQZTlSsnLNtu0nqy65aaZEXd3xfYwTnteKW61BmUus0bIo3IB8tF9GntPIz2Lv62Hj7w1vNFu/V401N6edd5JGQw6uAXHHeW27Nsi5pp/gMk3jOMsTBNGSIZrECUojKhDmfJ4RSrOcwOT6NfiYXblbrXPObBs/CTIhhuzPRv/6+PtOlYCNdzvFd8fDhRDfebNpwrwuS9a0IE74gd7d/n7PM8BRvhQpwlnMEU2jBUoxixGf+w0nHDjL/9qef67to83g/6K/uuiQinmSM/epokmCKFswlPI0R0kMPMpiSAhhf7LoFOOJ4z+/6v3DoO+3dXSFK68qN/wxaGQ1jLP7cVxf7X4By1GFBwIHAAA=
 ```
 
-----
+---
 
 ## Docker Container
 
@@ -42,10 +44,9 @@ docker compose up -d
 To change the port of the to container, default is 28080, change the user port in the `docker-compose.yaml` not the container port, i.e. change the `28080`, not the `80`.
 
 ```yaml
-...
-    ports:
-      - 28080:80
-...
+---
+ports:
+  - 28080:80
 ```
 
 ### QNAP Conatainer Station
@@ -195,7 +196,8 @@ http://localhost:28080/?championName=King&hillName=Hill
 
 ##### Probability of Sexy Thong
 
-Probability of a thong (flip flop) being a thong (g-string) (1 in x), use `gstringProb`. Default is 1,000 i.e. 1/1,000.
+Probability of a thong (flip flop) being a thong (g-string) (1 in x), use
+`gstringProb`. Default is 1,000 i.e. 1/1,000.
 
 ```url
 http://localhost:28080/?gstringProb=1000
@@ -203,10 +205,24 @@ http://localhost:28080/?gstringProb=1000
 
 ##### Additional Rigged Users
 
-If you want to add an additional rigged user use the search parameter `riggedUser`. You can add as many as you would like.
+If you want to add an additional rigged user use the search parameter
+`riggedUser`. You can add as many as you would like.
 
 ```url
 http://localhost:28080/?riggedUser=Ozy_Viking&riggedUser=Not_Ozy_Viking
+```
+
+##### Additional Ignored Users
+
+If you want to ignore additional users, use the search parameter `ignoredUser`.
+You can add as many as you would like.
+
+Currently list:
+
+- FrostyToolsDotCom
+
+```url
+http://localhost:28080/?ignoredUser=Ozy_Viking&ignoredUser=Not_Ozy_Viking
 ```
 
 ##### Testing Setup
@@ -323,6 +339,7 @@ U0JBRR+LCAAAAAAABADFVVtr2zAUfh/sP4g8V6ls+SLnZYyxrWOwQQvdwxhDtySmspTJctus9L9P8iWN
 ```
 
 ![Streamer.bot trigger and action](docs/endofstreamreset.png)
+
 > **Note**: The second OBS set browser source url goes to `about:blank`. Modify the delay as required to ensure that it actually clears the storage before setting it to `about:blank`.
 
 Set the url to the correct reset url. This sub-action auto resets your history when and only when you press **end stream** in OBS.
