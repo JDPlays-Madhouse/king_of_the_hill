@@ -3,6 +3,24 @@
 <a name="Upcoming Changes"></a>
 ## [Upcoming Changes]
 
+<a name="v1.0.1"></a>
+## [v1.0.1] - 2024-12-06
+### Features
+- Added ignored users
+
+### Notes
+- Changed platformBattle to ON by default.
+
+### Testing Changes
+- Made the testing page use the same implementation as the main.
+
+### Weapon Changes
+- coi vehicles will display nicknames (Mega Trucky Boi) rather than names (T3 Dump Truck).
+
+### Pull Requests
+- Merge pull request [#45](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/45) from JDPlays-Madhouse/full-featured
+
+
 <a name="v1.0.0"></a>
 ## [v1.0.0] - 2024-09-13
 
@@ -335,7 +353,8 @@
 
 
 
-[Upcoming Changes]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v1.0.0...HEAD
+[Upcoming Changes]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v1.0.1...HEAD
+[v1.0.1]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v1.0.0...v1.0.1
 [v1.0.0]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.9...v1.0.0
 [v0.9.9]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.8...v0.9.9
 [v0.9.8]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.7...v0.9.8
