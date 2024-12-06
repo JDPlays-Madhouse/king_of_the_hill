@@ -53,7 +53,7 @@ export const winner = urlParams.get("winner")
 export const winStreakOrder = winStreakOrderCondition(
   urlParams.get("consecutive"),
 );
-export const platformBattle = checkNegation("platformBattle");
+export const platformBattle = checkNegation("platformBattle", classicNegation);
 export const platform = urlParams.get("platform")
   ? urlParams.get("platform")
   : randomPlatform();
@@ -131,6 +131,7 @@ function winStreakOrderCondition(value) {
 export var weaponName = urlParams.get("weapon")
   ? urlParams.get("weapon")
   : null;
+
 export var side = randomSide(urlParams.get("side"));
 
 export function testingSettings() {
@@ -141,6 +142,7 @@ export function testingSettings() {
     platform: platform,
   };
 }
+
 /**
  * @param {string | null} hillChoice
  */

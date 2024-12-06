@@ -408,7 +408,7 @@ Type one of the following weapons to use them:
 
 ##### Platform Battle
 
-This sets for Twitch to come in on one side and YouTube to come in on the other. Default = False.
+This sets for Twitch to come in on one side and YouTube to come in on the other. Default = True.
 
 ```url
 http://localhost:28080/?platformBattle
