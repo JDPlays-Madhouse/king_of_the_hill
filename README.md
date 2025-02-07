@@ -694,3 +694,76 @@ To rebuild and test changes use the docker compose yaml in the testing folder. E
 ```bash
 docker compose --file ./testing/docker-compose.yaml up -d --force-recreate
 ```
+
+---
+
+### Sub Goal
+
+```url
+http://localhost:28080/subgoal
+```
+![Illustrations of this page](./docs/subgoal.png)
+
+#### Chat Commands
+
+Only mods and above can use these commands.
+
+- `!setsubgoal 10`: This will set the sub goal to the specified number (e.g. 10) and save it to local storage.
+- `!setsubcount 5`: This will set the sub count to the specified number (e.g. 5) and save it to local storage.
+
+#### Sub Goal Goal Url Params
+
+
+##### Sub Goals Streamer.bot webstream port
+
+To change the port to what the streamer bot is listening on, change it by search parameters in the url.
+
+```url
+http://localhost:28080/subgoal?wsPort=8080
+```
+
+wsPort: Websocket port of streamer bot set in streamer bot. Default is 8080.
+
+##### Sub Goals Streamer.bot Server
+
+If streamer.bot is on a different server to you gaming machine use the search parameter `server`. Change the webstream port aswell if it is not on the default 8080.
+
+```url
+http://localhost:28080/subgoal?server=127.0.0.1
+```
+
+##### Sub Goals Streamer.bot Title
+
+The `title` is the verbiage before the sub count and the colon ':'. Default is `Sub Goal`.
+
+```url
+http://localhost:28080/subgoal?title=Sub%20Goal
+```
+
+> [!NOTE]
+> `%20` is a space when encoding for a URL.
+
+
+##### Sub Goals Goal
+
+The `subgoal` is the target that your subs are aiming for.
+
+```url
+http://localhost:28080/subgoal?subgoal=20
+```
+
+##### Sub Goals Reset Count
+
+You can either use the chat command `!setsubcount 0` or add reset to the search parameter/s.
+
+```url
+http://localhost:28080/subgoal?reset
+```
+
+##### Sub Goals Testing
+
+This will add buttons so you can manually simulate subs and reset count.
+
+```url
+http://localhost:28080/subgoal?testing
+```

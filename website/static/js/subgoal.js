@@ -49,7 +49,6 @@ const fontColour = rgba(255, 255, 255, 1);
 modifyStyleSheet(":root", "--font-colour", fontColour);
 modifyStyleSheet(":root", "--shadow-colour", shadowColour);
 
-
 // ----------- URL Params ----------------------------------
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -70,16 +69,12 @@ const botID = "125";
 var reset = urlParams.get("reset") != null;
 var testing = urlParams.get("testing") != null;
 
-
-
 let title = urlParams.get("title") ? urlParams.get("title") : "Sub Goal";
-let pointname = urlParams.get("subname")
-  ? urlParams.get("subname")
-  : "subs";
+let pointname = urlParams.get("subname") ? urlParams.get("subname") : "subs";
 
-let subgoal = Number.parseInt(urlParams.get("subgoal")
-  ? urlParams.get("subgoal")
-  : 0);
+let subgoal = Number.parseInt(
+  urlParams.get("subgoal") ? urlParams.get("subgoal") : 0
+);
 
 // ------------ Constants --------------------
 
@@ -107,7 +102,6 @@ const tierName = {
 
 // ------------ Init --------------------------
 
-
 let display = `${title}: <span id="total">0</span>/<span id="subgoal">0</span>`;
 document.getElementById("display").innerHTML = display;
 
@@ -128,13 +122,13 @@ function initScore(tierInt) {
   return 0;
 }
 
-function updateEndGoal(goal = 0){
+function updateEndGoal(goal = 0) {
   let subgoalspan = document.getElementById("subgoal");
   if (!subgoal) {
-    subgoal = Number(storage.getItem('subgoal'));
+    subgoal = Number(storage.getItem("subgoal"));
   }
-  if (goal && goal != subgoal){
-    subgoal = goal
+  if (goal && goal != subgoal) {
+    subgoal = goal;
   }
   if (!subgoal) {
     subgoal = 0;
@@ -182,11 +176,11 @@ function subSwitch(subTier, subs = 1) {
 // file deepcode ignore MissingClose: Not relevant.
 
 function connectws() {
-  ws.onclose = function() {
+  ws.onclose = function () {
     setTimeout(connectws, 10000);
   };
 
-  ws.onopen = function() {
+  ws.onopen = function () {
     ws.send(
       JSON.stringify({
         request: "Subscribe",
@@ -201,17 +195,17 @@ function connectws() {
           ],
         },
         id: botID,
-      }),
+      })
     );
     ws.send(
       JSON.stringify({
         request: "GetBroadcaster",
         id: "1",
-      }),
+      })
     );
   };
 
-  ws.onmessage = function(event) {
+  ws.onmessage = function (event) {
     // console.log(event)
     const msg = event.data;
     // console.log(event.data)
@@ -250,14 +244,16 @@ function connectws() {
             updateScore(2, newCount[1], (set = true));
             updateScore(3, newCount[2], (set = true));
           }
-        }else if (wsdata.data.message.message.toLowerCase().startsWith(setSubGoal)) {
+        } else if (
+          wsdata.data.message.message.toLowerCase().startsWith(setSubGoal)
+        ) {
           console.log(wsdata.data.message.message);
           let newGoal = wsdata.data.message.message.split(" ").slice(1);
           goal = Number(newGoal[0]);
           if (Number.isNaN(goal)) {
             goal = 0;
           }
-          updateEndGoal(goal)
+          updateEndGoal(goal);
         }
       }
     }
@@ -276,7 +272,7 @@ function notify(message) {
         rawInput: message,
       },
       id: botID,
-    }),
+    })
   );
 }
 
@@ -366,8 +362,8 @@ function main() {
   if (testing) {
     const testButtons = document.getElementById("testButtons");
     testButtons.innerHTML = `<button onclick="handle_on_click('Sub', 1);">Tier 1 Sub (1)</button>
-                            <button onclick="handle_on_click('ReSub', 2);">Tier 2 ReSub (2)</button>
-                            <button onclick="handle_on_click('GiftSub', 3);">Tier 3 Gift Sub (6)</button>
+                            <button onclick="handle_on_click('ReSub', 2);">Tier 2 ReSub (1)</button>
+                            <button onclick="handle_on_click('GiftSub', 3);">Tier 3 Gift Sub (1)</button>
                             <button onclick="handle_on_click('GiftBomb', 1);">GiftBomb 10 Tier 1 (10)</button>
                             <button onclick="resetSubCount()">Reset Count</button>`;
   }
