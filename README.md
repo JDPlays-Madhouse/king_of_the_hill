@@ -689,7 +689,7 @@ http://localhost:28080/counter?timeout=0
 
 ## Testing
 
-To rebuild and test changes use the docker compose yaml in the testing folder. Ensure that the other container is down otherwith you will have conflicting ports.
+To rebuild and test changes use the docker compose yaml in the testing folder. Ensure that the other container is down otherwise you will have conflicting ports.
 
 ```bash
 docker compose --file ./testing/docker-compose.yaml up -d --force-recreate
