@@ -157,11 +157,11 @@ function subSwitch(subTier, subs = 1) {
 // file deepcode ignore MissingClose: Not relevant.
 
 function connectws() {
-  ws.onclose = function() {
+  ws.onclose = function () {
     setTimeout(connectws, 10000);
   };
 
-  ws.onopen = function() {
+  ws.onopen = function () {
     ws.send(
       JSON.stringify({
         request: "Subscribe",
@@ -176,17 +176,17 @@ function connectws() {
           ],
         },
         id: botID,
-      }),
+      })
     );
     ws.send(
       JSON.stringify({
         request: "GetBroadcaster",
         id: "1",
-      }),
+      })
     );
   };
 
-  ws.onmessage = function(event) {
+  ws.onmessage = function (event) {
     // console.log(event)
     const msg = event.data;
     // console.log(event.data)
@@ -243,7 +243,7 @@ function notify(message) {
         rawInput: message,
       },
       id: botID,
-    }),
+    })
   );
 }
 

@@ -15,7 +15,7 @@ import settings, {
   winStreak,
   ignoredUsers,
 } from "./urlParams.js";
-
+console.log(botID);
 import { weaponObjects, chooseRandomWeapon } from "./weapons.js";
 // @ts-ignore
 import {
@@ -94,10 +94,10 @@ function userJoining() {
         YouTube: ["Message"],
       },
       id: botID,
-    }),
+    })
   );
 
-  ws.onmessage = function(event) {
+  ws.onmessage = function (event) {
     // grab message and parse JSON
     const msg = event.data;
     const wsdata = JSON.parse(msg);
@@ -129,11 +129,11 @@ function userJoining() {
 function canUserJoin(username, lowerMessage) {
   if (!battleActive) {
     return false;
-  } else if (ignoredUsers.has(username)) {
+  } else if (ignoredUsers.includes(username)) {
     return false;
   } else if (testing) {
     return true;
-  } else if (usernamesAdded.has(username)) {
+  } else if (usernamesAdded.includes(username)) {
     return false;
     // deepcode ignore DuplicateIfBody: Separating out the logic for readability.
   } else if (joinCommandRegex.exec(lowerMessage) == null) {
@@ -149,11 +149,11 @@ function addFighter(
   username,
   lowerMessage,
   imageUrl,
-  platform = PLATFORM.Twitch,
+  platform = PLATFORM.Twitch
 ) {
   usernamesAdded.add(username);
   var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
+  xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       var warp = document.getElementById("confetti-container");
       let image = xhttp.responseText;
@@ -206,10 +206,11 @@ function winnerTime(winner) {
     winner.side,
     winner.rigged,
     winner.platform,
-    winner.avatarURL,
+    winner.avatarURL
   ).save();
-  element.innerHTML += `<div class='WinnerUsername'><div class="pretext">New ${joinCommand[0].toUpperCase() + joinCommand.slice(1)
-    }</div><div>${element.getAttribute("user")}</div></div>`;
+  element.innerHTML += `<div class='WinnerUsername'><div class="pretext">New ${
+    joinCommand[0].toUpperCase() + joinCommand.slice(1)
+  }</div><div>${element.getAttribute("user")}</div></div>`;
 
   if (param.platformBattle) {
     scoreboard.platformWonRound(winner.platform);
@@ -264,7 +265,7 @@ function fightSequence() {
   setTimeout(
     setWinner,
     totalYeetTime + delayToCeremony + motionUp + victorsClaimToFameTime,
-    user.username,
+    user.username
   );
   // deepcode ignore CodeInjection: Code Injection is not possible.
   setTimeout(closeWS, postGameLength * 1000, ws);
@@ -351,32 +352,32 @@ function main() {
   setTimeout(
     notify,
     gameLengthSplit(0, hillAnimationLength) * 1000,
-    `${gameLengthSplit(12, 0, true)} ${updateMessage}!`,
+    `${gameLengthSplit(12, 0, true)} ${updateMessage}!`
   );
   setTimeout(
     notify,
     gameLengthSplit(-9, hillAnimationLength + gameLength) * 1000,
-    `${gameLengthSplit(9, 0, true)} ${updateMessage}!`,
+    `${gameLengthSplit(9, 0, true)} ${updateMessage}!`
   );
   setTimeout(
     notify,
     gameLengthSplit(-6, hillAnimationLength + gameLength) * 1000,
-    `${gameLengthSplit(6, 0, true)} ${updateMessage}!`,
+    `${gameLengthSplit(6, 0, true)} ${updateMessage}!`
   );
   setTimeout(
     notify,
     gameLengthSplit(-3, hillAnimationLength + gameLength) * 1000,
-    `${gameLengthSplit(3, 0, true)} ${updateMessage}!`,
+    `${gameLengthSplit(3, 0, true)} ${updateMessage}!`
   );
   setTimeout(
     notify,
     gameLengthSplit(-2, hillAnimationLength + gameLength) * 1000,
-    `${gameLengthSplit(2, 0, true)} ${updateMessage}!`,
+    `${gameLengthSplit(2, 0, true)} ${updateMessage}!`
   );
   setTimeout(
     notify,
     gameLengthSplit(-1, hillAnimationLength + gameLength) * 1000,
-    `${gameLengthSplit(1, 0, true)} ${updateMessage}!`,
+    `${gameLengthSplit(1, 0, true)} ${updateMessage}!`
   );
   setTimeout(notify, (gameLength + hillAnimationLength) * 1000, endingMessage);
   setTimeout("battleActive = false", (gameLength + hillAnimationLength) * 1000);
@@ -384,7 +385,7 @@ function main() {
   setTimeout(closeWS, (gameLength + hillAnimationLength) * 1000, ws);
   setTimeout(
     startFight,
-    (gameLength + hillAnimationLength + fightDelay) * 1000,
+    (gameLength + hillAnimationLength + fightDelay) * 1000
   );
   setTimeout(removeElement, (totalGameLength - 0.5) * 1000, "grassyhill_id");
   setTimeout(stopAllSound, totalGameLength * 1000);
@@ -396,7 +397,7 @@ function main() {
     setTimeout(
       redirectBrowser,
       (totalGameLength + 1) * 1000,
-      document.location.href,
+      document.location.href
     );
   }
   randomWeaponSetup();
@@ -405,7 +406,7 @@ function main() {
       addTestingPeople,
       hillAnimationLength * 1000,
       gameLength,
-      gameLength / 2,
+      gameLength / 2
     );
   }
 }

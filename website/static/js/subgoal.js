@@ -64,7 +64,7 @@ if (!(server === null)) {
   server = `ws://localhost:${wsPort}/`;
 }
 const ws = new WebSocket(server);
-const botID = "125";
+const botID = "126";
 
 var reset = urlParams.get("reset") != null;
 var testing = urlParams.get("testing") != null;
