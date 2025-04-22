@@ -2,6 +2,21 @@
 
 <a name="Upcoming Changes"></a>
 ## [Upcoming Changes]
+### Features
+- Added additional join commands.
+
+
+<a name="v1.1.1"></a>
+## [v1.1.1] - 2025-03-16
+### Bug Fixes
+- gh actions
+
+
+<a name="v1.1.0"></a>
+## [v1.1.0] - 2025-02-07
+### Features
+- Added Sub goal.
+
 
 <a name="v1.0.1"></a>
 ## [v1.0.1] - 2024-12-06
@@ -353,7 +368,9 @@
 
 
 
-[Upcoming Changes]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v1.0.1...HEAD
+[Upcoming Changes]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v1.1.1...HEAD
+[v1.1.1]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v1.1.0...v1.1.1
+[v1.1.0]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v1.0.1...v1.1.0
 [v1.0.1]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v1.0.0...v1.0.1
 [v1.0.0]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.9...v1.0.0
 [v0.9.9]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.8...v0.9.9
