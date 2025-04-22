@@ -1,8 +1,14 @@
 // @ts-nocheck
 import { PLATFORM, randomSide, sides } from "../util.js";
-import { winnerMessage } from "./constants.js";
+import { acceptedJoinCommandsMap, winnerMessage } from "./constants.js";
 import { fighterAnimation } from "./playerMotion.js";
-import { PlatformSide, platformBattle, riggedUsers } from "./urlParams.js";
+import {
+  PlatformSide,
+  platformBattle,
+  riggedUsers,
+  joinCommand as jC, 
+  hillName,
+} from "./urlParams.js";
 import { usersWeapon, displayName } from "./weapons.js";
 
 class UserListClass {
@@ -38,6 +44,7 @@ export let divnumber = 0;
  * @property {string} weapon - The weapon the user used.
  * @property {string} avatarURL - URL to the user's avatar.
  * @property {string} side - The side of the user (left or right).
+ * @param {string} [joinCommand=jC] - The command to join the game.
  * @property {HTMLDivElement} div - The div element representing the user.
  * @property {boolean} rigged - Whether the user is rigged.
  */
@@ -58,7 +65,7 @@ export default class User {
     lowerMessage,
     avatarURL,
     platform = PLATFORM.Twitch,
-    side = "",
+    side = ""
   ) {
     this.ID = ID.toString();
     divnumber++;
@@ -82,6 +89,9 @@ export default class User {
       this.side = PlatformSide[this.platform];
     }
 
+    this.joinCommand = this.actualJoinCommand(lowerMessage) ;
+    console.log(
+      `User ${this.username} joined the game with the command ${this.joinCommand}.`)
     this.div = this.initDiv();
     UserList.addUser(this);
   }
@@ -129,12 +139,28 @@ export default class User {
 
   /**
    * Get the winMessage for the user.
-   * `${this.username} ${winMessage}, using ${this.weapon["tense 1"]} ${displayName(this.weapon).toLowerCase()}.`
+   * 
+   * ```js
+   * '${this.username}${platformAddition} is the new ${this.joinCommand} of the ${hillName}, using ${this.weapon["tense 1"]} ${displayName(this.weapon)}.`
+   * ```
    * @returns {string} The message to be sent.
    * @param {string} [winMessage=winnerMessage] - The bulk of the message to be sent.
    */
   winMessage(winMessage = winnerMessage) {
     const platformAddition = platformBattle ? ` of ${this.platform}` : "";
-    return `${this.username}${platformAddition} ${winMessage}, using ${this.weapon["tense 1"]} ${displayName(this.weapon)}.`;
+    return `${this.username}${platformAddition} is the new ${this.joinCommand} of the ${hillName}, using ${this.weapon["tense 1"]} ${displayName(this.weapon)}.`;
+  }
+
+  /**
+   * Get the Join Command used by the user.
+   * @returns {string} The command used by the user.
+   * @param {string} [lowerMessage] - The lowercased message received from the user.
+   */
+  actualJoinCommand(lowerMessage) {
+    for (const [joinCommand, regex] of Object.entries(acceptedJoinCommandsMap)) {
+      if (regex.test(lowerMessage)) {
+        return joinCommand;
+      }
+    }
   }
 }

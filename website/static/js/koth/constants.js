@@ -5,6 +5,7 @@ import {
   gameLength,
   hillName,
   joinCommand,
+  acceptedJoinCommands
 } from "./urlParams.js";
 import { chooseRandomWeapon, displayName, weaponNames } from "./weapons.js";
 
@@ -46,7 +47,12 @@ export const winnerMessage = `is the new ${battleGround}`;
 export const updateMessage = `seconds left to join the fight! Type ${joinCommand} to see if you can take the title of ${battleGround}!`;
 export const endingMessage = generateEndingMessage();
 console.log({ endingMessage });
-export const joinCommandRegex = new RegExp(joinCommand, "i");
+export const joinCommandRegex = new RegExp(`${acceptedJoinCommands.join("|")}`, "i");
+export const acceptedJoinCommandsMap = {};
+for (const command of acceptedJoinCommands) {
+  acceptedJoinCommandsMap[command] = new RegExp(command, "i");
+}
+
 export const updateMessageRegex = new RegExp(
   `${updateMessage.toLowerCase()}|${endingMessage.toLowerCase()}|${noJoinMessage.toLowerCase()}`,
   "i",

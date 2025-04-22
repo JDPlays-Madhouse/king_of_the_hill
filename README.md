@@ -132,6 +132,7 @@ Available:
 - [Hill Choice](https://github.com/Ozy-Viking/twitch_king_of_the_hill#hill-choice)
 - [Hill Name](https://github.com/Ozy-Viking/twitch_king_of_the_hill#champion-title-and-hill-name)
 - [Join Command](https://github.com/Ozy-Viking/twitch_king_of_the_hill#join-command)
+- [Accepted Other Join Commands](https://github.com/Ozy-Viking/twitch_king_of_the_hill#accepted-other-join-commands)
 - [Mass Testing](https://github.com/Ozy-Viking/twitch_king_of_the_hill#mass-testing)
 - [Reset Winner History](https://github.com/Ozy-Viking/twitch_king_of_the_hill#reset-winner-history)
 - [Rigged Users](https://github.com/Ozy-Viking/twitch_king_of_the_hill#additional-rigged-users)
@@ -172,10 +173,18 @@ http://localhost:28080/?botID=123
 
 ##### Join Command
 
-To change the join command from fight use the search parameter `joinCommand`. There is no issue if you want to use and exclamation command (!join) or not.
+To change the join command from King use the search parameter `joinCommand`. There is no issue if you want to use and exclamation command (!join) or not.
 
 ```url
-http://localhost:28080/?joinCommand=fight
+http://localhost:28080/?joinCommand=King
+```
+
+##### Accepted Other Join Commands
+
+To add alternate join commands that the players can use add one or many `acceptedJoinCommand`. Each one must be a separate parameter and each will be presented using the input case. In the following example the "King" is the primary join command and will be used in the instructions but "Queen" or "jESTer" can also be used. All join commands are already non-case sensitive but they will always be displayed as you input it.
+
+```url
+http://localhost:28080/?joinCommand=King&acceptedJoinCommand=Queen&acceptedJoinCommand=jESTer
 ```
 
 ##### Game Length

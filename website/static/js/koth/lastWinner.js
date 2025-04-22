@@ -38,6 +38,7 @@ export class LastWinner {
     rigged = false,
     platform = PLATFORM.Twitch,
     ImageURL = "",
+    joinTitle = "",
   ) {
     this.username = username;
     this.weapon = weapon;
@@ -45,6 +46,7 @@ export class LastWinner {
     this.rigged = rigged;
     this.platform = platform;
     this.ImageURL = ImageURL;
+    this.joinTitle = joinTitle;
     addToWinnerHistory(username); // BUG: Fix the multi-platform username issue.
   }
   get obj() {
@@ -55,6 +57,7 @@ export class LastWinner {
       rigged: this.rigged,
       platform: this.platform,
       ImageURL: this.ImageURL,
+      joinTitle: this.joinTitle,
     };
   }
   get json() {
@@ -80,6 +83,7 @@ export class LastWinner {
       lw.rigged,
       lw.platform,
       lw.ImageURL,
+      lw.joinTitle,
     );
   }
 }
@@ -302,7 +306,7 @@ export function lastWinnerDiv() {
 
         let lastWinnerNameDiv = document.createElement("div");
         lastWinnerNameDiv.id = "lastWinnerName";
-        lastWinnerNameDiv.innerHTML = `Defending ${championName}:<br>${lastWinner.username}`;
+        lastWinnerNameDiv.innerHTML = `Defending ${lastWinner.joinTitle}:<br>${lastWinner.username}`;
         lastWinnerDiv.appendChild(crown(winnerSide, lastWinner.username));
         lastWinnerDiv.appendChild(lastWinnerNameDiv);
         if (lastWinner.rigged) {

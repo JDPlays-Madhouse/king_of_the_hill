@@ -29,7 +29,8 @@ export const hillName = urlParams.get("hillName")
   : "Hill";
 export const joinCommand = urlParams.get("joinCommand")
   ? urlParams.get("joinCommand").toLowerCase()
-  : "king";
+  : "King";
+export const acceptedJoinCommands = [joinCommand, ...urlParams.getAll("acceptedJoinCommand")];
 export const riggedUsers = [
   "Ozy_Viking",
   "sassysarrah5",

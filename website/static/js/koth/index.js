@@ -14,6 +14,7 @@ import settings, {
   testing,
   winStreak,
   ignoredUsers,
+  acceptedJoinCommands,
 } from "./urlParams.js";
 console.log(botID);
 import { weaponObjects, chooseRandomWeapon } from "./weapons.js";
@@ -133,7 +134,7 @@ function canUserJoin(username, lowerMessage) {
     return false;
   } else if (testing) {
     return true;
-  } else if (usernamesAdded.includes(username)) {
+  } else if (usernamesAdded.has(username)) {
     return false;
     // deepcode ignore DuplicateIfBody: Separating out the logic for readability.
   } else if (joinCommandRegex.exec(lowerMessage) == null) {
@@ -206,10 +207,11 @@ function winnerTime(winner) {
     winner.side,
     winner.rigged,
     winner.platform,
-    winner.avatarURL
+    winner.avatarURL,
+    winner.joinCommand,
   ).save();
   element.innerHTML += `<div class='WinnerUsername'><div class="pretext">New ${
-    joinCommand[0].toUpperCase() + joinCommand.slice(1)
+    winner.joinCommand[0].toUpperCase() + winner.joinCommand.slice(1)
   }</div><div>${element.getAttribute("user")}</div></div>`;
 
   if (param.platformBattle) {
@@ -290,12 +292,13 @@ function yeetathon(winner) {
 }
 
 function addTestingPeople(totalGameLength, numberPeople = 20) {
+  console.log({acceptedJoinCommands})
   if (numberPeople == 0) {
     return;
   }
   for (let i = 0; i < numberPeople; i++) {
-    let randomdelay = totalGameLength * Math.random() * 1000;
-    setTimeout(testEvent, randomdelay, ws, joinCommand, randomPlayer());
+    let randomDelay = totalGameLength * Math.random() * 1000;
+    setTimeout(testEvent, randomDelay, ws, acceptedJoinCommands[Math.floor(Math.random() * acceptedJoinCommands.length)], randomPlayer());
   }
 }
 
