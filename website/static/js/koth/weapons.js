@@ -413,8 +413,70 @@ export const weaponObjects = {
       "transform: translate(-25px,-20px) rotate(0deg) scaleX(-1) scale(1.25); width: 50px;",
     command: ["abused", "sad", "crying"],
   },
+  "diesel train": {
+    file: "LocomotiveT1Diesel.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(30deg) scale(1.5) scaleX(-1); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(-30deg) scale(1.5); width: 50px;",
+    command: ["diesel train", "diesel", "desel", "train"],
+  },
+  "steam train": {
+    file: "LocomotiveT1Steam.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(30deg) scale(1.5) scaleX(-1); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(-30deg) scale(1.5); width: 50px;",
+    command: ["steam train", "steam", "train"],
+  },
+  "steam tender": {
+    file: "LocomotiveT1Tender.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(30deg) scale(1.5) scaleX(-1); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(-30deg) scale(1.5); width: 50px;",
+    command: ["steam tender", "tender"],
+  },
+  "fluid wagon": {
+    file: "WagonT1fluid.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(30deg) scale(1.5) scaleX(-1); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(-30deg) scale(1.5); width: 50px;",
+    command: ["fluid w"],
+  },
+  "loose wagon": {
+    file: "WagonT1loose.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(30deg) scale(1.5) scaleX(-1); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(-30deg) scale(1.5); width: 50px;",
+    command: ["loose w"],
+  },
+  "unit wagon": {
+    file: "WagonT1unit.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(30deg) scale(1.5) scaleX(-1); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(-30deg) scale(1.5); width: 50px;",
+    command: ["unit w", "wagon"],
+  },
+  rocket: {
+    file: "CargoRocketT2Transporter.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px, -10px) rotate(150deg) scale(1.5) scaleX(-1); width: 50px;",
+    right:
+      "transform: translate(-25px,-10px) rotate(-150deg) scale(1.5); width: 50px;",
+    command: ["cargo rocket", "asteroid"],
+  },
 };
-
 export const weaponNames = Object.keys(weaponObjects);
 
 export const weaponCount = weaponNames.length;
@@ -456,15 +518,7 @@ export const weaponObjectsTesting = {
       "transform: translate(-25px,-20px) rotate(0deg) scale(1.25); width: 50px;",
     command: ["pumpkin"],
   },
-  rocket: {
-    file: "testingrockett0transporter.png", // todo: position and orientation of rocket
-    "tense 1": "the",
-    "tense 2": "that",
-    left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
-    right:
-      "transform: translate(-25px,-20px) rotate(0deg) scale(1.25) scalex(-1); width: 50px;",
-    command: [],
-  },
+
   gsting: {
     name: "JD's Sexy Thong",
     takeoverName: "thong",
@@ -568,17 +622,19 @@ for (let key of Object.keys(tiered_weapons)) {
 for (let i = 0; i < weaponNames.length; i++) {
   let weapon = weaponObjects[weaponNames[i]];
   weapon.name = weaponNames[i];
-  weapon.regex = new RegExp([weapon.name, ...weapon.command].join("|"), "i");
+  weapon.command.push(weapon.name);
+  weapon.regex = new RegExp(weapon.command.join("|"), "i");
 }
 // adds the name of each weapon for code readability
 for (let i = 0; i < weaponNamesTesting.length; i++) {
   let weapon = weaponObjectsTesting[weaponNamesTesting[i]];
   weapon.name = weaponNamesTesting[i];
-  weapon.regex = new RegExp([weapon.name, ...weapon.command].join("|"), "i");
+  weapon.command.push(weapon.name);
+  weapon.regex = new RegExp(weapon.command.join("|"), "i");
 }
 
 export function userTieredWeapon(lowerMessage, weapon_name) {
-  let tier_choice = "T1";
+  let tier_choice = "T2";
   let type_choice = "Random";
   let typeMatch = false;
   let weapon = tiered_weapons[weapon_name];
