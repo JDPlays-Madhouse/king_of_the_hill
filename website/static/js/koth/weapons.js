@@ -694,9 +694,10 @@ export function chooseRandomWeapon() {
     weaponNames[Math.floor(Math.random() * weaponNames.length)]
   ];
 }
-export function usersWeapon(lowerMessage) {
+export function usersWeapon(lowerMessage, testing = false, joinCommand = "") {
   let weapon;
-  let choosenWeapon;
+  let chosenWeapon;
+  let potentials = [];
   // if (coiVehicles) { // TODO: Add choice of use.
   for (let weaponName of Object.keys(tiered_weapons)) {
     weapon = tiered_weapons[weaponName];
@@ -707,20 +708,48 @@ export function usersWeapon(lowerMessage) {
   // }
   for (let i = 0; i < weaponNames.length; i++) {
     weapon = weaponObjects[weaponNames[i]];
+
     if (weapon.regex.exec(lowerMessage) != null) {
-      choosenWeapon = weapon;
-      break;
+      chosenWeapon = weapon;
+      potentials.push({
+        weapon: weapon,
+        result: weapon.regex.exec(lowerMessage),
+      });
+      // break;
     }
   }
-  if (choosenWeapon === undefined) {
-    choosenWeapon = chooseRandomWeapon();
+  if (testing) {
+    for (let i = 0; i < weaponNamesTesting.length; i++) {
+      weapon = weaponObjectsTesting[weaponNamesTesting[i]];
+      if (weapon.regex.exec(lowerMessage) != null) {
+        chosenWeapon = weapon;
+        break;
+      }
+    }
   }
-  if (choosenWeapon.name === gstring.takeoverName) {
+  if (potentials.length > 1) {
+    // TODO: Think through if want to use a random choice of same length results.
+    let most_likely = { result: 0, weapon: undefined };
+    for (let potential of potentials) {
+      if (potential.result[0].length > most_likely.result) {
+        most_likely = {
+          result: potential.result[0].length,
+          weapon: potential.weapon,
+        };
+      }
+    }
+    chosenWeapon = most_likely.weapon;
+  }
+  if (chosenWeapon === undefined) {
+    chosenWeapon = chooseRandomWeapon();
+  }
+  if (chosenWeapon.name === gstring.takeoverName) {
     if (Randomizer(0, gstringProb) == 0) {
       return gstring;
     }
   }
-  return choosenWeapon;
+  console.log({ potentials });
+  return chosenWeapon;
 }
 
 export function displayName(weapon) {
