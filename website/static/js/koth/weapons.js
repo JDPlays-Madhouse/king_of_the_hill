@@ -154,7 +154,7 @@ export const weaponObjects = {
     left: "transform: translate(50px,-20px) rotate(50deg) scale(1.25); width: 50px;",
     right:
       "transform: translate(-25px,-20px) rotate(-40deg) scaleX(-1) scale(1.25); width: 50px;",
-    command: ["rocket", "bazooka", "rpg", "launcher", "cat rocket"],
+    command: ["bazooka", "rpg", "launcher", "cat rocket"],
   },
   "cat o' 9 tail": {
     file: "Herd.png",
@@ -265,7 +265,7 @@ export const weaponObjects = {
   },
   "T3 Dump Truck": {
     file: "TruckT3Loose_Dump.png",
-    displayName: "Mega Trucky Boi",
+    displayName: "Mega Trucky Boy",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.4); width: 50px;",
@@ -285,7 +285,7 @@ export const weaponObjects = {
   },
   "T2 Truck": {
     file: "TruckT2.png",
-    displayName: "Big Trucky Boi",
+    displayName: "Trucky Boy",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
@@ -295,7 +295,7 @@ export const weaponObjects = {
   },
   "T2 Dump Truck": {
     file: "TruckT2_Dump.png",
-    displayName: "Big Trucky Boi",
+    displayName: "Trucky Boy",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
@@ -305,7 +305,7 @@ export const weaponObjects = {
   },
   "T2 Fluid Tank Truck": {
     file: "TruckT2_Tank.png",
-    displayName: "Big Trucky Boi",
+    displayName: "Trucky Boy",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
@@ -315,7 +315,7 @@ export const weaponObjects = {
   },
   "T2 Container Truck": {
     file: "TruckT2_Container.png",
-    displayName: "Big Trucky Boi",
+    displayName: "Trucky Boy",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
@@ -325,7 +325,7 @@ export const weaponObjects = {
   },
   "T1 Truck": {
     file: "TruckT1.png",
-    displayName: "Trucky Boi",
+    displayName: "Tiny Trucky Boy",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.1); width: 50px;",
@@ -335,7 +335,7 @@ export const weaponObjects = {
   },
   "T1 Dump Truck": {
     file: "TruckT1_Dump.png",
-    displayName: "Trucky Boi",
+    displayName: "Tiny Trucky Boy",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.1); width: 50px;",
@@ -345,7 +345,7 @@ export const weaponObjects = {
   },
   "T1 Fluid Tank Truck": {
     file: "TruckT1_Tank.png",
-    displayName: "Trucky Boi",
+    displayName: "Tiny Trucky Boy",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.1); width: 50px;",
@@ -355,7 +355,7 @@ export const weaponObjects = {
   },
   "T1 Container Truck": {
     file: "TruckT1_Container.png",
-    displayName: "Trucky Boi",
+    displayName: "Tiny Trucky Boy",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.1); width: 50px;",
@@ -365,7 +365,7 @@ export const weaponObjects = {
   },
   "T1 Excavator": {
     file: "ExcavatorT1.png",
-    displayName: "Diggy Boi",
+    displayName: "Tiny Diggy Boy",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.1); width: 50px;",
@@ -375,7 +375,7 @@ export const weaponObjects = {
   },
   "T2 Excavator": {
     file: "ExcavatorT2.png",
-    displayName: "Big Diggy Boi",
+    displayName: "Diggy Boy",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.20); width: 50px;",
@@ -385,7 +385,7 @@ export const weaponObjects = {
   },
   "T3 Excavator": {
     file: "ExcavatorT3.png",
-    displayName: "Mega Diggy Boi",
+    displayName: "Mega Diggy Boy",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.4); width: 50px;",
@@ -521,7 +521,7 @@ for (let key of Object.keys(tier_regex)) {
   // console.log(key)
   tier_regex[key].regex = new RegExp(
     [key.toLowerCase(), ...tier.command].join("|"),
-    "i",
+    "i"
   );
 }
 // console.log(weaponNames.join(", "))
@@ -549,7 +549,7 @@ for (let key of Object.keys(tiered_weapons)) {
   // console.log(key)
   tiered_weapons[key].regex = new RegExp(
     [key.toLowerCase(), ...tier.command].join("|"),
-    "i",
+    "i"
   );
   if (tier.types) {
     tiered_weapons[key].typeNames = [];
@@ -558,7 +558,7 @@ for (let key of Object.keys(tiered_weapons)) {
       tiered_weapons[key].typeNames.push(type.name);
       tiered_weapons[key].types[idx].regex = new RegExp(
         [type.name.trim().toLowerCase(), ...type.command].join("|"),
-        "i",
+        "i"
       );
     }
   }
