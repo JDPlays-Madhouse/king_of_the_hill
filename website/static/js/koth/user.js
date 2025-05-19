@@ -6,7 +6,7 @@ import {
   PlatformSide,
   platformBattle,
   riggedUsers,
-  joinCommand as jC, 
+  joinCommand as jC,
   hillName,
 } from "./urlParams.js";
 import { usersWeapon, displayName } from "./weapons.js";
@@ -58,6 +58,7 @@ export default class User {
    * @param {string} avatarURL - URL to the user's avatar.
    * @param {platform} [platform=PLATFORM.Twitch] - The platform the user is on.
    * @param {string} [side=""] - The side of the user (left or right). If not provided, a random side will be assigned.
+   * @param {boolean} [testing=false] - Set to true when using the weapon testing.
    */
   constructor(
     ID,
@@ -65,22 +66,25 @@ export default class User {
     lowerMessage,
     avatarURL,
     platform = PLATFORM.Twitch,
-    side = ""
+    side = "",
+    testing = false
   ) {
+    console.log({ lowerMessage });
     this.ID = ID.toString();
     divnumber++;
     this.username = username;
-    this.weapon = usersWeapon(lowerMessage);
+    this.joinCommand = this.actualJoinCommand(lowerMessage);
+    this.weapon = usersWeapon(lowerMessage, testing);
     this.avatarURL = avatarURL;
     this.rigged = riggedUsers.includes(username);
     if (Object.keys(PLATFORM).includes(platform)) {
       this.platform = platform;
     } else {
-      console.log(`Invalid platform (${platform}), defaulting to Twitch.`);
+      console.error(`Invalid platform (${platform}), defaulting to Twitch.`);
       this.platform = PLATFORM.Twitch;
     }
 
-    if (side.toLowerCase() in sides) {
+    if (sides.includes(side)) {
       this.side = side.toLowerCase();
     } else {
       this.side = randomSide();
@@ -89,9 +93,9 @@ export default class User {
       this.side = PlatformSide[this.platform];
     }
 
-    this.joinCommand = this.actualJoinCommand(lowerMessage) ;
     console.log(
-      `User ${this.username} joined the game with the command ${this.joinCommand}.`)
+      `User ${this.username} joined the game with the command ${this.joinCommand}.`
+    );
     this.div = this.initDiv();
     UserList.addUser(this);
   }
@@ -139,7 +143,7 @@ export default class User {
 
   /**
    * Get the winMessage for the user.
-   * 
+   *
    * ```js
    * '${this.username}${platformAddition} is the new ${this.joinCommand} of the ${hillName}, using ${this.weapon["tense 1"]} ${displayName(this.weapon)}.`
    * ```
@@ -148,7 +152,11 @@ export default class User {
    */
   winMessage(winMessage = winnerMessage) {
     const platformAddition = platformBattle ? ` of ${this.platform}` : "";
-    return `${this.username}${platformAddition} is the new ${this.joinCommand} of the ${hillName}, using ${this.weapon["tense 1"]} ${displayName(this.weapon)}.`;
+    return `${this.username}${platformAddition} is the new ${
+      this.joinCommand
+    } of the ${hillName}, using ${this.weapon["tense 1"]} ${displayName(
+      this.weapon
+    )}.`;
   }
 
   /**
@@ -157,7 +165,9 @@ export default class User {
    * @param {string} [lowerMessage] - The lowercased message received from the user.
    */
   actualJoinCommand(lowerMessage) {
-    for (const [joinCommand, regex] of Object.entries(acceptedJoinCommandsMap)) {
+    for (const [joinCommand, regex] of Object.entries(
+      acceptedJoinCommandsMap
+    )) {
       if (regex.test(lowerMessage)) {
         return joinCommand;
       }
