@@ -61,17 +61,24 @@ function usersWeapon(choosenWeapon) {
   return weaponObjects[choosenWeapon];
 }
 
-function addFighter(user, lowerMessage, imageUrl, platform, side) {
+function addFighter(user, weapon, imageUrl, platform, side) {
+  console.log({ weapon });
   var username = user.toLowerCase();
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       var warp = document.getElementById("confetti-container");
       let image = xhttp.responseText;
-      // if (platform === PLATFORM.YouTube) {
-      //   image = imageUrl;
-      // }
-      USER = new User(divnumber, username, lowerMessage, image, platform, side);
+
+      USER = new User(
+        divnumber,
+        username,
+        joinCommand + " " + weapon.command[0],
+        image,
+        platform,
+        side,
+        true
+      );
       USER.rigged = rigged;
       platformChatMessages();
       document.getElementById("winnerNotification").innerText =
@@ -106,7 +113,6 @@ function removeElement(ID) {
 }
 
 function weaponTest(annimationSide = null, inputWeapon = weaponName) {
-  console.log(inputWeapon);
   try {
     while (document.getElementById(0)) {
       removeElement(divnumber);
@@ -122,6 +128,7 @@ function weaponTest(annimationSide = null, inputWeapon = weaponName) {
     weapon = weaponObjectsTesting[inputWeapon];
   }
   let imageUrl = "https://decapi.me/twitch/avatar/" + testingUser;
+
   addFighter(testingUser, weapon, imageUrl, platform, side);
 }
 
@@ -153,7 +160,7 @@ function winnerTime(id, userSide = side) {
     USER.side,
     USER.rigged,
     USER.platform,
-    USER.imageUrl,
+    USER.imageUrl
   ).save();
 
   if (platformBattle) {
@@ -181,7 +188,7 @@ function winnerTime(id, userSide = side) {
 function addButtons() {
   const buttonDiv = document.getElementById("buttonDiv");
   const testingWeaponButtonDiv = document.getElementById(
-    "testingWeaponButtonDivCardBody",
+    "testingWeaponButtonDivCardBody"
   );
   const sideButtonDiv = document.getElementById("sideButtonDiv");
   const hillButtonDiv = document.getElementById("hillButtonDiv");
