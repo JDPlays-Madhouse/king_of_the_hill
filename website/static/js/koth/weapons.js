@@ -395,7 +395,7 @@ export const weaponObjects = {
   },
 
   "Tree Harvester": {
-    file: "TreeHarvester.png", // TODO: check on background.
+    file: "TreeHarvester.png",
     "tense 1": "the",
     "tense 2": "that",
     left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
@@ -471,9 +471,9 @@ export const weaponObjects = {
     file: "CargoRocketT2Transporter.png",
     "tense 1": "the",
     "tense 2": "that",
-    left: "transform: translate(50px, -10px) rotate(150deg) scale(1.5) scaleX(-1); width: 50px;",
+    left: "transform: translate(50px, -20px) rotate(-25deg) scale(1.5) ; width: 50px;",
     right:
-      "transform: translate(-25px,-10px) rotate(-150deg) scale(1.5); width: 50px;",
+      "transform: translate(-25px,-20px) rotate(25deg) scale(1.5) scaleX(-1); width: 50px;",
     command: ["cargo rocket", "asteroid"],
   },
 };
