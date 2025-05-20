@@ -1,9 +1,9 @@
 # Changelog
 
 {{ if .Versions -}}
+{{ if .Unreleased.CommitGroups -}}
 <a name="Upcoming Changes"></a>
 ## [Upcoming Changes]
-{{ if .Unreleased.CommitGroups -}}
 {{ range .Unreleased.CommitGroups -}}
 ### {{ .Title }}
 {{ range .Commits -}}
