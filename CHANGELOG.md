@@ -2,6 +2,27 @@
 
 <a name="Upcoming Changes"></a>
 ## [Upcoming Changes]
+### Bug Fixes
+- **Change Log:** Added scope to changelog config. ([#51](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/51))
+- **Change Log:** Added scope to changelog config.
+
+### Weapon Changes
+- **rocket:** Rotated it to almost vertical. ([#50](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/50))
+- **rocket:** Rotated it to almost vertical.
+
+
+<a name="v1.2.1"></a>
+## [v1.2.1] - 2025-05-19
+### Bug Fixes
+- **Testing:** Fixed testing page to use selected weapon and side.
+- **Weapon:** Changed spelling from Boi to Boy.
+
+### Weapon Changes
+- **COI:** Added COI trains and rocket.
+
+
+<a name="v1.2.0"></a>
+## [v1.2.0] - 2025-04-22
 ### Features
 - Added additional join commands.
 
@@ -10,6 +31,7 @@
 ## [v1.1.1] - 2025-03-16
 ### Bug Fixes
 - gh actions
+- **KOTH:** fixed bug in code that caused the KOTH to not work properly
 
 
 <a name="v1.1.0"></a>
@@ -31,9 +53,6 @@
 
 ### Weapon Changes
 - coi vehicles will display nicknames (Mega Trucky Boi) rather than names (T3 Dump Truck).
-
-### Pull Requests
-- Merge pull request [#45](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/45) from JDPlays-Madhouse/full-featured
 
 
 <a name="v1.0.0"></a>
@@ -182,9 +201,6 @@
 
 <a name="v0.6.5-halloween"></a>
 ## [v0.6.5-halloween] - 2023-10-27
-### Pull Requests
-- Merge pull request [#44](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/44) from Ozy-Viking/43-last-winner-displayed
-
 
 <a name="v0.6.4-halloween"></a>
 ## [v0.6.4-halloween] - 2023-10-27
@@ -197,16 +213,9 @@
 
 <a name="v0.6.1-halloween"></a>
 ## [v0.6.1-halloween] - 2023-10-26
-### Pull Requests
-- Merge pull request [#42](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/42) from Ozy-Viking/40-add-halloween-and-other-jd-specific-weapons
-- Merge pull request [#41](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/41) from Ozy-Viking/40-add-halloween-and-other-jd-specific-weapons
-
 
 <a name="v0.6.0-halloween"></a>
 ## [v0.6.0-halloween] - 2023-10-26
-### Pull Requests
-- Merge pull request [#39](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/39) from Ozy-Viking/38-variable-game-length
-
 
 <a name="v0.5.11-rc.1"></a>
 ## [v0.5.11-rc.1] - 2023-10-01
@@ -240,9 +249,6 @@
 
 <a name="v0.5.1"></a>
 ## [v0.5.1] - 2023-09-20
-### Pull Requests
-- Merge pull request [#37](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/37) from Ozy-Viking/36-a-page-that-counts-specific-twitch-comments
-
 
 <a name="v0.5.0"></a>
 ## [v0.5.0] - 2023-09-20
@@ -279,96 +285,44 @@
 
 <a name="v0.3.0-rc3"></a>
 ## [v0.3.0-rc3] - 2023-09-17
-### Pull Requests
-- Merge pull request [#35](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/35) from Ozy-Viking/13-extend-gamelength
-- Merge pull request [#34](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/34) from Ozy-Viking/13-extend-gamelength
-- Merge pull request [#21](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/21) from Ozy-Viking/8-memory
-
 
 <a name="v0.3.0-rc2"></a>
 ## [v0.3.0-rc2] - 2023-09-17
 
 <a name="v0.2.7"></a>
 ## [v0.2.7] - 2023-07-30
-### Pull Requests
-- Merge pull request [#34](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/34) from Ozy-Viking/13-extend-gamelength
-- Merge pull request [#21](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/21) from Ozy-Viking/8-memory
-
 
 <a name="v0.2.6"></a>
 ## [v0.2.6] - 2023-07-27
-### Pull Requests
-- Merge pull request [#33](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/33) from Ozy-Viking/30-sound
-
 
 <a name="v0.2.5"></a>
 ## [v0.2.5] - 2023-07-21
-### Pull Requests
-- Merge pull request [#31](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/31) from Ozy-Viking/11-additional-weapons
-- Merge pull request [#29](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/29) from Ozy-Viking/11-additional-weapons
-- Merge pull request [#28](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/28) from Ozy-Viking:10-join-command Add additional weapons.
-
 
 <a name="v0.2.4"></a>
 ## [v0.2.4] - 2023-07-17
-### Pull Requests
-- Merge pull request [#28](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/28) from Ozy-Viking:10-join-command
-- Merge pull request [#27](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/27) from Ozy-Viking/Ozy-Viking-patch-3
-- Merge pull request [#26](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/26) from Ozy-Viking/Ozy-Viking-patch-2
-
 
 <a name="v0.2.3"></a>
 ## [v0.2.3] - 2023-07-16
-### Pull Requests
-- Merge pull request [#24](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/24) from Ozy-Viking:23-create-documentation-and-a-live-example
-
 
 <a name="v0.2.3-a"></a>
 ## [v0.2.3-a] - 2023-07-16
-### Pull Requests
-- Merge pull request [#22](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/22) from Ozy-Viking/Ozy-Viking-patch-1
-- Merge pull request [#20](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/20) from Ozy-Viking/9-spelling
-- Merge pull request [#19](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/19) from Ozy-Viking/9-spelling
-- Merge pull request [#18](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/18) from Ozy-Viking/9-spelling
-
 
 <a name="v0.2.2"></a>
 ## [v0.2.2] - 2023-07-15
-### Pull Requests
-- Merge pull request [#17](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/17) from Ozy-Viking/6-additional-weapons
-- Merge pull request [#16](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/16) from Ozy-Viking/6-additional-weapons
-- Merge pull request [#15](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/15) from Ozy-Viking/6-additional-weapons
-
 
 <a name="v0.2.1"></a>
 ## [v0.2.1] - 2023-07-14
 
 <a name="v0.2.0"></a>
 ## [v0.2.0] - 2023-07-11
-### Pull Requests
-- Merge pull request [#14](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/14) from Ozy-Viking/5-additional-features
-- Merge pull request [#13](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/13) from Ozy-Viking/5-additional-features
-- Merge pull request [#12](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/12) from Ozy-Viking/5-additional-features
-- Merge pull request [#11](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/11) from Ozy-Viking/5-additional-features
-- Merge pull request [#10](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/10) from Ozy-Viking/5-additional-features
-- Merge pull request [#9](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/9) from Ozy-Viking/5-additional-features
-- Merge pull request [#8](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/8) from Ozy-Viking/5-additional-features
-- Merge pull request [#7](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/7) from Ozy-Viking/5-additional-features
-- Merge pull request [#6](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/6) from Ozy-Viking/5-additional-features
-- Merge pull request [#5](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/5) from Ozy-Viking/4-weapon-choice
-- Merge pull request [#4](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/4) from Ozy-Viking/4-weapon-choice
-- Merge pull request [#3](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/3) from Ozy-Viking/3-mvp
-
 
 <a name="v0.1.0"></a>
 ## v0.1.0 - 2023-07-05
-### Pull Requests
-- Merge pull request [#2](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/2) from Ozy-Viking/2-condense-code
-- Merge pull request [#1](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/1) from Ozy-Viking/1-Inital-code
 
 
-
-[Upcoming Changes]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v1.1.1...HEAD
+[Upcoming Changes]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v1.2.1...HEAD
+[v1.2.1]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v1.2.0...v1.2.1
+[v1.2.0]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v1.1.1...v1.2.0
 [v1.1.1]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v1.1.0...v1.1.1
 [v1.1.0]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v1.0.1...v1.1.0
 [v1.0.1]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v1.0.0...v1.0.1
