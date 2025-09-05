@@ -420,7 +420,7 @@ export const weaponObjects = {
     left: "transform: translate(50px,-20px) rotate(30deg) scale(1.5) scaleX(-1); width: 50px;",
     right:
       "transform: translate(-25px,-20px) rotate(-30deg) scale(1.5); width: 50px;",
-    command: ["diesel train", "diesel", "desel", "train"],
+    command: ["diesel train", "diesel", "desel", "train", "choo"],
   },
   "steam train": {
     file: "LocomotiveT1Steam.png",
