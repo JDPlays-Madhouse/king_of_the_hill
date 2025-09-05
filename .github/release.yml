@@ -6,6 +6,7 @@ changelog:
     - title: Bug Fixes
       labels:
         - "fix"
+        - "bug"
     - title: Performance Improvements
       labels:
         - "perf"
@@ -18,6 +19,6 @@ changelog:
     - title: Testing Changes
       labels:
         - "test"
-    - title: Notes
+    - title: Other Changes
       labels:
         - "*"
