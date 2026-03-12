@@ -1,454 +1,451 @@
 @import url("https://fonts.cdnfonts.com/css/tw-cen-mt-std");
 
 :root {
-  --koth-length: 88s;
-  --shadow-colour: rgb(0, 0, 0);
-  --font-colour: #fff;
-  --winnerGrowRatio: 2.5;
-  --riggedGrowRatio: 5;
-  --font-family: "Tw Cen MT Std", Inter;
-  --bs-body-bg: #000;
+	--koth-length: 88s;
+	--shadow-colour: rgb(0, 0, 0);
+	--font-colour: #fff;
+	--winnerGrowRatio: 2.5;
+	--riggedGrowRatio: 5;
+	--font-family: "Tw Cen MT Std", Inter;
+	--bs-body-bg: #000;
 }
 
 body {
-  overflow: hidden;
-  z-index: -100;
-  font-family: var(--font-family);
+	overflow: hidden;
+	z-index: -100;
+	font-family: var(--font-family);
 }
 
 html,
 body,
 #container {
-  width: 100%;
-  height: 100%;
-  margin: 0px;
+	width: 100%;
+	height: 100%;
+	margin: 0px;
 }
 
 #confetti-container {
-  position: absolute;
-  z-index: -10;
+	position: absolute;
+	z-index: -10;
 }
 
 #container {
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  left: 0;
+	pointer-events: none;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 
 .falling-element {
-  width: 75px;
-  height: 75px;
-  position: absolute;
-  background-size: 100%;
+	width: 75px;
+	height: 75px;
+	position: absolute;
+	background-size: 100%;
 }
 
 .lurking-element {
-  width: 400px;
-  height: 400px;
-  position: absolute;
-  background-size: 100%;
+	width: 400px;
+	height: 400px;
+	position: absolute;
+	background-size: 100%;
 }
 
 .grassyhill {
-  position: absolute;
-  margin-left: -1070px;
-  left: 50%;
-  width: 2156px;
-  z-index: 0;
-  bottom: 0px;
-  animation: hillanimation var(--koth-length);
+	position: absolute;
+	margin-left: -1070px;
+	left: 50%;
+	width: 2156px;
+	z-index: 0;
+	bottom: 0px;
+	animation: hillanimation var(--koth-length);
 }
 
 .rigged {
-  left: 50%;
-  transform: translateX(-50%);
-  position: absolute;
-  top: 80%;
-  padding: 0px;
-  margin: 0px;
-  color: #f25703;
-  font-size: 35px;
-  width: fit-content;
-  text-align: right;
+	left: 50%;
+	transform: translateX(-50%);
+	position: absolute;
+	top: 80%;
+	padding: 0px;
+	margin: 0px;
+	color: #f25703;
+	font-size: 35px;
+	width: fit-content;
+	text-align: right;
 }
 
 @keyframes hillanimation {
+	0%,
+	100% {
+		bottom: -325px;
+	}
 
-  0%,
-  100% {
-    bottom: -325px;
-  }
-
-  2%,
-  98% {
-    bottom: 0px;
-  }
+	2%,
+	98% {
+		bottom: 0px;
+	}
 }
 
 #display {
-  color: var(--font-colour);
-  text-shadow:
-    2px 0 var(--shadow-colour),
-    -2px 0 var(--shadow-colour),
-    0 2px var(--shadow-colour),
-    0 -2px var(--shadow-colour),
-    1px 1px var(--shadow-colour),
-    -1px -1px var(--shadow-colour),
-    1px -1px var(--shadow-colour),
-    -1px 1px var(--shadow-colour);
-  font-size: 40px;
-  font-family: var(--font-family);
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  word-wrap: break-word;
+	color: var(--font-colour);
+	text-shadow:
+		2px 0 var(--shadow-colour),
+		-2px 0 var(--shadow-colour),
+		0 2px var(--shadow-colour),
+		0 -2px var(--shadow-colour),
+		1px 1px var(--shadow-colour),
+		-1px -1px var(--shadow-colour),
+		1px -1px var(--shadow-colour),
+		-1px 1px var(--shadow-colour);
+	font-size: 40px;
+	font-family: var(--font-family);
+	font-style: normal;
+	font-weight: 600;
+	line-height: normal;
+	word-wrap: break-word;
 }
 
 div#buttonDisp {
-  position: absolute;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  left: auto;
-  right: auto;
-  text-align: center;
+	position: absolute;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	left: auto;
+	right: auto;
+	text-align: center;
 }
 
 div.testingButtons {
-  max-width: 1440px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 10px;
+	max-width: 1440px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
 }
 
 .testing.grassyhill {
-  animation: none;
+	animation: none;
 }
 
 #grassyhill_1 {
-  /* position: absolute; */
-  opacity: 0;
-  z-index: 0;
+	/* position: absolute; */
+	opacity: 0;
+	z-index: 0;
 }
 
 #grassyhill_2 {
-  /* position: absolute; */
-  opacity: 0;
-  z-index: 0;
+	/* position: absolute; */
+	opacity: 0;
+	z-index: 0;
 }
 
 #grassyhill_3 {
-  /* position: absolute; */
-  opacity: 0;
-  z-index: 0;
+	/* position: absolute; */
+	opacity: 0;
+	z-index: 0;
 }
 
 #buttonDiv {
-  margin-top: 10px;
-  margin-bottom: 20px;
+	margin-top: 10px;
+	margin-bottom: 20px;
 }
 
 div#winnerNotification {
-  max-width: 1024px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
-  text-align: center;
-  color: #fff;
-  margin-top: 10px;
-  padding: 5px 0px;
-  border: rgba(255, 255, 255, 0.6) solid;
-  text-align: center;
+	max-width: 1024px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	color: #fff;
+	margin-top: 10px;
+	padding: 5px 0px;
+	border: rgba(255, 255, 255, 0.6) solid;
 }
 
 .display {
-  font-family: var(--font-family);
-  font-style: normal;
+	font-family: var(--font-family);
+	font-style: normal;
 }
 
 #testing_user {
-  text-align: center;
-  margin: 0px 10px;
+	text-align: center;
+	margin: 0px 10px;
 }
 
 div#buttonDisp button {
-  margin: 3px;
+	margin: 3px;
 
-  padding: 3px;
-  line-height: 32px;
-  font-family: var(--font-family);
-  /* font-style: 600; */
-  font-size: 25px;
+	padding: 3px;
+	line-height: 32px;
+	font-family: var(--font-family);
+	/* font-style: 600; */
+	font-size: 25px;
 }
 
 #testingWeaponButtonDiv div {
-  display: inline-block;
-  padding: 10px;
-  background-color: rgba(0, 0, 0, 0);
+	display: inline-block;
+	padding: 10px;
+	background-color: rgba(0, 0, 0, 0);
 }
 
-div#testingWeaponButtonDiv>button {
-  max-width: max-content;
-  margin: auto auto;
+div#testingWeaponButtonDiv > button {
+	max-width: max-content;
+	margin: auto auto;
 }
 
 #testingWeaponButtonDiv {
-  border: #f25703 dashed 2px;
-  max-width: 1440px;
-  margin-left: auto;
-  margin-right: auto;
-  flex-direction: row;
-  flex-wrap: wrap;
-  background-color: rgba(0, 0, 0, 0);
+	border: #f25703 dashed 2px;
+	max-width: 1440px;
+	margin-left: auto;
+	margin-right: auto;
+	flex-direction: row;
+	flex-wrap: wrap;
+	background-color: rgba(0, 0, 0, 0);
 }
 
 #testingWeaponTitle {
-  position: absolute;
-  text-align: left;
-  left: 0px;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-bottom: 0;
-  width: fit-content;
-  vertical-align: top;
-  margin-left: 10px;
+	position: absolute;
+	text-align: left;
+	left: 0px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-bottom: 0;
+	width: fit-content;
+	vertical-align: top;
+	margin-left: 10px;
 }
 
 /* .card .card-body {
   text-align: center;
 } */
 .card .card-body .card-title {
-  margin-top: -1.25em;
-  text-align: left;
+	margin-top: -1.25em;
+	text-align: left;
 }
 
 .card-title {
-  background-color: white;
-  display: inline-flex;
+	background-color: white;
+	display: inline-flex;
 }
 
 div#buttonDisp button#left {
-  margin-right: 0px;
-  background-color: red;
-  border-color: red;
-  min-width: 60px;
+	margin-right: 0px;
+	background-color: red;
+	border-color: red;
+	min-width: 60px;
 }
 
 div#buttonDisp button#right {
-  margin-left: 0px;
-  background-color: green;
-  border-color: green;
-  min-width: 60px;
+	margin-left: 0px;
+	background-color: green;
+	border-color: green;
+	min-width: 60px;
 }
 
 div#buttonDisp button#winnerTest {
-  background-color: green;
-  border-color: green;
-  min-width: 100px;
+	background-color: green;
+	border-color: green;
+	min-width: 100px;
 }
 
-div#buttonDisp div.btn-group>button.btn {
-  margin: 0px;
-  padding: 0px 10px;
+div#buttonDisp div.btn-group > button.btn {
+	margin: 0px;
+	padding: 0px 10px;
 }
 
 #winnerDiv {
-  position: absolute;
-  z-index: -10;
+	position: absolute;
+	z-index: -10;
 }
 
 #lastWinnerDiv {
-  position: absolute;
-  z-index: -10;
+	position: absolute;
+	z-index: -10;
 }
 
 #buttonDisp {
-  z-index: 0;
+	z-index: 0;
 }
 
 div#lastWinnerName {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translate(-50%, 150%);
-  color: #fff;
-  width: max-content;
-  font-family: var(--font-family);
-  font-weight: 600;
-  font-size: 20px;
-  text-align: center;
-  line-height: 1.15;
-  text-shadow: 2px 2px 2px #000000;
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	transform: translate(-50%, 150%);
+	color: #fff;
+	width: max-content;
+	font-family: var(--font-family);
+	font-weight: 600;
+	font-size: 20px;
+	text-align: center;
+	line-height: 1.15;
+	text-shadow: 2px 2px 2px #000000;
 }
 
 .centre {
-  left: 50%;
-  transform: translate(-50%, 0%);
+	left: 50%;
+	transform: translate(-50%, 0%);
 }
 
 img#lastWinnerCrown {
-  position: absolute;
-  width: 30px;
-  top: -20px;
-  z-index: -10;
-  transform: translateX(-50%);
+	position: absolute;
+	width: 30px;
+	top: -20px;
+	z-index: -10;
+	transform: translateX(-50%);
 }
 
 img#lastWinnerCrown.left {
-  left: 0;
+	left: 0;
 }
 
 img#lastWinnerCrown.left.op0 {
-  transform: translate(-9px, 3px) rotate(-30deg);
+	transform: translate(-9px, 3px) rotate(-30deg);
 }
 
 img#lastWinnerCrown.left.op1 {
-  transform: translate(-13px, 8px) rotate(-45deg);
+	transform: translate(-13px, 8px) rotate(-45deg);
 }
 
 img#lastWinnerCrown.left.op2 {
-  transform: translate(-18px, 12px) rotate(-60deg);
+	transform: translate(-18px, 12px) rotate(-60deg);
 }
 
 img#lastWinnerCrown.right {
-  right: 0;
+	right: 0;
 }
 
 img#lastWinnerCrown.right.op0 {
-  transform: translate(18px, 12px) rotate(60deg);
+	transform: translate(18px, 12px) rotate(60deg);
 }
 
 img#lastWinnerCrown.right.op1 {
-  transform: translate(13px, 7px) rotate(45deg);
+	transform: translate(13px, 7px) rotate(45deg);
 }
 
 img#lastWinnerCrown.right.op2 {
-  transform: translate(9px, 2.5px) rotate(30deg);
+	transform: translate(9px, 2.5px) rotate(30deg);
 }
 
 img#lastWinnerCrown.op3.left,
 img#lastWinnerCrown.op3.right {
-  left: 50%;
-  transform: translateX(-50%);
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 img#lastWinnerCrown.crownOzyViking {
-  left: 50%;
-  transform: translate(-21px, 12px) rotate(-5deg) scale(0.7);
+	left: 50%;
+	transform: translate(-21px, 12px) rotate(-5deg) scale(0.7);
 }
 
 img#lastWinnerCrown.crownNavalWarlord {
-  left: 50%;
-  transform: translate(19%, 4.5px) scale(0.5) rotate(1deg);
+	left: 50%;
+	transform: translate(19%, 4.5px) scale(0.5) rotate(1deg);
 }
 
 :root {
-  --icon-dimension: 40px;
-  --yt-primary: #ff0000;
-  --twitch-primary: #9146ff;
+	--icon-dimension: 40px;
+	--yt-primary: #ff0000;
+	--twitch-primary: #9146ff;
 }
 
 button.btn-YouTube {
-  --bs-btn-bg: var(--yt-primary);
-  --bs-btn-color: #fff;
+	--bs-btn-bg: var(--yt-primary);
+	--bs-btn-color: #fff;
 }
 
 button.btn-Twitch {
-  --bs-btn-bg: var(--twitch-primary);
-  --bs-btn-color: #fff;
+	--bs-btn-bg: var(--twitch-primary);
+	--bs-btn-color: #fff;
 }
 
 div.WinnerUsername {
-  position: absolute;
-  font-size: 20px;
-  font-weight: 600;
-  width: max-content;
-  color: #fff;
-  text-shadow: 2px 2px 2px #000000;
-  z-index: 20;
-  left: 50%;
-  bottom: 0;
-  transform: translate(-50%, 150%);
-  text-align: center;
-  line-height: 1;
+	position: absolute;
+	font-size: 20px;
+	font-weight: 600;
+	width: max-content;
+	color: #fff;
+	text-shadow: 2px 2px 2px #000000;
+	z-index: 20;
+	left: 50%;
+	bottom: 0;
+	transform: translate(-50%, 150%);
+	text-align: center;
+	line-height: 1;
 }
 
-.WinnerUsername>div.pretext {
-  font-size: 15px;
-  font-weight: 500;
+.WinnerUsername > div.pretext {
+	font-size: 15px;
+	font-weight: 500;
 }
 
 img.Twitch {
-  --twitch-width: calc(var(--icon-dimension) * 0.857111);
-  --twitch-height: var(--icon-dimension);
-  width: var(--twitch-width);
-  height: var(--twitch-height);
+	--twitch-width: calc(var(--icon-dimension) * 0.857111);
+	--twitch-height: var(--icon-dimension);
+	width: var(--twitch-width);
+	height: var(--twitch-height);
 }
 
 img.Twitch.left {
-  position: absolute;
-  left: calc(-1 * var(--twitch-width) / 2);
-  bottom: calc(-1 * var(--twitch-height) / 2);
+	position: absolute;
+	left: calc(-1 * var(--twitch-width) / 2);
+	bottom: calc(-1 * var(--twitch-height) / 2);
 }
 
 img.Twitch.right {
-  position: absolute;
-  right: calc(-1 * var(--twitch-width) / 2);
-  bottom: calc(-1 * var(--twitch-height) / 2);
+	position: absolute;
+	right: calc(-1 * var(--twitch-width) / 2);
+	bottom: calc(-1 * var(--twitch-height) / 2);
 }
 
 img.YouTube {
-  --yt-width: var(--icon-dimension);
-  --yt-height: calc(var(--icon-dimension) / 1.417);
-  width: var(--yt-width);
-  height: var(--yt-height);
+	--yt-width: var(--icon-dimension);
+	--yt-height: calc(var(--icon-dimension) / 1.417);
+	width: var(--yt-width);
+	height: var(--yt-height);
 }
 
 img.left.YouTube {
-  position: absolute;
-  left: calc(-1 * var(--yt-width) / 2);
-  bottom: calc(-1 * var(--yt-height) / 2);
+	position: absolute;
+	left: calc(-1 * var(--yt-width) / 2);
+	bottom: calc(-1 * var(--yt-height) / 2);
 }
 
 img.right.YouTube {
-  position: absolute;
-  right: calc(-1 * var(--yt-width) / 2);
-  bottom: calc(-1 * var(--yt-height) / 2);
+	position: absolute;
+	right: calc(-1 * var(--yt-width) / 2);
+	bottom: calc(-1 * var(--yt-height) / 2);
 }
 
 div.Twitch {
-  color: var(--twitch-primary);
+	color: var(--twitch-primary);
 }
 
 div.YouTube {
-  color: var(--yt-primary);
+	color: var(--yt-primary);
 }
 
 .platform_title {
-  text-align: center;
-  vertical-align: text-top;
-  font-size: 112px;
-  border-style: hidden;
-  outline: none;
-  font-weight: 600;
-  margin: 0;
-  line-height: 0;
+	text-align: center;
+	vertical-align: text-top;
+	font-size: 112px;
+	border-style: hidden;
+	outline: none;
+	font-weight: 600;
+	margin: 0;
+	line-height: 0;
 }
 
 .platform_comment {
-  font-size: 60px;
-  font-weight: 500;
-  color: #fff;
+	font-size: 60px;
+	font-weight: 500;
+	color: #fff;
 }
 
 #platformBattle {
-  position: absolute;
-  z-index: 0;
-  width: 100%;
-  text-align: center;
-  top: 50%;
-  transform: translateY(-50%);
+	position: absolute;
+	z-index: 0;
+	width: 100%;
+	text-align: center;
+	top: 50%;
+	transform: translateY(-50%);
 }
 
 /* .titlelogo{
@@ -457,141 +454,160 @@ div.YouTube {
 } */
 
 img.Twitch.titlelogo {
-  width: 68.57px;
-  height: 80px;
+	width: 68.57px;
+	height: 80px;
 }
 
 img.YouTube.titlelogo {
-  width: 113.36px;
-  height: 80px;
+	width: 113.36px;
+	height: 80px;
 }
 
 img.Twitch.score_logo {
-  width: 51.43px;
-  height: 60px;
+	width: 51.43px;
+	height: 60px;
 }
 
 img.YouTube.score_logo {
-  width: 85.02px;
-  height: 60px;
+	width: 85.02px;
+	height: 60px;
 }
 
 .titlelogo {
-  padding: 0px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 24px;
-  position: relative;
+	padding: 0px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 24px;
+	position: relative;
 }
 
 #bottom_message {
-  color: #ffffff;
-  text-align: center;
-  vertical-align: text-top;
-  font-size: 60px;
-  line-height: auto;
-  border-style: hidden;
-  outline: none;
+	color: #ffffff;
+	text-align: center;
+	vertical-align: text-top;
+	font-size: 60px;
+	line-height: auto;
+	border-style: hidden;
+	outline: none;
 }
 
 .platformBattleScoreboard {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 36px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 36px;
 }
 
 .separator {
-  color: #ffffff;
-  text-align: center;
-  vertical-align: middle;
-  font-size: 112px;
-  line-height: auto;
-  border-style: hidden;
-  outline: none;
+	color: #ffffff;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 112px;
+	line-height: auto;
+	border-style: hidden;
+	outline: none;
 }
 
 div.score {
-  display: inline-flex;
-  text-align: center;
-  vertical-align: text-top;
+	display: inline-flex;
+	text-align: center;
+	vertical-align: text-top;
 
-  font-size: 90px;
-  line-height: 1;
-  border-style: hidden;
-  outline: none;
-  font-weight: 500;
+	font-size: 90px;
+	line-height: 1;
+	border-style: hidden;
+	outline: none;
+	font-weight: 500;
 }
 
 .logo_score {
-  padding: 0px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 24px;
-  position: relative;
+	padding: 0px;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 24px;
+	position: relative;
 }
 
 .logoWrapper {
-  display: flex;
-  flex-direction: row;
+	display: flex;
+	flex-direction: row;
 }
 
 .textMoveUp {
-  padding-bottom: 10px;
+	padding-bottom: 10px;
 }
 
 .separator {
-  padding-bottom: 24px;
-  line-height: 0;
+	padding-bottom: 24px;
+	line-height: 0;
 }
 
 .titleMessageWrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 0px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 0px;
 }
 
 #platformBattleDisplay {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  opacity: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+	opacity: 0;
 }
 
 #platformChatNotification {
-  display: flex;
-  max-width: 1440px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  color: #fff;
-  gap: 10px;
+	display: flex;
+	max-width: 1440px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	color: #fff;
+	gap: 10px;
 }
 
-#platformChatNotification>div {
-  width: 100%;
-  margin-top: 10px;
-  padding: 5px 5px;
+#platformChatNotification > div {
+	width: 100%;
+	margin-top: 10px;
+	padding: 5px 5px;
 }
 
 div#scorePlatformBattleChat.center {
-  width: max-content;
-  white-space: nowrap;
-  font-size: xx-large;
+	width: max-content;
+	white-space: nowrap;
+	font-size: xx-large;
 }
 
 #rightPlatformBattleChat {
-  /* border: var(--yt-primary) solid; */
-  text-align: right;
+	/* border: var(--yt-primary) solid; */
+	text-align: right;
 }
 
 #leftPlatformBattleChat {
-  /* border: var(--twitch-primary) solid; */
-  text-align: left;
+	/* border: var(--twitch-primary) solid; */
+	text-align: left;
+}
+
+#weaponRegexTesting {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 5px;
+	margin-bottom: 10px;
+}
+
+#weaponRegexTestingDisplay {
+	font-size: 18px;
+	color: white;
+	min-width: 500px;
+	max-width: 1024px;
+	text-align: center;
+	padding: 5px 0px;
+	height: 35px;
+	border: rgba(255, 255, 255, 0.6) solid;
 }
