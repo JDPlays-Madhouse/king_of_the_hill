@@ -782,7 +782,7 @@ export function chooseRandomWeapon() {
 	];
 }
 export function usersWeapon(lowerMessage, testing = false, joinCommand = "") {
-	console.log({ lowerMessage });
+	// console.log({ lowerMessage });
 	let weapon;
 	let chosenWeapon;
 	let potentials = [];
