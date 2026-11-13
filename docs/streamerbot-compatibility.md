@@ -29,7 +29,7 @@ saved evidence records both source URLs and identifies the event export version.
 
 A function here means an operation such as `read-message`, `display-name`, or
 `user-role`. Each event's `fields` section lists these operations and their
-accepted API paths. Once a handler implements both formats, its rule can be:
+accepted API paths. The handlers support both formats, so the message rule is:
 
 ```json
 "read-message": {
@@ -47,10 +47,10 @@ The rule applies independently to each event in the tested export:
 | Both fields | Flag as ambiguous; review for repurposing |
 | Schema unavailable or unreadable | Unverified; do not accept the version |
 
-The current checkout implements only the legacy Twitch paths. The config accepts
-those paths, not the proposed modern fallbacks:
+The Twitch handlers use `website/static/js/streamerbot.js` to normalize modern
+and legacy payloads. The config accepts the fields supported by that helper:
 
-| Function | Implemented and configured | Modern candidate, not yet implemented |
+| Function | Legacy path | Modern path |
 | --- | --- | --- |
 | Read message | `data.message.message` | `data.text` |
 | Display name | `data.message.displayName` | `data.user.name` |
@@ -59,9 +59,16 @@ those paths, not the proposed modern fallbacks:
 
 Twitch chat and whispers have separate schemas. A path present in chat does not
 satisfy a whisper requirement. The current whisper schema uses
-`data.whisperText`, which is not accepted by the configured message alternatives.
-Add it when the corresponding handler supports it. Role availability must also
-be checked for whispers independently.
+`data.whisperText` and `data.user.login`; the config accepts these alongside
+the legacy nested message and username fields. Whisper commands authorize known
+usernames without relying on a channel role, so whispers have no `user-role`
+requirement. KOTH subscribes only to public chat and uses the user login for
+avatar lookup.
+
+Subscription events still require `data.subTier`. The runtime normalizes numeric
+and string tiers; the presence monitor does not check their types. Run
+`node --test tests/*.test.cjs` to verify payload handling, tier scoring,
+authentication, and reconnect behavior.
 
 The `consumers` section maps IDs to source files and JavaScript handlers. Event
 or request consumers identify the affected code; individual field rules can

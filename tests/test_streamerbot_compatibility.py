@@ -166,6 +166,74 @@ class CompatibilityTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             compat.extract_requests("Error page")
 
+class RuntimeContractTests(unittest.TestCase):
+    def setUp(self):
+        self.config = json.loads(compat.DEFAULT_CONTRACT.read_text())
+
+    def upstream(self, legacy=False):
+        def object_schema(properties):
+            return {"type": "object", "properties": properties}
+
+        text = {"type": "string"}
+        role = {"type": "integer"}
+        if legacy:
+            chat = object_schema({"message": object_schema({
+                "message": text, "displayName": text, "username": text, "role": role,
+            })})
+            whisper = object_schema({"message": object_schema({"message": text, "username": text})})
+        else:
+            chat = object_schema({"text": text, "user": object_schema({
+                "name": text, "login": text, "role": role,
+            })})
+            whisper = object_schema({"whisperText": text, "user": object_schema({"login": text})})
+        return {
+            "events": {
+                "Twitch.ChatMessage": chat,
+                "Twitch.Whisper": whisper,
+                "YouTube.Message": object_schema({"message": text, "user": object_schema({
+                    "name": text, "profileImageUrl": text,
+                })}),
+                **{event: object_schema({"subTier": {"type": "integer" if legacy else "string"}})
+                   for event in ("Twitch.Sub", "Twitch.ReSub", "Twitch.GiftSub")},
+            },
+            "requests": {
+                "Subscribe": {"Schema": {"events": {}, "id": "subscribe"}},
+                "GetBroadcaster": {
+                    "Schema": {"id": "broadcaster"},
+                    "↙️ Response": {"id": "broadcaster", "platforms": {
+                        "twitch": {"broadcastUserName": "Broadcaster"},
+                    }},
+                },
+                "DoAction": {"Schema": {"action": {"name": "FightMessageTwitch"}, "args": {}, "id": "action"}},
+            },
+            "errors": {},
+        }
+
+    def test_repo_contract_accepts_supported_payloads_without_whisper_roles(self):
+        for legacy in (True, False):
+            with self.subTest(legacy=legacy):
+                self.assertEqual(compat.check_contract(self.config, self.upstream(legacy)), [])
+
+    def test_repo_contract_reports_missing_chat_login_for_koth_avatar_lookup(self):
+        upstream = self.upstream()
+        del upstream["events"]["Twitch.ChatMessage"]["properties"]["user"]["properties"]["login"]
+        findings = compat.check_contract(self.config, upstream)
+        self.assertEqual([(f["scope"], f["capability"], f["status"]) for f in findings],
+                         [("Twitch.ChatMessage", "user-login", "missing")])
+        self.assertIn("koth-chat", findings[0]["consumers"])
+
+    def test_repo_contract_still_requires_whisper_text_and_identity(self):
+        upstream = self.upstream()
+        properties = upstream["events"]["Twitch.Whisper"]["properties"]
+        del properties["whisperText"]
+        del properties["user"]["properties"]["login"]
+        findings = compat.check_contract(self.config, upstream)
+        self.assertEqual([(f["scope"], f["capability"], f["status"]) for f in findings], [
+            ("Twitch.Whisper", "read-message", "missing"),
+            ("Twitch.Whisper", "user-login", "missing"),
+        ])
+
+
 class AcceptedVersionsTests(unittest.TestCase):
     def test_clean_export_is_accepted_without_manual_snapshot_approval(self):
         with tempfile.TemporaryDirectory() as directory:

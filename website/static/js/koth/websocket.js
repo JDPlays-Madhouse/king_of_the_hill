@@ -1,19 +1,20 @@
 import { emptyFunction } from "../util.js";
-import { server } from "./urlParams.js";
+import { server, urlParams } from "./urlParams.js";
 
-export var ws = newWebSocket(server);
+export let ws;
 
 export function newWebSocket(server) {
-  return new WebSocket(server);
+  return new globalThis.Streamerbot.Connection(server, {
+    password: urlParams.get("wsPassword") || "",
+  });
 }
 
 export function connectws(onopen = emptyFunction, onclose = emptyFunction) {
+  if (ws) {
+    ws.close();
+  }
   ws = newWebSocket(server);
-  if (onopen.toString() != emptyFunction.toString()) {
-    ws.onopen = onopen;
-  }
-  if (onclose.toString() != emptyFunction.toString()) {
-    ws.onclose = onclose;
-  }
+  ws.onopen = onopen;
+  ws.onclose = onclose;
   return ws;
 }

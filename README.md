@@ -23,6 +23,27 @@ U0JBRR+LCAAAAAAABADtVcGK2zAUvC/sPxjD3lZBshXH6W0pbLeHUijLQllKkaVnR9SWXVlqki7590p2
 
 ---
 
+## Streamer.bot API compatibility
+
+The overlays support current Twitch chat payloads (`data.text` and `data.user`) and the legacy nested message format. Twitch whispers remain available for counter and subscription commands; joining King of the Hill uses public chat only. Subscription tiers accept both legacy numbers and string tier values.
+
+Connections use Streamer.bot's `Hello` handshake (available since v0.2.5). After a disconnect, overlays reconnect and restore their subscriptions. Keep the WebSocket endpoint set to `/` with the existing host and port options below.
+
+### WebSocket authentication
+
+If you enable **Authentication** and **Enforce** in Streamer.bot's WebSocket Server settings, add the URL-encoded password as `wsPassword` to any overlay URL:
+
+```url
+http://localhost:28080/?wsPassword=your-url-encoded-password
+http://localhost:28080/counter.html?wsPassword=your-url-encoded-password
+```
+
+Leave `wsPassword` out when authentication is not required. Keep overlay URLs containing a password private. The connection authenticates before subscribing or executing actions, and supports both localhost and HTTP LAN hosting.
+
+For access from another machine, change Streamer.bot's WebSocket **Address** from `127.0.0.1` to its LAN address or `0.0.0.0`, then set the overlay's `server` parameter to that machine's address. See the [official WebSocket configuration](https://docs.streamer.bot/api/websocket/guide/configuration).
+
+The existing named actions (`FightMessageTwitch`, `FightMessageYouTube`, `SetFightReward`, and `SubMessage`) are still used. Import both the KOTH commands below and the platform message actions at the top of this README.
+
 ## Docker Container
 
 Docker image: [ozyviking/twitch-king-of-the-hill](https://hub.docker.com/repository/docker/ozyviking/twitch-king-of-the-hill/)
@@ -165,7 +186,7 @@ http://localhost:28080/?server=192.168.0.10
 
 ##### Streamer.bot BotID
 
-Set botID for the streamer.bot connection, only applicable when multiple different bots are accessing like koth and others. Any alphanumeric text is fine.
+Set the request/response correlation ID used by King of the Hill. This is not a bot identity; separate overlays do not need distinct IDs. Any alphanumeric text is fine.
 
 ```url
 http://localhost:28080/?botID=123
@@ -776,3 +797,7 @@ This will add buttons so you can manually simulate subs and reset count.
 ```url
 http://localhost:28080/subgoal?testing
 ```
+
+### Streamer.bot regression checks
+
+Run `node --test tests/*.test.cjs` from the repository root. These dependency-free checks replay modern and legacy events and test authentication, reconnection, and command authorization without a live Streamer.bot instance.

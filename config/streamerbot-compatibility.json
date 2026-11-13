@@ -148,12 +148,14 @@
       "fields": {
         "read-message": {
           "alternatives": [
-            "data.message.message"
+            "data.message.message",
+            "data.text"
           ]
         },
         "display-name": {
           "alternatives": [
-            "data.message.displayName"
+            "data.message.displayName",
+            "data.user.name"
           ],
           "consumers": [
             "koth-chat"
@@ -161,9 +163,11 @@
         },
         "user-login": {
           "alternatives": [
-            "data.message.username"
+            "data.message.username",
+            "data.user.login"
           ],
           "consumers": [
+            "koth-chat",
             "counter-chat",
             "subs-chat",
             "subgoal-chat"
@@ -171,7 +175,8 @@
         },
         "user-role": {
           "alternatives": [
-            "data.message.role"
+            "data.message.role",
+            "data.user.role"
           ],
           "consumers": [
             "counter-chat",
@@ -191,17 +196,14 @@
       "fields": {
         "read-message": {
           "alternatives": [
-            "data.message.message"
+            "data.message.message",
+            "data.whisperText"
           ]
         },
         "user-login": {
           "alternatives": [
-            "data.message.username"
-          ]
-        },
-        "user-role": {
-          "alternatives": [
-            "data.message.role"
+            "data.message.username",
+            "data.user.login"
           ]
         }
       }
