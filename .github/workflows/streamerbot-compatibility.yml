@@ -1,0 +1,86 @@
+name: Streamer.bot compatibility
+
+on:
+  pull_request:
+    paths:
+      - config/streamerbot-compatibility.json
+      - config/streamerbot-accepted-versions.json
+      - scripts/streamerbot_compatibility.py
+      - tests/test_streamerbot_compatibility.py
+      - .github/workflows/streamerbot-compatibility.yml
+  push:
+    paths:
+      - config/streamerbot-compatibility.json
+      - config/streamerbot-accepted-versions.json
+      - scripts/streamerbot_compatibility.py
+      - tests/test_streamerbot_compatibility.py
+      - .github/workflows/streamerbot-compatibility.yml
+  schedule:
+    - cron: "23 19 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test compatibility rules and issue reporting
+        run: python3 -m unittest discover -s tests -p 'test_streamerbot_compatibility.py' -v
+
+  monitor:
+    needs: test
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: streamerbot-compatibility-monitor
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check upstream and create or update a compatibility issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          python3 scripts/streamerbot_compatibility.py
+          --create-issues
+          --write-snapshot streamerbot-snapshot.json
+          --report streamerbot-report.md
+          --accepted-versions config/streamerbot-accepted-versions.json
+      - name: Commit newly accepted versions
+        run: |
+          if ! git diff --quiet -- config/streamerbot-accepted-versions.json; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add config/streamerbot-accepted-versions.json
+            git commit -m 'chore: record accepted Streamer.bot version'
+            git push
+          fi
+      - name: Publish job summary
+        if: always()
+        run: |
+          if [ -f streamerbot-report.md ]; then
+            cat streamerbot-report.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Save upstream evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: streamerbot-compatibility
+          path: |
+            streamerbot-snapshot.json
+            streamerbot-report.md
+          if-no-files-found: ignore

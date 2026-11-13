@@ -1,0 +1,263 @@
+{
+  "schema_version": 1,
+  "upstream": {
+    "releases_url": "https://streamer.bot/api/releases",
+    "channel": "stable",
+    "events_query_url": "https://docs.streamer.bot/__nuxt_content/events/query",
+    "requests_url": "https://raw.githubusercontent.com/Streamerbot/docs/main/streamerbot/3.api/4.websocket/3.requests.md"
+  },
+  "reporting": {
+    "assignees": [
+      "Ozy-Viking"
+    ],
+    "title_prefix": "[Streamer.bot] Review API compatibility for"
+  },
+  "consumers": {
+    "koth-chat": {
+      "file": "website/static/js/koth/index.js",
+      "function": "userJoining / ws.onmessage"
+    },
+    "counter-chat": {
+      "file": "website/static/js/counter.js",
+      "function": "connectws / ws.onmessage"
+    },
+    "subs-chat": {
+      "file": "website/static/js/subs.js",
+      "function": "connectws / ws.onmessage"
+    },
+    "subgoal-chat": {
+      "file": "website/static/js/subgoal.js",
+      "function": "connectws / ws.onmessage"
+    },
+    "counter-notify": {
+      "file": "website/static/js/counter.js",
+      "function": "notify"
+    },
+    "subs-notify": {
+      "file": "website/static/js/subs.js",
+      "function": "notify"
+    },
+    "subgoal-notify": {
+      "file": "website/static/js/subgoal.js",
+      "function": "notify"
+    },
+    "koth-notify": {
+      "file": "website/static/js/koth/streamerBot.js",
+      "function": "notify"
+    },
+    "koth-winner": {
+      "file": "website/static/js/koth/streamerBot.js",
+      "function": "setWinner"
+    },
+    "subs-tier": {
+      "file": "website/static/js/subs.js",
+      "function": "subSwitch"
+    },
+    "subgoal-tier": {
+      "file": "website/static/js/subgoal.js",
+      "function": "subSwitch"
+    }
+  },
+  "requests": {
+    "Subscribe": {
+      "consumers": [
+        "koth-chat",
+        "counter-chat",
+        "subs-chat",
+        "subgoal-chat"
+      ],
+      "fields": {
+        "event-subscriptions": {
+          "alternatives": [
+            "events"
+          ]
+        }
+      }
+    },
+    "GetBroadcaster": {
+      "consumers": [
+        "counter-chat",
+        "subs-chat",
+        "subgoal-chat"
+      ],
+      "fields": {
+        "broadcaster-name": {
+          "alternatives": [
+            "platforms.twitch.broadcastUserName"
+          ],
+          "example": "\u2199\ufe0f Response"
+        }
+      }
+    },
+    "DoAction": {
+      "consumers": [
+        "koth-notify",
+        "koth-winner",
+        "counter-notify",
+        "subs-notify",
+        "subgoal-notify"
+      ],
+      "fields": {
+        "action-name": {
+          "alternatives": [
+            "action.name"
+          ]
+        },
+        "action-arguments": {
+          "alternatives": [
+            "args"
+          ]
+        }
+      },
+      "local_actions": [
+        "FightMessageTwitch",
+        "FightMessageYouTube",
+        "SetFightReward",
+        "SubMessage"
+      ]
+    }
+  },
+  "events": {
+    "Twitch.ChatMessage": {
+      "url": "https://docs.streamer.bot/api/websocket/events/twitch/chat-message",
+      "consumers": [
+        "koth-chat",
+        "counter-chat",
+        "subs-chat",
+        "subgoal-chat"
+      ],
+      "fields": {
+        "read-message": {
+          "alternatives": [
+            "data.message.message",
+            "data.text"
+          ]
+        },
+        "display-name": {
+          "alternatives": [
+            "data.message.displayName",
+            "data.user.name"
+          ],
+          "consumers": [
+            "koth-chat"
+          ]
+        },
+        "user-login": {
+          "alternatives": [
+            "data.message.username",
+            "data.user.login"
+          ],
+          "consumers": [
+            "counter-chat",
+            "subs-chat",
+            "subgoal-chat"
+          ]
+        },
+        "user-role": {
+          "alternatives": [
+            "data.message.role",
+            "data.user.role"
+          ],
+          "consumers": [
+            "counter-chat",
+            "subs-chat",
+            "subgoal-chat"
+          ]
+        }
+      }
+    },
+    "Twitch.Whisper": {
+      "url": "https://docs.streamer.bot/api/websocket/events/twitch/whisper",
+      "consumers": [
+        "counter-chat",
+        "subs-chat",
+        "subgoal-chat"
+      ],
+      "fields": {
+        "read-message": {
+          "alternatives": [
+            "data.message.message",
+            "data.text"
+          ]
+        },
+        "user-login": {
+          "alternatives": [
+            "data.message.username",
+            "data.user.login"
+          ]
+        },
+        "user-role": {
+          "alternatives": [
+            "data.message.role",
+            "data.user.role"
+          ]
+        }
+      }
+    },
+    "YouTube.Message": {
+      "url": "https://docs.streamer.bot/api/websocket/events/youtube/message",
+      "consumers": [
+        "koth-chat"
+      ],
+      "fields": {
+        "read-message": {
+          "alternatives": [
+            "data.message"
+          ]
+        },
+        "display-name": {
+          "alternatives": [
+            "data.user.name"
+          ]
+        },
+        "avatar-url": {
+          "alternatives": [
+            "data.user.profileImageUrl"
+          ]
+        }
+      }
+    },
+    "Twitch.Sub": {
+      "url": "https://docs.streamer.bot/api/websocket/events/twitch/sub",
+      "consumers": [
+        "subs-tier",
+        "subgoal-tier"
+      ],
+      "fields": {
+        "subscription-tier": {
+          "alternatives": [
+            "data.subTier"
+          ]
+        }
+      }
+    },
+    "Twitch.ReSub": {
+      "url": "https://docs.streamer.bot/api/websocket/events/twitch/re-sub",
+      "consumers": [
+        "subs-tier",
+        "subgoal-tier"
+      ],
+      "fields": {
+        "subscription-tier": {
+          "alternatives": [
+            "data.subTier"
+          ]
+        }
+      }
+    },
+    "Twitch.GiftSub": {
+      "url": "https://docs.streamer.bot/api/websocket/events/twitch/gift-sub",
+      "consumers": [
+        "subs-tier",
+        "subgoal-tier"
+      ],
+      "fields": {
+        "subscription-tier": {
+          "alternatives": [
+            "data.subTier"
+          ]
+        }
+      }
+    }
+  }
+}
