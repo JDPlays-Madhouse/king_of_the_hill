@@ -6,22 +6,20 @@ against Streamer.bot's current documentation export. It runs daily at 19:23 UTC
 and can also be run from **Actions → Streamer.bot compatibility → Run workflow**
 after the workflow reaches the default branch.
 
-## Which version is tested
+## What is checked
 
-The version declared by the generated event records is the version being
-tested. For example, records declaring `1.1.0-alpha.17` produce compatibility
-results, issues, and accepted-version entries for `1.1.0-alpha.17`.
+The question is whether the current API still satisfies the operations supported
+by the application. The configured alternatives describe those supported calls;
+keep them aligned with the implementation when adding or removing fallbacks.
 
 The checker reads JSON from `upstream.events_query_url`. It first reads the
 event inventory and version metadata, then retrieves the schemas for the
 configured events. No HTML scraping or manual snapshot approval is required.
-Mixed or missing export versions stop the check. A schema that changes version
-between the inventory and detail queries is marked unverified.
+Version labels are informational. Missing, mixed, invalid, or changing version
+metadata does not block the compatibility check or create an incompatibility.
 
-The latest published stable release is fetched independently from
-`upstream.releases_url`, using `upstream.channel`. It is informational: an alpha
-export's result is never recorded against a different stable release. A release
-feed failure does not block the API presence check.
+The monitor does not query release feeds or wait for a release. It compares the
+current available API definitions on every scheduled run.
 
 Outgoing request definitions come from the Markdown at `upstream.requests_url`.
 Its frontmatter introduction versions are not used as compatibility gates. The
@@ -31,7 +29,7 @@ saved evidence records both source URLs and identifies the event export version.
 
 A function here means an operation such as `read-message`, `display-name`, or
 `user-role`. Each event's `fields` section lists these operations and their
-accepted API paths:
+accepted API paths. Once a handler implements both formats, its rule can be:
 
 ```json
 "read-message": {
@@ -49,9 +47,10 @@ The rule applies independently to each event in the tested export:
 | Both fields | Flag as ambiguous; review for repurposing |
 | Schema unavailable or unreadable | Unverified; do not accept the version |
 
-All four Twitch mappings from the migration are configured:
+The current checkout implements only the legacy Twitch paths. The config accepts
+those paths, not the proposed modern fallbacks:
 
-| Function | Legacy | Current |
+| Function | Implemented and configured | Modern candidate, not yet implemented |
 | --- | --- | --- |
 | Read message | `data.message.message` | `data.text` |
 | Display name | `data.message.displayName` | `data.user.name` |
@@ -73,7 +72,8 @@ them. Editing this file does not implement runtime fallbacks. This monitor check
 existence, not field meaning or type changes to a path that still exists.
 
 The `requests` section checks outgoing request names and their documented
-request/response fields. `DoAction.local_actions` records installation-specific
+request/response fields, including request IDs and the broadcaster response ID
+used to correlate replies. `DoAction.local_actions` records installation-specific
 action names for reference; the export cannot check those actions or arbitrary
 arguments such as `rawInput`.
 
@@ -83,20 +83,33 @@ arguments such as `rawInput`.
 The workflow needs permission to create issues and the assignee must be
 assignable in the repository.
 
-Missing or ambiguous requirements create an issue showing the tested export
-version, accepted and matching fields, source URLs, and affected code. One issue
-per tested version/channel is updated instead of creating daily duplicates.
-A closed issue is reopened only when its findings change. Observation timestamps
-are excluded from issue bodies so unchanged results do not generate updates.
-Fetch failures alone fail the workflow without opening an incompatibility issue.
+Missing or ambiguous requirements create an issue showing the affected
+operations, accepted and matching fields, source URLs, and affected code.
+`reporting.title` sets the title. Issue handling follows the compatibility result:
 
-When every configured presence check passes, the tested export version is added
-automatically to
+- While an issue is open, changed findings update it; identical findings do not
+  notify again. Versions and timestamps are excluded from that comparison.
+- A successful check closes the issue and records that the problem was resolved,
+  preserving the original problem description.
+- A later incompatibility creates a new issue. Closed issues are never reopened.
+- Manually closing an issue suppresses repeats of the same unresolved findings.
+  A different problem or a regression after a successful check creates a new one.
+
+Unreadable API data fails the workflow without claiming an API change. If any
+required definition is unverified, issue publication is deferred for the entire
+run: no issue is created, updated, or closed. Confirmed findings still appear in
+the report. The next complete check compares the full findings with the existing
+issue, preventing temporary missing data from looking like a new incompatibility.
+
+The separate version history is retained for the previously requested tracking.
+When presence checks pass and version metadata is available and consistent, the
+export version is added automatically to
 [`config/streamerbot-accepted-versions.json`](../config/streamerbot-accepted-versions.json).
 Entries record its version/channel, check date, source URLs, and hashes of the
 contract and API definitions. Repeated unchanged checks do not rewrite entries.
-Acceptance means the configured paths exist for that export version; it does
-not test the application's runtime handling of them.
+This bookkeeping never changes the compatibility result or issue lifecycle.
+Unavailable version metadata simply skips the history entry. The check tests
+API path existence; it does not execute the application's handlers.
 
 The workflow commits accepted-version changes to the default branch. Its token
 has `issues: write` and `contents: write` permissions only in the monitoring job.
@@ -132,7 +145,6 @@ Optional flags:
   `GH_TOKEN` or `GITHUB_TOKEN` and `GITHUB_REPOSITORY=owner/repository`.
 
 Exit codes: `0` = all presence checks passed; `1` = missing or ambiguous API;
-`2` = checks could not complete or export version metadata is unavailable or
-inconsistent. The workflow saves the report and JSON evidence as artifacts,
+`2` = required API definitions could not be checked. The workflow saves the report and JSON evidence as artifacts,
 including on failures. The internal documentation query endpoint may change;
 an unreadable response fails the check instead of accepting a version.

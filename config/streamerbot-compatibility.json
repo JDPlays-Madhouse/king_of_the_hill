@@ -1,8 +1,6 @@
 {
   "schema_version": 1,
   "upstream": {
-    "releases_url": "https://streamer.bot/api/releases",
-    "channel": "stable",
     "events_query_url": "https://docs.streamer.bot/__nuxt_content/events/query",
     "requests_url": "https://raw.githubusercontent.com/Streamerbot/docs/main/streamerbot/3.api/4.websocket/3.requests.md"
   },
@@ -10,7 +8,7 @@
     "assignees": [
       "Ozy-Viking"
     ],
-    "title_prefix": "[Streamer.bot] Review API compatibility for"
+    "title": "[Streamer.bot] Current API compatibility needs attention"
   },
   "consumers": {
     "koth-chat": {
@@ -71,6 +69,11 @@
           "alternatives": [
             "events"
           ]
+        },
+        "request-id": {
+          "alternatives": [
+            "id"
+          ]
         }
       }
     },
@@ -85,7 +88,18 @@
           "alternatives": [
             "platforms.twitch.broadcastUserName"
           ],
-          "example": "\u2199\ufe0f Response"
+          "example": "↙️ Response"
+        },
+        "request-id": {
+          "alternatives": [
+            "id"
+          ]
+        },
+        "response-id": {
+          "alternatives": [
+            "id"
+          ],
+          "example": "↙️ Response"
         }
       }
     },
@@ -106,6 +120,11 @@
         "action-arguments": {
           "alternatives": [
             "args"
+          ]
+        },
+        "request-id": {
+          "alternatives": [
+            "id"
           ]
         }
       },
@@ -129,14 +148,12 @@
       "fields": {
         "read-message": {
           "alternatives": [
-            "data.message.message",
-            "data.text"
+            "data.message.message"
           ]
         },
         "display-name": {
           "alternatives": [
-            "data.message.displayName",
-            "data.user.name"
+            "data.message.displayName"
           ],
           "consumers": [
             "koth-chat"
@@ -144,8 +161,7 @@
         },
         "user-login": {
           "alternatives": [
-            "data.message.username",
-            "data.user.login"
+            "data.message.username"
           ],
           "consumers": [
             "counter-chat",
@@ -155,8 +171,7 @@
         },
         "user-role": {
           "alternatives": [
-            "data.message.role",
-            "data.user.role"
+            "data.message.role"
           ],
           "consumers": [
             "counter-chat",
@@ -176,20 +191,17 @@
       "fields": {
         "read-message": {
           "alternatives": [
-            "data.message.message",
-            "data.text"
+            "data.message.message"
           ]
         },
         "user-login": {
           "alternatives": [
-            "data.message.username",
-            "data.user.login"
+            "data.message.username"
           ]
         },
         "user-role": {
           "alternatives": [
-            "data.message.role",
-            "data.user.role"
+            "data.message.role"
           ]
         }
       }
