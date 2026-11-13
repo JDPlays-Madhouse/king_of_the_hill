@@ -42,8 +42,9 @@ export function randomPlayer(player = null) {
 export function kothTestEvent(
   ws,
   joinCommand,
-  username = "ozy_viking",
-  weapon = ""
+  username = "Ozy_Viking",
+  weapon = "",
+  legacy = false
 ) {
   class TestEvent {
     constructor(data) {
@@ -60,37 +61,27 @@ export function kothTestEvent(
           source: "Twitch",
           type: "ChatMessage",
         },
-        data: {
-          message: {
-            msgId: "a0d32df1-d3ca-4fd7-87fb-6c4e958550f0",
-            userId: 1231453,
-            username: user,
-            role: 1,
-            subscriber: true,
-            displayName: user,
-            channel: "<broadcaster's channel name>",
-            message: `${joinCommand} ${weapon}` /* The message the user sent */,
-            isHighlighted: false,
-            isMe: false,
-            isCustomReward: false,
-            isAnonymous: false,
-            isReply: false,
-            bits: 0,
-            hasBits: false,
-            emotes: [
-              {
-                id: "300400304",
-                type: "Twitch",
-                name: "nate121Raid",
-                startIndex: 5,
-                endIndex: 15,
-                imageUrl:
-                  "https://static-cdn.jtvnw.net/emoticons/v2/300400304/default/dark/2.0",
+        data: legacy
+          ? {
+              message: {
+                msgId: "a0d32df1-d3ca-4fd7-87fb-6c4e958550f0",
+                userId: 1231453,
+                username: user.toLowerCase(),
+                displayName: user,
+                role: 1,
+                message: `${joinCommand} ${weapon}`,
               },
-            ],
-            cheerEmotes: [],
-          },
-        },
+            }
+          : {
+              messageId: "a0d32df1-d3ca-4fd7-87fb-6c4e958550f0",
+              text: `${joinCommand} ${weapon}`,
+              user: {
+                id: "1231453",
+                login: user.toLowerCase(),
+                name: user,
+                role: 1,
+              },
+            },
       })
     );
   } else if (platform === PLATFORM.YouTube) {

@@ -50,13 +50,11 @@ if (testing) {
 }
 
 // deepcode ignore MissingClose: Intentionally never closed.
-const ws = new WebSocket(server);
+const ws = new Streamerbot.Connection(server, {
+  password: urlParams.get("wsPassword") || "",
+});
 const botID = "125";
 function connectws() {
-  ws.onclose = function () {
-    setTimeout(connectws, 10000);
-  };
-
   ws.onopen = function () {
     ws.send(
       JSON.stringify({
@@ -76,26 +74,38 @@ function connectws() {
   };
 
   ws.onmessage = function (event) {
-    const msg = event.data;
-    const wsdata = JSON.parse(msg);
-    if (wsdata.id == "1") {
-      authUsers = [...authUsers, wsdata.platforms.twitch.broadcastUserName];
+    let wsdata;
+    try {
+      wsdata = JSON.parse(event.data);
+    } catch (error) {
+      return;
     }
-    if (wsdata.event && wsdata.event.source === "Twitch") {
-      if (
-        wsdata.data.message.message.toLowerCase().startsWith(setCountCommand) &&
-        (authUsers.includes(wsdata.data.message.username) ||
-          wsdata.data.message.role >= 3)
-      ) {
-        console.log(wsdata.data.message.role);
-        let newCount = Number(wsdata.data.message.message.split(" ")[1]);
-        console.log(newCount);
-        if (!Number.isNaN(newCount)) {
-          updateCount((count = newCount), (set = true));
+    if (!wsdata || typeof wsdata !== "object") {
+      return;
+    }
+    if (wsdata.id === "1" && wsdata.status === "ok") {
+      const broadcaster = wsdata.platforms && wsdata.platforms.twitch;
+      if (broadcaster) {
+        for (const name of [broadcaster.broadcastUser, broadcaster.broadcastUserName]) {
+          if (typeof name === "string" && name.length > 0) {
+            authUsers.push(name.toLowerCase());
+          }
         }
-      } else if (countCommandAllowed) {
-        validateCountMessage(wsdata.data.message.message);
       }
+    }
+    const message = Streamerbot.normalizeTwitchMessage(wsdata);
+    if (!message) {
+      return;
+    }
+    const authorized = authUsers.includes(message.login.toLowerCase()) ||
+      (wsdata.event.type === "ChatMessage" && message.role >= 3);
+    if (message.text.toLowerCase().startsWith(setCountCommand) && authorized) {
+      const newCount = Number(message.text.split(" ")[1]);
+      if (Number.isFinite(newCount)) {
+        updateCount(newCount, true);
+      }
+    } else if (countCommandAllowed) {
+      validateCountMessage(message.text);
     }
   };
 }
@@ -166,49 +176,21 @@ function notify(message) {
 }
 
 function testData(message = countCommand) {
-  class TestEvent {
-    constructor(data) {
-      this.data = JSON.stringify(data);
-    }
-  }
-  return new TestEvent({
-    timeStamp: "2022-01-30T21:32:04.4588947-05:00",
-    event: {
-      source: "Twitch",
-      type: "ChatMessage",
-    },
-    data: {
-      message: {
-        msgId: "a0d32df1-d3ca-4fd7-87fb-6c4e958550f0",
-        userId: 568765,
-        username: "<username>",
-        role: 4,
-        subscriber: true,
-        displayName: "<display name>",
-        channel: "<broadcaster's channel name>",
-        message: message,
-        isHighlighted: false,
-        isMe: false,
-        isCustomReward: false,
-        isAnonymous: false,
-        isReply: false,
-        bits: 0,
-        hasBits: false,
-        emotes: [
-          {
-            id: "300400304",
-            type: "Twitch",
-            name: "nate121Raid",
-            startIndex: 5,
-            endIndex: 15,
-            imageUrl:
-              "https://static-cdn.jtvnw.net/emoticons/v2/300400304/default/dark/2.0",
-          },
-        ],
-        cheerEmotes: [],
+  return {
+    data: JSON.stringify({
+      event: { source: "Twitch", type: "ChatMessage" },
+      data: {
+        messageId: "a0d32df1-d3ca-4fd7-87fb-6c4e958550f0",
+        text: message,
+        user: {
+          id: "568765",
+          login: "test_broadcaster",
+          name: "Test Broadcaster",
+          role: 4,
+        },
       },
-    },
-  });
+    }),
+  };
 }
 
 function main() {

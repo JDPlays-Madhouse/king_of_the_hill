@@ -59,7 +59,9 @@ if (!(server === null)) {
 } else {
   server = `ws://localhost:${wsPort}/`;
 }
-const ws = new WebSocket(server);
+const ws = new Streamerbot.Connection(server, {
+  password: urlParams.get("wsPassword") || "",
+});
 const botID = "124";
 
 var reset = urlParams.get("reset") != null;
@@ -142,25 +144,14 @@ function testButtons(tier) {
 }
 
 function subSwitch(subTier, subs = 1) {
-  console.log(subTier);
-  switch (subTier) {
-    case 2:
-      updateScore(2, subs);
-      break;
-    case 3:
-      updateScore(3, subs);
-      break;
-    default: // tier 1 or prime (0)
-      updateScore(1, subs);
+  const tierInt = Streamerbot.normalizeSubTier(subTier);
+  if (tierInt !== null) {
+    updateScore(tierInt, subs);
   }
 }
 // file deepcode ignore MissingClose: Not relevant.
 
 function connectws() {
-  ws.onclose = function () {
-    setTimeout(connectws, 10000);
-  };
-
   ws.onopen = function () {
     ws.send(
       JSON.stringify({
@@ -187,45 +178,57 @@ function connectws() {
   };
 
   ws.onmessage = function (event) {
-    // console.log(event)
-    const msg = event.data;
-    // console.log(event.data)
-    const wsdata = JSON.parse(msg);
-    // console.log(wsdata.event && wsdata.event.source === 'Twitch')
-    if (wsdata.id == "1") {
-      authUsers = [...authUsers, wsdata.platforms.twitch.broadcastUserName];
+    let wsdata;
+    try {
+      wsdata = JSON.parse(event.data);
+    } catch (error) {
+      return;
     }
-    if (wsdata.event && wsdata.event.source === "Twitch") {
-      // console.log(wsdata.data.message.username)
-      // console.log(wsdata.event.type, wsdata.data.subTier)
-      if (["Sub", "ReSub", "GiftSub"].includes(wsdata.event.type)) {
-        subSwitch(wsdata.data.subTier);
-      } else if (wsdata.event.type == "GiftBomb") {
-        // subSwitch(wsdata.data.subTier, wsdata.data.gifts)
-      } else if (
-        ["Whisper", "ChatMessage"].includes(wsdata.event.type) &&
-        (authUsers.includes(wsdata.data.message.username) ||
-          wsdata.data.message.role >= 3)
-      ) {
-        if (wsdata.data.message.message.toLowerCase().startsWith(setSubCount)) {
-          console.log(wsdata.data.message.message);
-          let newCount = wsdata.data.message.message.split(" ").slice(1);
-          for (let i = 0; i < newCount.length; i++) {
-            newCount[i] = Number(newCount[i]);
-            if (Number.isNaN(newCount[i])) {
-              newCount[i] = 0;
-            }
-          }
-          if (newCount.length == 1) {
-            updateScore(1, newCount[0], (set = true));
-            updateScore(2, 0, (set = true));
-            updateScore(3, 0, (set = true));
-          } else if (newCount.length == 3) {
-            updateScore(1, newCount[0], (set = true));
-            updateScore(2, newCount[1], (set = true));
-            updateScore(3, newCount[2], (set = true));
+    if (!wsdata || typeof wsdata !== "object") {
+      return;
+    }
+    if (wsdata.id === "1" && wsdata.status === "ok") {
+      const broadcaster = wsdata.platforms && wsdata.platforms.twitch;
+      if (broadcaster) {
+        for (const name of [broadcaster.broadcastUser, broadcaster.broadcastUserName]) {
+          if (typeof name === "string" && name.length > 0) {
+            authUsers.push(name.toLowerCase());
           }
         }
+      }
+    }
+    if (
+      wsdata.event &&
+      wsdata.event.source === "Twitch" &&
+      ["Sub", "ReSub", "GiftSub"].includes(wsdata.event.type)
+    ) {
+      if (wsdata.data && typeof wsdata.data === "object") {
+        subSwitch(wsdata.data.subTier);
+      }
+      return;
+    }
+    const message = Streamerbot.normalizeTwitchMessage(wsdata);
+    if (!message) {
+      return;
+    }
+    const authorized = authUsers.includes(message.login.toLowerCase()) ||
+      (wsdata.event.type === "ChatMessage" && message.role >= 3);
+    if (!authorized) {
+      return;
+    }
+    if (message.text.toLowerCase().startsWith(setSubCount)) {
+      const newCount = message.text.split(" ").slice(1).map((value) => {
+        const count = Number(value);
+        return Number.isFinite(count) ? count : 0;
+      });
+      if (newCount.length === 1) {
+        updateScore(1, newCount[0], true);
+        updateScore(2, 0, true);
+        updateScore(3, 0, true);
+      } else if (newCount.length === 3) {
+        updateScore(1, newCount[0], true);
+        updateScore(2, newCount[1], true);
+        updateScore(3, newCount[2], true);
       }
     }
   };
@@ -260,56 +263,38 @@ function testData(subType = "Sub", subTier = 3) {
       type: subType,
     },
     data: {
-      subTier: subTier /* 0 - Prime, 1 - Tier 1, 2 - Tier 2, 3 - Tier 3 */,
+      subTier: String((Streamerbot.normalizeSubTier(subTier) || 1) * 1000),
+      isPrime: subTier === 0,
       ...testSubSwitch(subType),
     },
   });
 }
 
+const testUser = {
+  id: "34567898765",
+  login: "test_viewer",
+  name: "Test Viewer",
+  role: 1,
+};
 const sub = {
-  color: "#008D99",
-  emotes: [],
-  message: "",
-  userId: 34567898765,
-  userName: "<username>",
-  displayName: "<display name>",
-  role: 1 /* 1 - Viewer, 2 - VIP, 3 - Moderator, 4 - Broadcaster  */,
+  user: testUser,
+  durationMonths: 1,
 };
 const resub = {
+  user: testUser,
   cumulativeMonths: 25,
-  shareStreak: true,
   streakMonths: 1,
-  color: "#FF4500",
-  emotes: [],
-  message: "",
-  userId: 162909743,
-  userName: "admiralai",
-  displayName: "AdmiralAI",
-  role: 1 /* 1 - Viewer, 2 - VIP, 3 - Moderator, 4 - Broadcaster  */,
+  text: "",
 };
 const giftsub = {
-  isAnonymous: false,
-  totalSubsGifted: 1,
-  cumulativeMonths: 4,
-  monthsGifted: 1,
-  fromSubBomb: false,
-  subBombCount: 1,
-  recipientUserId: 9876567,
-  recipientUsername: "<username of recipient>",
-  recipientDisplayName: "<display name of recipient>",
-  userId: 3987654567,
-  userName: "<username of gifter>",
-  displayName: "<displayname of gifter>",
-  role: 1 /* 1 - Viewer, 2 - VIP, 3 - Moderator, 4 - Broadcaster  */,
+  user: testUser,
+  recipient: { id: "9876567", login: "recipient", name: "Recipient" },
 };
+// GiftBomb is deliberately not subscribed to: individual GiftSub events are counted.
 const giftbomb = {
-  isAnonymous: false,
-  gifts: 10,
-  totalGifts: 0,
-  userId: 45678,
-  userName: "<username of gifter>",
-  displayName: "<displayname of gifter>",
-  role: 1 /* 1 - Viewer, 2 - VIP, 3 - Moderator, 4 - Broadcaster  */,
+  user: testUser,
+  total: 10,
+  recipients: [],
 };
 function testSubSwitch(subType) {
   switch (subType) {
@@ -334,7 +319,7 @@ function main() {
     const testButtons = document.getElementById("testButtons");
     testButtons.innerHTML = `<button onclick="handle_on_click('Sub', 1);">Tier 1 Sub (1)</button>
                             <button onclick="handle_on_click('ReSub', 2);">Tier 2 ReSub (2)</button>
-                            <button onclick="handle_on_click('GiftSub', 3);">Tier 3 Gift Sub (6)</button>
+                            <button onclick="handle_on_click('GiftSub', 3);">Tier 3 Gift Sub (5)</button>
                             <button onclick="handle_on_click('GiftBomb', 1);">GiftBomb 10 Tier 1 (10)</button>
                             <button onclick="resetSubCount()">Reset Count</button>`;
   }

@@ -99,29 +99,53 @@ function userJoining() {
     );
 
     ws.onmessage = function (event) {
-        // grab message and parse JSON
-        const msg = event.data;
-        const wsdata = JSON.parse(msg);
-        console.log(wsdata);
-        if (typeof wsdata.data != "undefined") {
-            if (typeof wsdata.data.message != "undefined") {
-                let lowerMessage;
-                let username;
-                if (wsdata.event.source === PLATFORM.Twitch) {
-                    lowerMessage = wsdata.data.message.message.toLowerCase();
-                    username = wsdata.data.message.displayName;
-                    let imageUrl = "https://decapi.me/twitch/avatar/" + username;
-                    if (canUserJoin(username, lowerMessage)) {
-                        addFighter(username, lowerMessage, imageUrl);
-                    }
-                } else if (wsdata.event.source === PLATFORM.YouTube) {
-                    lowerMessage = wsdata.data.message.toLowerCase();
-                    username = wsdata.data.user.name;
-                    let imageUrl = wsdata.data.user.profileImageUrl;
-                    if (canUserJoin(username, lowerMessage)) {
-                        addFighter(username, lowerMessage, imageUrl, PLATFORM.YouTube);
-                    }
-                }
+        let wsdata;
+        try {
+            wsdata = JSON.parse(event.data);
+        } catch {
+            return;
+        }
+        if (!wsdata || !wsdata.event || !wsdata.data) {
+            return;
+        }
+        if (
+            wsdata.event.source === PLATFORM.Twitch &&
+            wsdata.event.type === "ChatMessage"
+        ) {
+            const message = globalThis.Streamerbot.normalizeTwitchMessage(wsdata);
+            if (!message) {
+                return;
+            }
+            const lowerMessage = message.text.toLowerCase();
+            const username = message.name;
+            const imageUrl =
+                "https://decapi.me/twitch/avatar/" + encodeURIComponent(message.login);
+            if (canUserJoin(username, lowerMessage)) {
+                addFighter(username, lowerMessage, imageUrl);
+            }
+        } else if (
+            wsdata.event.source === PLATFORM.YouTube &&
+            wsdata.event.type === "Message"
+        ) {
+            const { message, user } = wsdata.data;
+            if (
+                typeof message !== "string" ||
+                !user ||
+                typeof user.name !== "string" ||
+                !user.name ||
+                typeof user.profileImageUrl !== "string" ||
+                !user.profileImageUrl
+            ) {
+                return;
+            }
+            const lowerMessage = message.toLowerCase();
+            if (canUserJoin(user.name, lowerMessage)) {
+                addFighter(
+                    user.name,
+                    lowerMessage,
+                    user.profileImageUrl,
+                    PLATFORM.YouTube,
+                );
             }
         }
     };
@@ -237,7 +261,11 @@ function winnerTime(winner) {
 function startFight() {
     battleActive = false;
     // deepcode ignore MissingClose: added close to end of onopen.
-    connectws(fightSequence);
+    connectws(() => {
+        // Reconnecting must not select another winner or repeat the ceremony.
+        ws.onopen = null;
+        fightSequence();
+    });
 }
 
 function fightSequence() {
