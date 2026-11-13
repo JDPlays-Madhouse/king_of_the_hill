@@ -74,17 +74,6 @@ def extract_requests(markdown):
     return requests
 
 
-def latest_release(payload, channel):
-    releases = [item for item in payload["data"]
-                if item["project"] == "streamer.bot" and item["published"]
-                and item["release_channel"] == channel]
-    if not releases:
-        raise ValueError(f"No published Streamer.bot releases in channel {channel!r}")
-    item = max(releases, key=lambda row: (row["version_major"], row["version_minor"],
-                                        row["version_patch"], row["published_at"]))
-    return {key: item[key] for key in ("version", "release_channel", "published_at")}
-
-
 def export_release(version):
     match = re.fullmatch(r"\d+\.\d+\.\d+(?:-([0-9A-Za-z.-]+))?(?:\+[0-9A-Za-z.-]+)?", version or "")
     if not match:
@@ -134,11 +123,12 @@ def collect_snapshot(contract, read=fetch):
         return rows
 
     metadata = query('SELECT "path", "source", "type", "version" FROM _content_events ORDER BY stem ASC')
-    versions = {row.get("version") for row in metadata}
-    if len(versions) != 1:
-        raise ValueError("Event export has missing or mixed version metadata")
-    version = versions.pop()
-    release = export_release(version)
+    versions = sorted({row["version"] for row in metadata if isinstance(row.get("version"), str) and row["version"]})
+    version = versions[0] if len(versions) == 1 else None
+    try:
+        release = export_release(version)
+    except (TypeError, ValueError):
+        release = {"version": "unspecified", "release_channel": "unspecified"}
     by_event = {}
     for row in metadata:
         event = f"{row.get('source')}.{row.get('type')}"
@@ -158,14 +148,14 @@ def collect_snapshot(contract, read=fetch):
     snapshot = {
         "release": release,
         "export_version": version,
+        "export_versions": versions,
         "event_versions": {},
         "observed_at": datetime.now(timezone.utc).isoformat(),
-        "basis": f"API field presence in export {version}; request definitions from current documentation.",
+        "basis": "Current API field presence against the configured supported functions.",
         "sources": {"events": upstream["events_query_url"], "requests": upstream["requests_url"]},
         "requests": extract_requests(read(upstream["requests_url"])),
         "events": {},
         "errors": {},
-        "metadata_errors": {},
     }
     for event in contract["events"]:
         # Absence from a successfully read export is a missing event, not a fetch failure.
@@ -173,16 +163,10 @@ def collect_snapshot(contract, read=fetch):
             continue
         try:
             row = details[event]
-            if row.get("version") != version:
-                raise ValueError("Event schema version changed while reading the export")
-            snapshot["event_versions"][event] = row["version"]
+            snapshot["event_versions"][event] = row.get("version")
             snapshot["events"][event] = extract_schema(row)
         except (ValueError, KeyError, TypeError) as error:
             snapshot["errors"][event] = str(error)
-    try:
-        snapshot["latest_release"] = latest_release(json.loads(read(upstream["releases_url"])), upstream["channel"])
-    except (HTTPError, URLError, TimeoutError, OSError, ValueError, KeyError, TypeError) as error:
-        snapshot["metadata_errors"]["latest_release"] = str(error)
     return snapshot
 
 
@@ -278,23 +262,22 @@ def check_contract(contract, snapshot):
     return findings
 
 
-def render_report(contract, snapshot, findings):
-    release = snapshot["release"]
-    lines = [f"# Streamer.bot compatibility: {release['version']} ({release['release_channel']})",
-             "", snapshot["basis"], "",
-             f"Observed: {snapshot['observed_at']}", "",
-             "Acceptance: " + (acceptance_problem(contract, snapshot)
-                               or ("Blocked by compatibility findings." if findings
-                                   else "Accepted: all configured presence checks passed.")), "",
+def render_report(contract, snapshot, findings, include_metadata=True):
+    if not findings:
+        result = "Compatible: all configured API requirements are satisfied."
+    elif any(item["status"] != "unverified" for item in findings):
+        result = "Needs a fix: the current API does not satisfy the configured requirements."
+    else:
+        result = "Check incomplete: required API definitions could not be read."
+    lines = ["# Streamer.bot API compatibility", "", result, "",
              "Each capability must have exactly one accepted field in its own event schema.",
              "Zero matches = missing; multiple matches = ambiguous and require review.", ""]
-    latest = snapshot.get("latest_release")
-    if latest:
-        lines.extend([f"Latest published {latest['release_channel']} release: {latest['version']} (informational).", ""])
-    elif snapshot.get("metadata_errors", {}).get("latest_release"):
-        lines.extend(["Latest published release: unavailable (informational).", ""])
-    if not findings:
-        lines.append("All configured checks passed.")
+    if any(item["status"] == "unverified" for item in findings):
+        lines.extend(["Issue changes are deferred until all required API checks complete.", ""])
+    if include_metadata:
+        lines.extend([f"Observed: {snapshot['observed_at']}", ""])
+        if snapshot.get("export_version"):
+            lines.extend([f"Export version: {snapshot['export_version']} (informational).", ""])
     for item in findings:
         lines.extend([f"## {item['status']}: {item['scope']} / {item['capability']}", ""])
         if "alternatives" in item:
@@ -317,40 +300,74 @@ def render_report(contract, snapshot, findings):
     return "\n".join(lines)
 
 
-def publish_issue(contract, snapshot, report, repository, token, read=fetch):
+def findings_fingerprint(findings):
+    """Only actionable compatibility changes should update an issue."""
+    canonical = []
+    for item in findings:
+        if item["status"] == "unverified":
+            continue
+        entry = {key: item[key] for key in ("scope", "capability", "status")}
+        for key in ("alternatives", "matches", "consumers"):
+            entry[key] = sorted(item.get(key, []))
+        canonical.append(entry)
+    canonical.sort(key=lambda item: (item["scope"], item["capability"], item["status"]))
+    return hashlib.sha256(json.dumps(canonical, sort_keys=True).encode()).hexdigest()
+
+
+def publish_issue(contract, snapshot, findings, repository, token, read=fetch):
+    if any(item["status"] == "unverified" for item in findings):
+        return None
     if not re.fullmatch(r"[\w.-]+/[\w.-]+", repository):
         raise ValueError("GITHUB_REPOSITORY must be an owner/repository")
-    release = snapshot["release"]
-    key = hashlib.sha256(f"{release['release_channel']}:{release['version']}".encode()).hexdigest()[:20]
-    marker = f"<!-- streamerbot-compatibility:{key} -->"
+    marker = "<!-- streamerbot-compatibility:current-api -->"
+    resolved_marker = "<!-- streamerbot-compatibility:resolved -->"
+    fingerprint = f"<!-- streamerbot-findings:{findings_fingerprint(findings)} -->"
     base = f"https://api.github.com/repos/{repository}/issues"
-    # Exclude the changing observation time from the issue body to avoid daily notifications.
-    report = re.sub(r"^Observed: .*\n", "", report, flags=re.M)
-    body = f"{marker}\n{report}"
+    actionable = [item for item in findings if item["status"] != "unverified"]
+    body = f"{marker}\n{fingerprint}\n{render_report(contract, snapshot, actionable, include_metadata=False)}"
     existing = None
+    last_closed = None
     page = 1
     while True:
         issues = json.loads(read(f"{base}?state=all&per_page=100&page={page}", token=token))
-        existing = next((item for item in issues if "pull_request" not in item
-                         and marker in (item.get("body") or "")), None)
+        for item in issues:
+            if "pull_request" in item or marker not in (item.get("body") or ""):
+                continue
+            if item["state"] == "open":
+                existing = item
+                break
+            if last_closed is None:
+                last_closed = item
         if existing or len(issues) < 100:
             break
         page += 1
+    existing = existing or last_closed
     if existing:
-        if existing["body"] == body:
-            return existing["html_url"]
-        if existing["state"] == "closed":
-            # Only reopen when the findings change, not every time the cron runs.
-            update = {"body": body, "state": "open"}
-        else:
+        old_body = existing.get("body") or ""
+        if not actionable:
+            if resolved_marker in old_body:
+                return existing["html_url"]
+            update = {"state": "closed", "body": old_body + "\n\n" + resolved_marker
+                      + "\nAll configured API compatibility checks now pass.\n"}
+        elif existing["state"] == "open":
+            if fingerprint in old_body:
+                return existing["html_url"]
             update = {"body": body}
-        result = json.loads(read(f"{base}/{existing['number']}", token=token,
-                                 method="PATCH", body=update))
-    else:
-        result = json.loads(read(base, token=token, method="POST", body={
-            "title": f"{contract['reporting']['title_prefix']} {release['version']}",
-            "body": body, "assignees": contract["reporting"]["assignees"],
-        }))
+        elif resolved_marker not in old_body and fingerprint in old_body:
+            # Respect a manual closure while the same unresolved findings persist.
+            return existing["html_url"]
+        else:
+            update = None
+        if update is not None:
+            result = json.loads(read(f"{base}/{existing['number']}", token=token,
+                                     method="PATCH", body=update))
+            return result["html_url"]
+    if not actionable:
+        return None
+    result = json.loads(read(base, token=token, method="POST", body={
+        "title": contract["reporting"]["title"],
+        "body": body, "assignees": contract["reporting"]["assignees"],
+    }))
     return result["html_url"]
 
 
@@ -409,17 +426,19 @@ def main(argv=None):
         print(report)
         if args.accepted_versions and record_accepted(args.accepted_versions, contract, snapshot, findings):
             print(f"Accepted version recorded in {args.accepted_versions}")
-        if args.create_issues and any(item["status"] != "unverified" for item in findings):
+        if args.create_issues and not any(item["status"] == "unverified" for item in findings):
             token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
             if not token:
                 raise ValueError("Issue creation requires GH_TOKEN or GITHUB_TOKEN")
-            print("Issue:", publish_issue(contract, snapshot, report,
-                                           os.environ.get("GITHUB_REPOSITORY", ""), token))
+            issue = publish_issue(contract, snapshot, findings,
+                                  os.environ.get("GITHUB_REPOSITORY", ""), token)
+            if issue:
+                print("Issue:", issue)
         if any(item["status"] == "unverified" for item in findings):
             return 2
         if findings:
             return 1
-        return 2 if acceptance_problem(contract, snapshot) else 0
+        return 0
     except (HTTPError, URLError, TimeoutError, OSError, ValueError, KeyError, TypeError) as error:
         print(f"Compatibility check could not complete: {error}", file=sys.stderr)
         return 2

@@ -15,9 +15,8 @@ import streamerbot_compatibility as compat
 def contract():
     return {
         "schema_version": 1,
-        "upstream": {"releases_url": "releases", "requests_url": "requests", "channel": "stable",
-                     "events_query_url": "event-export"},
-        "reporting": {"assignees": ["Ozy-Viking"], "title_prefix": "Compatibility"},
+        "upstream": {"requests_url": "requests", "events_query_url": "event-export"},
+        "reporting": {"assignees": ["Ozy-Viking"], "title": "Current API compatibility"},
         "consumers": {"chat": {"file": "website/static/js/koth/index.js", "function": "userJoining"}},
         "requests": {"Subscribe": {"consumers": ["chat"], "fields": {
             "subscribe": {"alternatives": ["events"]},
@@ -167,16 +166,6 @@ class CompatibilityTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             compat.extract_requests("Error page")
 
-    def test_latest_release_filters_product_channel_and_publication(self):
-        def release(version, channel="stable", project="streamer.bot", published=True):
-            major, minor, patch = map(int, version.split('.'))
-            return dict(version=version, release_channel=channel, project=project, published=published,
-                        version_major=major, version_minor=minor, version_patch=patch, published_at="2026-11-13")
-        payload = {"data": [release("1.0.9"), release("1.0.10"), release("2.0.0", channel="alpha"),
-                            release("3.0.0", published=False), release("4.0.0", project="speaker.bot")]}
-        self.assertEqual(compat.latest_release(payload, "stable")["version"], "1.0.10")
-
-
 class AcceptedVersionsTests(unittest.TestCase):
     def test_clean_export_is_accepted_without_manual_snapshot_approval(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -235,12 +224,9 @@ class ExportCollectionTests(unittest.TestCase):
         detail = {**metadata[0], "schema": "[object Object]", "sections": [{
             "id": "schema", "content": "```json [schema.json]\n" + json.dumps(MODERN) + "\n```",
         }]}
-        feed = {"data": [{"project": "streamer.bot", "published": True, "release_channel": "stable",
-                          "version": "1.0.7", "version_major": 1, "version_minor": 0,
-                          "version_patch": 7, "published_at": "2026-11-13"}]}
-        return metadata, [detail], feed
+        return metadata, [detail]
 
-    def reader(self, metadata, details, feed, calls=None):
+    def reader(self, metadata, details, calls=None):
         def read(url, method="GET", body=None):
             if calls is not None:
                 calls.append((url, method, body))
@@ -249,83 +235,165 @@ class ExportCollectionTests(unittest.TestCase):
                 return json.dumps(details if body["sql"].startswith("SELECT *") else metadata)
             if url == "requests":
                 return '### `Subscribe`\n```json [Schema]\n{"events":{}}\n```'
-            if url == "releases":
-                if isinstance(feed, Exception):
-                    raise feed
-                return json.dumps(feed)
-            self.fail(f"Unexpected source: {url}")
+            self.fail(f"Compatibility checking must not depend on release services: {url}")
         return read
 
-    def test_export_version_is_the_target_and_latest_stable_is_separate(self):
-        metadata, details, feed = self.resources()
+    def test_current_api_is_checked_without_reading_release_feed(self):
+        metadata, details = self.resources()
         calls = []
-        upstream = compat.collect_snapshot(contract(), self.reader(metadata, details, feed, calls))
-        self.assertEqual(upstream["release"], {"version": "1.1.0-alpha.17", "release_channel": "alpha"})
-        self.assertEqual(upstream["latest_release"]["version"], "1.0.7")
+        upstream = compat.collect_snapshot(contract(), self.reader(metadata, details, calls))
         self.assertEqual(compat.check_contract(contract(), upstream), [])
-        self.assertIsNone(compat.acceptance_problem(contract(), upstream))
+        self.assertEqual(upstream["export_version"], "1.1.0-alpha.17")
         self.assertEqual(len([call for call in calls if call[0] == "event-export"]), 2)
         report = compat.render_report(contract(), upstream, [])
-        self.assertIn("compatibility: 1.1.0-alpha.17 (alpha)", report)
-        self.assertIn("1.0.7 (informational)", report)
+        self.assertIn("Compatible:", report)
+        self.assertNotIn("Latest published", report)
 
-    def test_mixed_missing_or_invalid_export_versions_fail(self):
-        for versions in [["1.1.0-alpha.17", "1.0.7"], [None], ["invalid"]]:
-            metadata, details, feed = self.resources()
-            metadata = [{**metadata[0], "version": version} for version in versions]
-            with self.subTest(versions=versions), self.assertRaises(ValueError):
-                compat.collect_snapshot(contract(), self.reader(metadata, details, feed))
+    def test_missing_invalid_or_mixed_versions_do_not_block_presence_check(self):
+        for version in [None, "invalid", "1.0.7"]:
+            metadata, details = self.resources(version)
+            metadata.append({"path": "/unrelated", "source": "Other", "type": "Event", "version": "different"})
+            with self.subTest(version=version):
+                upstream = compat.collect_snapshot(contract(), self.reader(metadata, details))
+                self.assertEqual(compat.check_contract(contract(), upstream), [])
+                self.assertIn("Compatible:", compat.render_report(contract(), upstream, []))
 
-    def test_schema_version_changing_between_queries_is_unverified(self):
-        metadata, details, feed = self.resources()
+    def test_version_changing_between_queries_does_not_block_presence_check(self):
+        metadata, details = self.resources()
         details[0]["version"] = "1.1.0-alpha.18"
-        upstream = compat.collect_snapshot(contract(), self.reader(metadata, details, feed))
-        findings = compat.check_contract(contract(), upstream)
-        self.assertEqual(findings[0]["status"], "unverified")
-        self.assertIsNotNone(compat.acceptance_problem(contract(), upstream))
+        upstream = compat.collect_snapshot(contract(), self.reader(metadata, details))
+        self.assertEqual(compat.check_contract(contract(), upstream), [])
 
     def test_event_absent_from_successful_export_is_missing(self):
-        metadata, details, feed = self.resources()
+        metadata, details = self.resources()
         metadata[0]["source"] = "Other"
-        upstream = compat.collect_snapshot(contract(), self.reader(metadata, [], feed))
+        upstream = compat.collect_snapshot(contract(), self.reader(metadata, []))
         self.assertEqual(compat.check_contract(contract(), upstream)[0]["status"], "missing")
-
-    def test_feed_failure_does_not_block_successful_presence_check(self):
-        metadata, details, _ = self.resources()
-        upstream = compat.collect_snapshot(contract(), self.reader(metadata, details, OSError("Feed unavailable")))
-        self.assertEqual(compat.check_contract(contract(), upstream), [])
-        self.assertIsNone(compat.acceptance_problem(contract(), upstream))
-        self.assertIn("latest_release", upstream["metadata_errors"])
 
 
 class IssueTests(unittest.TestCase):
-    def test_issue_is_assigned_and_unchanged_findings_do_not_duplicate_or_notify(self):
-        calls = []
-        stored = []
+    def setUp(self):
+        self.calls = []
+        self.issues = []
+        self.config = contract()
+        self.broken = snapshot()
+        del self.broken["events"]["Twitch.ChatMessage"]["properties"]["text"]
 
-        def read(url, token=None, method="GET", body=None):
-            calls.append((method, body))
-            if method == "GET":
-                return json.dumps(stored)
-            if method == "POST":
-                stored.append({**body, "number": 42, "state": "open", "html_url": "https://github.com/a/b/issues/42"})
-                return json.dumps(stored[0])
-            stored[0].update(body)
-            return json.dumps(stored[0])
+    def read(self, url, token=None, method="GET", body=None):
+        self.calls.append((method, body))
+        if method == "GET":
+            return json.dumps(list(reversed(self.issues)))
+        if method == "POST":
+            number = len(self.issues) + 1
+            self.issues.append({**body, "number": number, "state": "open",
+                                "html_url": f"https://github.com/a/b/issues/{number}"})
+            return json.dumps(self.issues[-1])
+        number = int(url.rsplit('/', 1)[-1])
+        self.issues[number - 1].update(body)
+        return json.dumps(self.issues[number - 1])
 
-        config, upstream = contract(), snapshot(version="1.1.0-alpha.17")
-        upstream["latest_release"] = {"version": "1.0.7", "release_channel": "stable"}
-        report = "# Finding\nObserved: today\nMissing text\n"
-        compat.publish_issue(config, upstream, report, "a/b", "token", read)
-        self.assertEqual(stored[0]["assignees"], ["Ozy-Viking"])
-        self.assertEqual(stored[0]["title"], "Compatibility 1.1.0-alpha.17")
-        compat.publish_issue(config, upstream, report.replace("today", "tomorrow"), "a/b", "token", read)
-        self.assertEqual([method for method, _ in calls].count("POST"), 1)
-        self.assertEqual([method for method, _ in calls].count("PATCH"), 0)
-        stored[0]["state"] = "closed"
-        compat.publish_issue(config, upstream, report + "New ambiguity\n", "a/b", "token", read)
-        self.assertEqual(stored[0]["state"], "open")
-        self.assertEqual([method for method, _ in calls].count("PATCH"), 1)
+    def publish(self, upstream):
+        findings = compat.check_contract(self.config, upstream)
+        return compat.publish_issue(self.config, upstream, findings, "a/b", "token", self.read)
+
+    def test_new_issue_is_assigned_and_unchanged_findings_do_not_notify(self):
+        self.publish(self.broken)
+        self.assertEqual(self.issues[0]["assignees"], ["Ozy-Viking"])
+        self.assertEqual(self.issues[0]["title"], "Current API compatibility")
+        self.publish(self.broken)
+        self.assertEqual([method for method, _ in self.calls].count("POST"), 1)
+        self.assertEqual([method for method, _ in self.calls].count("PATCH"), 0)
+
+    def test_closed_issue_is_not_reopened_by_version_feed_or_timestamp_changes(self):
+        self.publish(self.broken)
+        self.issues[0]["state"] = "closed"
+        changed = copy.deepcopy(self.broken)
+        changed["latest_release"] = {"version": "9.0.0", "release_channel": "stable"}
+        changed["export_version"] = "9.0.0-alpha.10"
+        changed["observed_at"] = "tomorrow"
+        changed["metadata_errors"] = {"latest_release": "HTTP 500"}
+        self.publish(changed)
+        self.assertEqual(len(self.issues), 1)
+        self.assertEqual(self.issues[0]["state"], "closed")
+        self.assertEqual([method for method, _ in self.calls].count("PATCH"), 0)
+
+    def test_new_finding_updates_an_open_issue(self):
+        self.publish(self.broken)
+        changed = copy.deepcopy(self.broken)
+        del changed["events"]["Twitch.ChatMessage"]["properties"]["user"]
+        self.publish(changed)
+        self.assertEqual(len(self.issues), 1)
+        self.assertEqual(self.issues[0]["state"], "open")
+        self.assertEqual([method for method, _ in self.calls].count("PATCH"), 1)
+
+    def test_clean_check_closes_issue_and_later_regression_creates_a_new_one(self):
+        self.publish(self.broken)
+        original_body = self.issues[0]["body"]
+        self.publish(snapshot())
+        self.assertEqual(self.issues[0]["state"], "closed")
+        self.assertIn(original_body, self.issues[0]["body"])
+        self.publish(snapshot())
+        self.assertEqual([method for method, _ in self.calls].count("PATCH"), 1)
+        self.publish(self.broken)
+        self.assertEqual(len(self.issues), 2)
+        self.assertEqual(self.issues[0]["state"], "closed")
+        self.assertEqual(self.issues[1]["state"], "open")
+        self.assertNotIn('"state": "open"', json.dumps([b for m, b in self.calls if m == "PATCH"]))
+
+    def test_different_findings_after_manual_closure_create_a_new_issue(self):
+        self.publish(self.broken)
+        self.issues[0]["state"] = "closed"
+        changed = copy.deepcopy(self.broken)
+        del changed["events"]["Twitch.ChatMessage"]["properties"]["user"]
+        self.publish(changed)
+        self.assertEqual(len(self.issues), 2)
+        self.assertEqual(self.issues[0]["state"], "closed")
+
+    def test_unreadable_schema_does_not_close_or_update_an_existing_issue(self):
+        self.publish(self.broken)
+        changed = copy.deepcopy(self.broken)
+        changed["errors"]["Twitch.ChatMessage"] = "HTTP 500"
+        self.publish(changed)
+        self.assertEqual(self.issues[0]["state"], "open")
+        self.assertEqual([method for method, _ in self.calls].count("PATCH"), 0)
+
+    def test_partial_schema_failure_cannot_create_or_update_an_issue(self):
+        self.config["events"]["Twitch.Whisper"] = copy.deepcopy(self.config["events"]["Twitch.ChatMessage"])
+        broken = copy.deepcopy(self.broken)
+        broken["events"]["Twitch.Whisper"] = copy.deepcopy(broken["events"]["Twitch.ChatMessage"])
+        for state in ["open", "closed"]:
+            with self.subTest(state=state):
+                self.calls = []
+                self.issues = []
+                self.publish(broken)
+                self.issues[0]["state"] = state
+                original_body = self.issues[0]["body"]
+                incomplete = copy.deepcopy(broken)
+                incomplete["errors"]["Twitch.Whisper"] = "Temporary unreadable schema"
+                calls_before = len(self.calls)
+                self.publish(incomplete)
+                self.assertEqual(len(self.issues), 1)
+                self.assertEqual(self.issues[0]["state"], state)
+                self.assertEqual(self.issues[0]["body"], original_body)
+                self.assertFalse(any(method != "GET" for method, _ in self.calls[calls_before:]))
+
+    def test_partial_schema_failure_cannot_create_the_first_issue(self):
+        self.config["events"]["Twitch.Whisper"] = copy.deepcopy(self.config["events"]["Twitch.ChatMessage"])
+        incomplete = copy.deepcopy(self.broken)
+        incomplete["errors"]["Twitch.Whisper"] = "Temporary unreadable schema"
+        self.publish(incomplete)
+        self.assertEqual(self.issues, [])
+
+    def test_clean_check_without_history_creates_no_issue(self):
+        self.assertIsNone(self.publish(snapshot()))
+        self.assertEqual(self.issues, [])
+
+    def test_finding_order_and_transient_errors_do_not_change_fingerprint(self):
+        findings = compat.check_contract(self.config, self.broken)
+        changed = copy.deepcopy(findings)
+        changed[0]["alternatives"].reverse()
+        changed.append({"scope": "Other", "capability": "schema", "status": "unverified", "reason": "HTTP 500"})
+        self.assertEqual(compat.findings_fingerprint(findings), compat.findings_fingerprint(changed))
 
     def test_issue_lookup_paginates(self):
         calls = []
@@ -336,7 +404,8 @@ class IssueTests(unittest.TestCase):
             if method == "GET":
                 return "[]"
             return '{"html_url":"https://github.com/a/b/issues/42"}'
-        compat.publish_issue(contract(), snapshot(), "report", "a/b", "token", read)
+        findings = compat.check_contract(self.config, self.broken)
+        compat.publish_issue(self.config, self.broken, findings, "a/b", "token", read)
         self.assertTrue(any("page=2" in url for url in calls))
 
 
@@ -361,6 +430,17 @@ class CommandTests(unittest.TestCase):
                 self.assertTrue(report_path.exists())
                 self.assertEqual(accepted_path.exists(), mode == "pass")
 
+    def test_missing_version_does_not_fail_the_command(self):
+        with tempfile.TemporaryDirectory() as directory:
+            config_path, snapshot_path = Path(directory) / "contract.json", Path(directory) / "snapshot.json"
+            config_path.write_text(json.dumps(contract()))
+            upstream = snapshot()
+            upstream.pop("export_version")
+            upstream.pop("event_versions")
+            snapshot_path.write_text(json.dumps(upstream))
+            with redirect_stdout(io.StringIO()):
+                self.assertEqual(compat.main(["--contract", str(config_path), "--snapshot", str(snapshot_path)]), 0)
+
     def test_unverified_result_does_not_create_incompatibility_issue(self):
         with tempfile.TemporaryDirectory() as directory:
             config_path = Path(directory) / "contract.json"
@@ -370,6 +450,23 @@ class CommandTests(unittest.TestCase):
             upstream["errors"]["Twitch.ChatMessage"] = "Schema unavailable"
             snapshot_path.write_text(json.dumps(upstream))
             with patch.object(compat, "publish_issue") as publish, redirect_stdout(io.StringIO()):
+                result = compat.main(["--contract", str(config_path), "--snapshot", str(snapshot_path),
+                                      "--create-issues"])
+            self.assertEqual(result, 2)
+            publish.assert_not_called()
+
+    def test_partial_check_does_not_publish_even_with_confirmed_findings(self):
+        with tempfile.TemporaryDirectory() as directory:
+            config_path, snapshot_path = Path(directory) / "contract.json", Path(directory) / "snapshot.json"
+            config = contract()
+            config["events"]["Twitch.Whisper"] = copy.deepcopy(config["events"]["Twitch.ChatMessage"])
+            config_path.write_text(json.dumps(config))
+            upstream = snapshot()
+            del upstream["events"]["Twitch.ChatMessage"]["properties"]["text"]
+            upstream["errors"]["Twitch.Whisper"] = "Temporary unreadable schema"
+            snapshot_path.write_text(json.dumps(upstream))
+            with patch.object(compat, "publish_issue") as publish, redirect_stdout(io.StringIO()), \
+                    patch.dict(compat.os.environ, {"GH_TOKEN": "test-token", "GITHUB_REPOSITORY": "a/b"}):
                 result = compat.main(["--contract", str(config_path), "--snapshot", str(snapshot_path),
                                       "--create-issues"])
             self.assertEqual(result, 2)
