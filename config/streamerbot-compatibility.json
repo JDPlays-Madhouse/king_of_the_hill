@@ -8,7 +8,13 @@
     "assignees": [
       "Ozy-Viking"
     ],
-    "title": "[Streamer.bot] Current API compatibility needs attention"
+    "title": "[Streamer.bot] Current API compatibility needs attention",
+    "issue_field_values": [
+      {
+        "field_id": 29067150,
+        "value": "High"
+      }
+    ]
   },
   "consumers": {
     "koth-chat": {

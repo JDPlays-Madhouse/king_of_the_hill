@@ -20,7 +20,8 @@ DEFAULT_CONTRACT = ROOT / "config/streamerbot-compatibility.json"
 def fetch(url, token=None, method="GET", body=None):
     headers = {"User-Agent": "Mozilla/5.0 (KOTH Streamer.bot compatibility monitor)"}
     if token:
-        headers.update(Authorization=f"Bearer {token}", Accept="application/vnd.github+json")
+        headers.update(Authorization=f"Bearer {token}", Accept="application/vnd.github+json",
+                       **{"X-GitHub-Api-Version": "2026-03-10"})
     if body is not None:
         headers["Content-Type"] = "application/json"
     request = Request(url, headers=headers, method=method,
@@ -84,6 +85,13 @@ def export_release(version):
 def validate_contract(contract, root=ROOT):
     if contract.get("schema_version") != 1:
         raise ValueError("Unsupported contract schema_version")
+    field_values = contract["reporting"].get("issue_field_values", [])
+    if (not isinstance(field_values, list)
+            or any(not isinstance(field, dict)
+                   or type(field.get("field_id")) is not int or field["field_id"] <= 0
+                   or not isinstance(field.get("value"), str) or not field["value"].strip()
+                   for field in field_values)):
+        raise ValueError("reporting.issue_field_values needs positive field IDs and nonempty option names")
     consumers = contract["consumers"]
     for name, consumer in consumers.items():
         path = (root / consumer["file"]).resolve()
@@ -364,10 +372,13 @@ def publish_issue(contract, snapshot, findings, repository, token, read=fetch):
             return result["html_url"]
     if not actionable:
         return None
-    result = json.loads(read(base, token=token, method="POST", body={
+    issue = {
         "title": contract["reporting"]["title"],
         "body": body, "assignees": contract["reporting"]["assignees"],
-    }))
+    }
+    if contract["reporting"].get("issue_field_values"):
+        issue["issue_field_values"] = contract["reporting"]["issue_field_values"]
+    result = json.loads(read(base, token=token, method="POST", body=issue))
     return result["html_url"]
 
 

@@ -7,6 +7,9 @@ on:
       - config/streamerbot-accepted-versions.json
       - scripts/streamerbot_compatibility.py
       - tests/test_streamerbot_compatibility.py
+      - tests/*.cjs
+      - website/static/js/**
+      - website/*.html
       - .github/workflows/streamerbot-compatibility.yml
   push:
     paths:
@@ -14,6 +17,9 @@ on:
       - config/streamerbot-accepted-versions.json
       - scripts/streamerbot_compatibility.py
       - tests/test_streamerbot_compatibility.py
+      - tests/*.cjs
+      - website/static/js/**
+      - website/*.html
       - .github/workflows/streamerbot-compatibility.yml
   schedule:
     - cron: "23 19 * * *"
@@ -32,6 +38,11 @@ jobs:
           python-version: "3.12"
       - name: Test compatibility rules and issue reporting
         run: python3 -m unittest discover -s tests -p 'test_streamerbot_compatibility.py' -v
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Test Streamer.bot client and overlays
+        run: node --test tests/*.test.cjs
 
   monitor:
     needs: test
