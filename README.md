@@ -8,17 +8,10 @@ You can run it locally with docker or through the browser at [twitchbot.hankin.i
 
 ---
 
-## BREAKING CHANGE
-
-In streamer.bot instead of a single message action named `FightMessage` one for each Twitch and YouTube need to be created as depicted below. Below under Import String is what can be used to import these 2 actions.
-
-![Streamer.bot youtube message actions](./docs/FightMessageYouTube.png)
-![Streamer.bot twitch message actions](./docs/FightMessageTwitch.png)
-
-### Import String
+## Import String
 
 ```base64
-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
+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
 ```
 
 ---
@@ -148,20 +141,26 @@ The values that are in each example are the default and are not required to be a
 Available:
 
 - [Champion Name](https://github.com/Ozy-Viking/twitch_king_of_the_hill#champion-title-and-hill-name)
+- [Disqualified Users](https://github.com/Ozy-Viking/twitch_king_of_the_hill#disqualified-users)
 - [G-string Probability](https://github.com/Ozy-Viking/twitch_king_of_the_hill#probability-of-sexy-thong)
 - [Game Length](https://github.com/Ozy-Viking/twitch_king_of_the_hill#game-length)
 - [Hill Choice](https://github.com/Ozy-Viking/twitch_king_of_the_hill#hill-choice)
 - [Hill Name](https://github.com/Ozy-Viking/twitch_king_of_the_hill#champion-title-and-hill-name)
+- [Ignored Users](https://github.com/Ozy-Viking/twitch_king_of_the_hill#additional-ignored-users)
 - [Join Command](https://github.com/Ozy-Viking/twitch_king_of_the_hill#join-command)
 - [Accepted Other Join Commands](https://github.com/Ozy-Viking/twitch_king_of_the_hill#accepted-other-join-commands)
+- [List Weapon Choices](https://github.com/Ozy-Viking/twitch_king_of_the_hill#list-weapon-choices)
 - [Mass Testing](https://github.com/Ozy-Viking/twitch_king_of_the_hill#mass-testing)
+- [Platform Battle](https://github.com/Ozy-Viking/twitch_king_of_the_hill#platform-battle)
 - [Reset Winner History](https://github.com/Ozy-Viking/twitch_king_of_the_hill#reset-winner-history)
 - [Rigged Users](https://github.com/Ozy-Viking/twitch_king_of_the_hill#additional-rigged-users)
 - [Show Last Winner](https://github.com/Ozy-Viking/twitch_king_of_the_hill#show-last-winner)
 - [Streamer.bot botID](https://github.com/Ozy-Viking/twitch_king_of_the_hill#streamerbot-botid)
 - [Streamer.bot Server](https://github.com/Ozy-Viking/twitch_king_of_the_hill#streamerbot-server)
 - [Streamer.bot Websocket Port](https://github.com/Ozy-Viking/twitch_king_of_the_hill#streamerbot-webstream-port)
+- [Streamer.bot WebSocket Password](https://github.com/Ozy-Viking/twitch_king_of_the_hill#websocket-authentication)
 - [Testing](https://github.com/Ozy-Viking/twitch_king_of_the_hill#testing-setup)
+- [Twitch Side](https://github.com/Ozy-Viking/twitch_king_of_the_hill#twitch-side)
 - [Win Streak Order](https://github.com/Ozy-Viking/twitch_king_of_the_hill#win-streak-order)
 - [Win Streak](https://github.com/Ozy-Viking/twitch_king_of_the_hill#win-streak)
 - [Winner limit](https://github.com/Ozy-Viking/twitch_king_of_the_hill#winner-limit)
@@ -389,7 +388,7 @@ http://localhost:28080/?reset=no
 If you are using streamer.bot you can use:
 
 ```base64
-U0JBRR+LCAAAAAAABADFVVtr2zAUfh/sP4g8V6ls+SLnZYyxrWOwQQvdwxhDtySmspTJctus9L9P8iWN4xTCLswPBn3f0dHx9x0dP7x8AcDsVtq6NHq2APisBcpqY6y73sFxB1elLqumesJnaB7Po1nPSkc99hAWfqlpJUPIpaylA19KDS7K2hm77cJ9BG3c2tgQ8/nn9vt1eVPq1Y58qmkWzdEc7Qgha27LjevJNn0N3FqCO3/GujsDUNdCUgtglmBrGgtqZyWt5rOQ57ErWdBRyZSHrLVHvnYIGKiWLkU4MEUUoxRTyEmWwSQTGBYij6GUGeUkyZYc86HYdtuPRjZBCd0otY9LTZmSIaezjRwx91w1Qr6zpho0W4AlVfUoahD4bfeNV+3ngTdKUt1sRhWsrPGIDx2hVN3RbX3Z6GPJLdXCVK95L/OE50bzxlqp3THW2XK18gbuK3mgZhtnWP2hFRX1DzzyGp794vf8QJwVlEUFRCRGMCGEwAIhCVGU55iQJcWYTra67SZoFyUIZYfcs75MVAv8Pv34tPg2UnraV8fUqLnU8lPv6lXDauBNADfGrSf1176h+S72o784oQVCx1+USk3CG6tCHGWmcQumqL6ZhHhDtWzr7BzBCLMoJwzmPGcwYXEGSSpyyFFekCKKclHwZxwpOMpygTEUIlnCBPMYUpwVMMZ5SmQWU4GjydY7Wa7WoZn8XX/GLUwOiaGxD67WCTaWWsj7MNlG/p39V3vWzm0W5+fKcKrWpnaLmCCCzl/ZMOL+pWEszXmRFhlELPVXSDABifcISkJ5xiMsWTq9Qn9k2GyS7jS70Ol23VLVjt0YTcqr6P11z064bvAdGWp7ehUiwTHLpFd56V+pEJAxksI4jXlO6JIjSn5Hrwih+G8rFp0+oN6Ho9opNSK5UYpuain2+IHuEw7x3b9ulMJvryqv6Rh0ZdX/HtpUPs3jLzYO1M+LCAAA
+U0JBRR+LCAAAAAAABADNVl1r2zAUfS/0P5g8V63s2HGcl1FKt5bBNlboyyhDH9eJqSx5stwmK/3vk+w4iWMnlEJhfjDonnP0cc/Vx8vpieeNcjBkNPNeXMM2JcnBNkdfMzn3VOqZBXg3mRDeteSufWc0kNy7EkBkVYzO1jJSmYXSTvj97+r3ffZo5RvwCXSZKelQ/3x87m8ADiXTWWHW4G5v6mclL9kakZUQLZZnMsur/H7TpwMd9lozRpx01kPqPkob+dVEvBaq4Yy7gTENeIh5gHyfRSiMKUdkShLEgwnHaZpEYxa0k6tlfyqo6jTh9YcGfu3XUYIkVIAb1egKOsiSiYrDZ63ym6w0Sq8sKSWiPMT6AZK7NA+wWhevl4XS5rh3tWCulY0M+N5hEfFMVqV1ZmhMTSRX+cazHs6UZJXWIM0QanQ2n1tPd43aM6vmKVre8m5J7Jk5SUJsvYzQJGUMhRFJEY19gtJ4ElDGOcbxdLQvNavCJcy30sk+dtCyrSFlW2MPu+jrtvGwu9ayopf9shxabclAwrd2Syqz6E28VJVmW8oR92p6pYXjLYwpZhcXQjEiFqo0s2CKp/jik4YSTE9knZNQT/iWv6fod8yByLf5jwI0DiJrDgQ+SmjKUUp5DAlOOYt4T/oM2Xzhqgaf4wPGjaf7QEFcqR2sleOmZpLD0g3YsfPsmFVPRDRHQjCw+Jws71u8jzY7Z2BX7CQuTNOUEiDIHk4hCqeYoYSwEMUkoVFCxgwHk/ckztoRfEjq/Len7qOqnFBVmRkVRD5+ZE0HUYKjhAGCOMQoZAEgyiYE4RCAYkgSPqX/UU0HbzmimBKCFCXwL+5i6B5ta03Lby7DhtKGmMpzW9Td4DPQUrFHMHegn9ZHfR+8EpldYxc0Wd7yd2767bMiCJsI1NcdcHc7Nq8NfB43qe+/G2oUIyKKBbFvktOT138OWsTgEQkAAA==
 ```
 
 ![Streamer.bot trigger and action](docs/endofstreamreset.png)
