@@ -2,6 +2,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const { webcrypto } = require('node:crypto');
+const { setTimeout: delay } = require('node:timers/promises');
 
 const root = path.resolve(__dirname, '..');
 
@@ -127,12 +128,13 @@ function hello(socket, authentication) {
   socket.message({ request: 'Hello', info: { version: '1.0.7' }, ...(authentication ? { authentication } : {}) });
 }
 
-async function settle(predicate = () => true) {
-  // Web Crypto completes outside the promise microtask queue.
-  for (let i = 0; i < 100; i++) {
-    await new Promise(resolve => setImmediate(resolve));
+async function settle(predicate = () => true, { timeout = 1000 } = {}) {
+  // Web Crypto runs on workers; event-loop turns do not measure its progress.
+  const deadline = performance.now() + timeout;
+  do {
+    await delay(1);
     if (predicate()) return;
-  }
+  } while (performance.now() < deadline);
   throw new Error('Asynchronous browser operation did not complete');
 }
 
