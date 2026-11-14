@@ -1,6 +1,15 @@
 # Changelog
 
 
+<a name="v1.3.1"></a>
+## [v1.3.1] - 2026-11-14
+### Features
+- **users:** Add disqualified user labels. ([#63](https://github.com/JDPlays-Madhouse/king_of_the_hill/pull/63))
+
+### Testing Changes
+- Wait for crypto completion using an elapsed-time deadline.
+
+
 <a name="v1.3.0"></a>
 ## [v1.3.0] - 2026-11-14
 ### Bug Fixes
@@ -360,7 +369,8 @@
 ## v0.1.0 - 2023-07-05
 
 
-[Upcoming Changes]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v1.3.0...HEAD
+[Upcoming Changes]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v1.3.1...HEAD
+[v1.3.1]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v1.3.0...v1.3.1
 [v1.3.0]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v1.2.6...v1.3.0
 [v1.2.6]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v1.2.5...v1.2.6
 [v1.2.5]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v1.2.4...v1.2.5
