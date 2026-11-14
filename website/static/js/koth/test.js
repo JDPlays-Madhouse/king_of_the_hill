@@ -1,6 +1,16 @@
 import { PLATFORM } from "../util.js";
 
 const testPeople = {
+  Cmdrshephard: {
+    user: "Cmdrshephard",
+    platform: PLATFORM.Twitch,
+    profileImageUrl: "",
+  },
+  foxhound590: {
+    user: "foxhound590",
+    platform: PLATFORM.Twitch,
+    profileImageUrl: "",
+  },
   Naval_Warlord: {
     user: "Naval_Warlord",
     platform: PLATFORM.Twitch,
