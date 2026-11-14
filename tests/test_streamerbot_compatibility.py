@@ -143,6 +143,16 @@ class CompatibilityTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             compat.validate_contract(config)
 
+    def test_issue_field_options_require_valid_ids_and_option_names(self):
+        for fields in [None, {}, [{"field_id": 0, "value": "High"}],
+                       [{"field_id": True, "value": "High"}],
+                       [{"field_id": 1, "value": ""}], [{"field_id": 1}]]:
+            with self.subTest(fields=fields):
+                config = contract()
+                config["reporting"]["issue_field_values"] = fields
+                with self.assertRaises(ValueError):
+                    compat.validate_contract(config)
+
     def test_schema_extraction_reads_json_export_sections_not_examples(self):
         section = {"id": "schema", "content": "```json [schema.json]\n" + json.dumps(MODERN) + "\n```"}
         record = {"schema": "[object Object]", "sections": [
@@ -371,6 +381,24 @@ class IssueTests(unittest.TestCase):
         self.publish(self.broken)
         self.assertEqual([method for method, _ in self.calls].count("POST"), 1)
         self.assertEqual([method for method, _ in self.calls].count("PATCH"), 0)
+
+    def test_new_issues_receive_high_priority_without_overwriting_manual_changes(self):
+        self.config["reporting"]["issue_field_values"] = [{"field_id": 29067150, "value": "High"}]
+        self.publish(self.broken)
+        self.assertEqual(self.issues[0]["issue_field_values"], [{"field_id": 29067150, "value": "High"}])
+        self.issues[0]["issue_field_values"] = [{"field_id": 29067150, "value": "Low"}]
+        changed = copy.deepcopy(self.broken)
+        del changed["events"]["Twitch.ChatMessage"]["properties"]["user"]
+        self.publish(changed)
+        self.assertEqual(self.issues[0]["issue_field_values"][0]["value"], "Low")
+        self.assertNotIn("issue_field_values", [body for method, body in self.calls if method == "PATCH"][-1])
+        self.publish(snapshot())
+        self.publish(self.broken)
+        self.assertEqual(self.issues[1]["issue_field_values"], [{"field_id": 29067150, "value": "High"}])
+
+    def test_priority_is_optional_for_other_repositories(self):
+        self.publish(self.broken)
+        self.assertNotIn("issue_field_values", self.issues[0])
 
     def test_closed_issue_is_not_reopened_by_version_feed_or_timestamp_changes(self):
         self.publish(self.broken)

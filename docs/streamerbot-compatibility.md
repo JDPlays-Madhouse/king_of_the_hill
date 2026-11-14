@@ -90,6 +90,14 @@ arguments such as `rawInput`.
 The workflow needs permission to create issues and the assignee must be
 assignable in the repository.
 
+`reporting.issue_field_values` sets custom single-select fields when creating an
+issue. It configures this organization's **Priority** field (ID `29067150`) to
+**High**. GitHub expects the option name, not the option ID. These values are
+sent in the issue creation request; updates leave existing field values alone
+so a manually changed priority is preserved. When using another repository,
+replace the field ID with one available to that repository, or omit this setting.
+The existing `issues: write` workflow permission covers setting issue fields.
+
 Missing or ambiguous requirements create an issue showing the affected
 operations, accepted and matching fields, source URLs, and affected code.
 `reporting.title` sets the title. Issue handling follows the compatibility result:
