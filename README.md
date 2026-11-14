@@ -242,6 +242,30 @@ If you want to add an additional rigged user use the search parameter
 http://localhost:28080/?riggedUser=Ozy_Viking&riggedUser=Not_Ozy_Viking
 ```
 
+##### Disqualified Users
+
+To display a `Disqualified` label on selected users during the winner and defending
+champion animations, add their usernames to `disqualifiedUsers` in
+`website/static/js/koth/urlParams.js`, or use repeated `disqualifiedUser` URL
+parameters:
+
+```url
+http://localhost:28080/?disqualifiedUser=Some_Viewer&disqualifiedUser=Another_Viewer
+```
+
+The default list includes 2 amazing friends. Supplying any
+`disqualifiedUser` parameter replaces the entire default list with the provided
+usernames. Use `?disqualifiedUser` to clear the list. To keep both defaults while
+adding another user, include all three explicitly:
+
+```url
+http://localhost:28080/?disqualifiedUser=Friend1&disqualifiedUser=Friend2&disqualifiedUser=Another_Viewer
+```
+
+Names match without regard to capitalization; blank entries are ignored.
+`Disqualified` takes priority over `#RIGGED` when a user appears in both lists.
+This is a display label only; listed users can still join and win normally.
+
 ##### Additional Ignored Users
 
 If you want to ignore additional users, use the search parameter `ignoredUser`.

@@ -60,7 +60,8 @@ body,
 	animation: hillanimation var(--koth-length);
 }
 
-.rigged {
+.rigged,
+.disqualified {
 	left: 50%;
 	transform: translateX(-50%);
 	position: absolute;
