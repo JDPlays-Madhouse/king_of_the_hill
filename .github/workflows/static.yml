@@ -37,9 +37,9 @@ jobs:
       - name: Static page ref
         run: ./scripts/gh_pages.sh
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
+          # Package the website as the tar archive required by Pages
           name: "github-pages"
           path: "./website"
       - name: Deploy to GitHub Pages
