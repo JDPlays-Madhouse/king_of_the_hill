@@ -37,6 +37,10 @@ export const riggedUsers = [
   "gotobedchild",
   ...urlParams.getAll("riggedUser"),
 ];
+// A supplied query replaces the defaults; a blank value clears the list.
+export const disqualifiedUsers = urlParams.has("disqualifiedUser")
+  ? urlParams.getAll("disqualifiedUser").map((name) => name.trim()).filter(Boolean)
+  : ["Cmdrshephard", "foxhound590"];
 export const ignoredUsers = [
   "FrostyToolsDotCom",
   ...urlParams.getAll("ignoredUser"),
@@ -83,6 +87,7 @@ export default function settings() {
     championName: championName,
     coiVehicles,
     debug: debug,
+    disqualifiedUsers,
     gameLength: gameLength,
     gstringProb: gstringProb,
     hillChoice: hillChoice,

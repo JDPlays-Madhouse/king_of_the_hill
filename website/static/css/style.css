@@ -60,7 +60,10 @@ body,
 	animation: hillanimation var(--koth-length);
 }
 
-.rigged {
+.rigged,
+.disqualified {
+	font-weight: 800;
+	z-index: 21;
 	left: 50%;
 	transform: translateX(-50%);
 	position: absolute;
@@ -71,6 +74,15 @@ body,
 	font-size: 35px;
 	width: fit-content;
 	text-align: right;
+}
+
+.disqualified {
+	font-weight: 800;
+	z-index: 21;
+	left: 50%;
+	top: 120%;
+	transform: translateX(-50%) rotate(-35deg);
+	white-space: nowrap;
 }
 
 @keyframes hillanimation {

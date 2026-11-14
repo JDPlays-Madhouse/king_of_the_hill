@@ -1,6 +1,7 @@
 import { Randomizer, randomSide, removeElement } from "../util.js";
 import { modifyStyleSheet } from "../util.js";
 import { loseSound } from "./sound.js";
+import { disqualifiedUsers } from "./urlParams.js";
 
 export const startTime = 0;
 export const motionUp1 = 1.5;
@@ -44,12 +45,16 @@ export function winnerMotion(
   scale = 2.5,
   rigged = false
 ) {
-  let riggedTitle;
-  if (rigged) {
-    riggedTitle = document.createElement("h1");
-    riggedTitle.className = "rigged";
-    riggedTitle.innerText = "#RIGGED";
-    element.appendChild(riggedTitle);
+  const username = (element.getAttribute("user") || "").toLowerCase();
+  const disqualified = disqualifiedUsers.some(
+    (name) => name.trim().toLowerCase() === username && username !== ""
+  );
+  let statusTitle;
+  if (rigged || disqualified) {
+    statusTitle = document.createElement("h1");
+    statusTitle.className = disqualified ? "disqualified" : "rigged";
+    statusTitle.innerText = disqualified ? "Disqualified" : "#RIGGED";
+    element.appendChild(statusTitle);
   }
   zIndex("-10", startTime * 1000, lastWinner);
   const disp = lastWinner
@@ -73,8 +78,8 @@ export function winnerMotion(
       delay: startTime,
     });
     zIndex("50", (motionUp1 + startTime) * 1000, lastWinner);
-    if (rigged) {
-      TweenMax.to(riggedTitle, 1, {
+    if (statusTitle) {
+      TweenMax.to(statusTitle, 1, {
         y: "-=50",
         repeat: 0,
         ease: Sine.easeInOut,
