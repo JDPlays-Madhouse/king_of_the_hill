@@ -1,13 +1,53 @@
 # Changelog
 
-<a name="Upcoming Changes"></a>
-## [Upcoming Changes]
+
+<a name="v1.3.0"></a>
+## [v1.3.0] - 2026-11-14
 ### Bug Fixes
-- **Change Log:** Added scope to changelog config. ([#51](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/51))
+- package GitHub Pages deployment artifact correctly
+
+### Features
+- **Streamer.bot:** Add client tests and prioritize compatibility issues
+- **Streamer.bot:** Support current payloads and authenticated reconnect
+- **Streamer.bot:** Track current API compatibility
+- **Streamer.bot:** Add API compatibility monitoring
+
+
+<a name="v1.2.6"></a>
+## [v1.2.6] - 2026-03-12
+### Bug Fixes
+- Licence year update
+- **weapons:** Images not loading
+
+### Features
+- **Testing:** Regex checker for weapon names added to testing
+- **Weapons:** Train tiers implemented
+
+
+<a name="v1.2.5"></a>
+## [v1.2.5] - 2026-03-06
+### Features
+- **weapons:** Endpoint with a dynamic list of current playable weapons.
+- **weapons:** Added the pngs of the new weapons
+
+
+<a name="v1.2.4"></a>
+## [v1.2.4] - 2026-02-03
+
+<a name="v1.2.3"></a>
+## [v1.2.3] - 2025-09-05
+
+<a name="v1.2.2"></a>
+## [v1.2.2] - 2025-05-20
+### Bug Fixes
+- **Change Log:** Added scope to changelog config. ([#51](https://github.com/JDPlays-Madhouse/king_of_the_hill/issues/51))
 - **Change Log:** Added scope to changelog config.
 
+### Notes
+- **Changelog:** Modified changlog to not include merge as it was doubling up. ([#52](https://github.com/JDPlays-Madhouse/king_of_the_hill/issues/52))
+
 ### Weapon Changes
-- **rocket:** Rotated it to almost vertical. ([#50](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/50))
+- **rocket:** Rotated it to almost vertical. ([#50](https://github.com/JDPlays-Madhouse/king_of_the_hill/issues/50))
 - **rocket:** Rotated it to almost vertical.
 
 
@@ -320,84 +360,90 @@
 ## v0.1.0 - 2023-07-05
 
 
-[Upcoming Changes]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v1.2.1...HEAD
-[v1.2.1]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v1.2.0...v1.2.1
-[v1.2.0]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v1.1.1...v1.2.0
-[v1.1.1]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v1.1.0...v1.1.1
-[v1.1.0]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v1.0.1...v1.1.0
-[v1.0.1]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v1.0.0...v1.0.1
-[v1.0.0]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.9...v1.0.0
-[v0.9.9]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.8...v0.9.9
-[v0.9.8]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.7...v0.9.8
-[v0.9.7]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.6...v0.9.7
-[v0.9.6]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.5...v0.9.6
-[v0.9.5]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.4...v0.9.5
-[v0.9.4]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.3...v0.9.4
-[v0.9.3]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.2...v0.9.3
-[v0.9.2]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.1...v0.9.2
-[v0.9.1]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.9.0...v0.9.1
-[v0.9.0]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.15...v0.9.0
-[v0.8.15]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.14...v0.8.15
-[v0.8.14]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.13...v0.8.14
-[v0.8.13]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.12...v0.8.13
-[v0.8.12]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.11...v0.8.12
-[v0.8.11]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.10...v0.8.11
-[v0.8.10]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.9...v0.8.10
-[v0.8.9]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.8...v0.8.9
-[v0.8.8]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.7...v0.8.8
-[v0.8.7]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.6...v0.8.7
-[v0.8.6]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.5...v0.8.6
-[v0.8.5]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.4...v0.8.5
-[v0.8.4]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.3...v0.8.4
-[v0.8.3]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.2...v0.8.3
-[v0.8.2]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.1...v0.8.2
-[v0.8.1]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.0...v0.8.1
-[v0.8.0]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.7.4+halloween...v0.8.0
-[v0.7.4+halloween]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.7.3+halloween...v0.7.4+halloween
-[v0.7.3+halloween]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.7.2+halloween...v0.7.3+halloween
-[v0.7.2+halloween]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.7.1+halloween...v0.7.2+halloween
-[v0.7.1+halloween]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.6.10+halloween...v0.7.1+halloween
-[v0.6.10+halloween]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.6.9+halloween...v0.6.10+halloween
-[v0.6.9+halloween]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.6.8+halloween...v0.6.9+halloween
-[v0.6.8+halloween]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.6.7+halloween...v0.6.8+halloween
-[v0.6.7+halloween]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.6.6+halloween...v0.6.7+halloween
-[v0.6.6+halloween]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.6.5-halloween...v0.6.6+halloween
-[v0.6.5-halloween]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.6.4-halloween...v0.6.5-halloween
-[v0.6.4-halloween]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.6.3-halloween...v0.6.4-halloween
-[v0.6.3-halloween]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.6.2-halloween...v0.6.3-halloween
-[v0.6.2-halloween]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.6.1-halloween...v0.6.2-halloween
-[v0.6.1-halloween]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.6.0-halloween...v0.6.1-halloween
-[v0.6.0-halloween]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.5.11-rc.1...v0.6.0-halloween
-[v0.5.11-rc.1]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.5.10...v0.5.11-rc.1
-[v0.5.10]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.5.9...v0.5.10
-[v0.5.9]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.5.8...v0.5.9
-[v0.5.8]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.5.7...v0.5.8
-[v0.5.7]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.5.6...v0.5.7
-[v0.5.6]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.5.5...v0.5.6
-[v0.5.5]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.5.4...v0.5.5
-[v0.5.4]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.5.3...v0.5.4
-[v0.5.3]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.5.2...v0.5.3
-[v0.5.2]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.5.1...v0.5.2
-[v0.5.1]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.5.0...v0.5.1
-[v0.5.0]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.4.2...v0.5.0
-[v0.4.2]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.4.1...v0.4.2
-[v0.4.1]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.4.0...v0.4.1
-[v0.4.0]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.3.6...v0.4.0
-[v0.3.6]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.3.5...v0.3.6
-[v0.3.5]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.3.4...v0.3.5
-[v0.3.4]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.3.3...v0.3.4
-[v0.3.3]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.3.2...v0.3.3
-[v0.3.2]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.3.1...v0.3.2
-[v0.3.1]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.3.0...v0.3.1
-[v0.3.0]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.3.0-rc3...v0.3.0
-[v0.3.0-rc3]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.3.0-rc2...v0.3.0-rc3
-[v0.3.0-rc2]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.2.7...v0.3.0-rc2
-[v0.2.7]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.2.6...v0.2.7
-[v0.2.6]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.2.5...v0.2.6
-[v0.2.5]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.2.4...v0.2.5
-[v0.2.4]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.2.3...v0.2.4
-[v0.2.3]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.2.3-a...v0.2.3
-[v0.2.3-a]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.2.2...v0.2.3-a
-[v0.2.2]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.2.1...v0.2.2
-[v0.2.1]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.2.0...v0.2.1
-[v0.2.0]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.1.0...v0.2.0
+[Upcoming Changes]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v1.3.0...HEAD
+[v1.3.0]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v1.2.6...v1.3.0
+[v1.2.6]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v1.2.5...v1.2.6
+[v1.2.5]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v1.2.4...v1.2.5
+[v1.2.4]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v1.2.3...v1.2.4
+[v1.2.3]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v1.2.2...v1.2.3
+[v1.2.2]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v1.2.1...v1.2.2
+[v1.2.1]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v1.2.0...v1.2.1
+[v1.2.0]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v1.1.1...v1.2.0
+[v1.1.1]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v1.1.0...v1.1.1
+[v1.1.0]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v1.0.1...v1.1.0
+[v1.0.1]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v1.0.0...v1.0.1
+[v1.0.0]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.9.9...v1.0.0
+[v0.9.9]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.9.8...v0.9.9
+[v0.9.8]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.9.7...v0.9.8
+[v0.9.7]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.9.6...v0.9.7
+[v0.9.6]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.9.5...v0.9.6
+[v0.9.5]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.9.4...v0.9.5
+[v0.9.4]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.9.3...v0.9.4
+[v0.9.3]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.9.2...v0.9.3
+[v0.9.2]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.9.1...v0.9.2
+[v0.9.1]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.9.0...v0.9.1
+[v0.9.0]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.8.15...v0.9.0
+[v0.8.15]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.8.14...v0.8.15
+[v0.8.14]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.8.13...v0.8.14
+[v0.8.13]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.8.12...v0.8.13
+[v0.8.12]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.8.11...v0.8.12
+[v0.8.11]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.8.10...v0.8.11
+[v0.8.10]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.8.9...v0.8.10
+[v0.8.9]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.8.8...v0.8.9
+[v0.8.8]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.8.7...v0.8.8
+[v0.8.7]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.8.6...v0.8.7
+[v0.8.6]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.8.5...v0.8.6
+[v0.8.5]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.8.4...v0.8.5
+[v0.8.4]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.8.3...v0.8.4
+[v0.8.3]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.8.2...v0.8.3
+[v0.8.2]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.8.1...v0.8.2
+[v0.8.1]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.8.0...v0.8.1
+[v0.8.0]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.7.4+halloween...v0.8.0
+[v0.7.4+halloween]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.7.3+halloween...v0.7.4+halloween
+[v0.7.3+halloween]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.7.2+halloween...v0.7.3+halloween
+[v0.7.2+halloween]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.7.1+halloween...v0.7.2+halloween
+[v0.7.1+halloween]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.6.10+halloween...v0.7.1+halloween
+[v0.6.10+halloween]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.6.9+halloween...v0.6.10+halloween
+[v0.6.9+halloween]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.6.8+halloween...v0.6.9+halloween
+[v0.6.8+halloween]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.6.7+halloween...v0.6.8+halloween
+[v0.6.7+halloween]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.6.6+halloween...v0.6.7+halloween
+[v0.6.6+halloween]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.6.5-halloween...v0.6.6+halloween
+[v0.6.5-halloween]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.6.4-halloween...v0.6.5-halloween
+[v0.6.4-halloween]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.6.3-halloween...v0.6.4-halloween
+[v0.6.3-halloween]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.6.2-halloween...v0.6.3-halloween
+[v0.6.2-halloween]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.6.1-halloween...v0.6.2-halloween
+[v0.6.1-halloween]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.6.0-halloween...v0.6.1-halloween
+[v0.6.0-halloween]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.5.11-rc.1...v0.6.0-halloween
+[v0.5.11-rc.1]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.5.10...v0.5.11-rc.1
+[v0.5.10]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.5.9...v0.5.10
+[v0.5.9]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.5.8...v0.5.9
+[v0.5.8]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.5.7...v0.5.8
+[v0.5.7]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.5.6...v0.5.7
+[v0.5.6]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.5.5...v0.5.6
+[v0.5.5]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.5.4...v0.5.5
+[v0.5.4]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.5.3...v0.5.4
+[v0.5.3]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.5.2...v0.5.3
+[v0.5.2]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.5.1...v0.5.2
+[v0.5.1]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.5.0...v0.5.1
+[v0.5.0]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.4.2...v0.5.0
+[v0.4.2]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.4.1...v0.4.2
+[v0.4.1]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.4.0...v0.4.1
+[v0.4.0]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.3.6...v0.4.0
+[v0.3.6]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.3.5...v0.3.6
+[v0.3.5]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.3.4...v0.3.5
+[v0.3.4]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.3.3...v0.3.4
+[v0.3.3]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.3.2...v0.3.3
+[v0.3.2]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.3.1...v0.3.2
+[v0.3.1]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.3.0...v0.3.1
+[v0.3.0]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.3.0-rc3...v0.3.0
+[v0.3.0-rc3]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.3.0-rc2...v0.3.0-rc3
+[v0.3.0-rc2]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.2.7...v0.3.0-rc2
+[v0.2.7]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.2.6...v0.2.7
+[v0.2.6]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.2.5...v0.2.6
+[v0.2.5]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.2.4...v0.2.5
+[v0.2.4]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.2.3...v0.2.4
+[v0.2.3]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.2.3-a...v0.2.3
+[v0.2.3-a]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.2.2...v0.2.3-a
+[v0.2.2]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.2.1...v0.2.2
+[v0.2.1]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.2.0...v0.2.1
+[v0.2.0]: https://github.com/JDPlays-Madhouse/king_of_the_hill/compare/v0.1.0...v0.2.0

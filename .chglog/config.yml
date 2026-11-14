@@ -2,7 +2,7 @@ style: github
 template: CHANGELOG.tpl.md
 info:
   title: CHANGELOG
-  repository_url: https://github.com/Ozy-Viking/twitch_king_of_the_hill
+  repository_url: https://github.com/JDPlays-Madhouse/king_of_the_hill
 options:
   tag_filter_pattern: '^v'
   sort: "semver"
